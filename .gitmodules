@@ -1,0 +1,3 @@
+[submodule "laradock-photocomp"]
+	path = laradock-photocomp
+	url = https://github.com/Laradock/laradock.git
