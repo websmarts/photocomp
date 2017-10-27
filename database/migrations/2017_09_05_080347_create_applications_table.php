@@ -15,7 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->emun('salutation', ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr'])->nullable();
+            $table->enum('salutation', ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr'])->nullable();
             // first name, lastname honours address1 address2 city state postcode phone email
             //
             // vaps_affliate aps_member nominated_club
