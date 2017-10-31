@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Mailers\AppMailer;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -18,7 +20,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -40,6 +42,31 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+
+        return view('auth.register');
+    }
+
+    public function register(Request $request, AppMailer $mailer)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->create($request->all());
+
+        //$this->guard()->login($user);
+        $mailer->sendEmailConfirmationTo($user);
+
+        flash('Please confirm your email address');
+
+        return redirect('registered');
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -47,8 +74,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            // 'salutation' => 'required|string|max:255',
+            // 'firstname' => 'required|string|max:255',
+            // 'lastname' => 'required|string|max:255',
+            //'honours' => 'required|string|max:255',
+            // 'address1' => 'required|string|max:255',
+            //'address2' => 'required|string|nullable|max:255',
+            // 'city' => 'required|string|max:255',
+            // 'postcode' => 'required|string|max:255',
+            // 'state' => 'required|string|max:255',
+            // 'phone' => 'required|string|max:255',
+            // 'vaps_affiliated' => 'required|string|max:255',
+            // 'vaps_member' => 'required|string|max:255',
+            //'club_nomination' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -62,10 +102,44 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
         ]);
+
+        // Application::create([
+        //     'salutation' => $data['salutation'],
+        //     'firstname' => $data['firstname'],
+        //     'lastname' => $data['lastname'],
+        //     'honours' => $data['honours'],
+        //     'address1' => $data['address1'],
+        //     'address2' => $data['address2'],
+        //     'city' => $data['city'],
+        //     'postcode' => $data['postcode'],
+        //     'state' => $data['state'],
+        //     'phone' => $data['phone'],
+        //     'vaps_affiliated' => $data['vaps_affiliated'],
+        //     'aps_member' => $data['aps_member'],
+        //     'club_nomination' => $data['club_nomination'],
+        //     'user_id' => $user->id,
+        // ]);
+
+        return $user;
+    }
+
+    public function confirmEmail($token)
+    {
+
+        $user = User::whereToken($token)->first();
+
+        if (!$user) {
+            return redirect('login');
+        }
+
+        $user->confirmEmail();
+
+        flash('Your account has been verified, you may now login');
+
+        return redirect('login');
     }
 }

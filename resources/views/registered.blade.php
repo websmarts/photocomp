@@ -8,16 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @can('admin')
-                    I can admin
-                    @endcan
-
-                    @include('partials.registration_form')
+                   <h3>Thank you for registering an account. We have sent an email to you with instructions on how to verify and activate your new account.</h3>
 
                 </div>
             </div>
