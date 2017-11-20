@@ -41,8 +41,6 @@ class EntriesController extends Controller
 
         ]);
 
-        return ['entries' => $this->getEntries()]; // Hack to chase down speed holdup
-
         $user = $request->user();
         $sectionId = (int) $request->input('section_id');
         $categoryId = (int) $request->input('category_id');
@@ -75,25 +73,25 @@ class EntriesController extends Controller
 
         // resize the image to a width of 300 and constrain aspect ratio (auto height)
 
-        // $image->resize(100, null, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // });
-        // $image->save(storage_path('app/public/photos/' . $filename));
+        $image->resize(100, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $image->save(storage_path('app/public/photos/' . $filename));
 
         // Insert photo table into db
         //
-        // $data = [
-        //     'category_id' => $categoryId,
-        //     'section_id' => $sectionId,
-        //     'title' => $request->input('title'),
-        //     'filepath' => $filename,
-        //     'filesize' => $photo->getClientSize(),
-        //     'width' => $width,
-        //     'height' => $height,
-        //     'section_entry_number' => $count++,
-        // ];
+        $data = [
+            'category_id' => $categoryId,
+            'section_id' => $sectionId,
+            'title' => $request->input('title'),
+            'filepath' => $filename,
+            'filesize' => $photo->getClientSize(),
+            'width' => $width,
+            'height' => $height,
+            'section_entry_number' => $count++,
+        ];
 
-        // $user->photos()->create($data);
+        $user->photos()->create($data);
         //return $data;
         // Return
         return ['entries' => $this->getEntries()];
