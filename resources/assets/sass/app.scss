@@ -7,3 +7,103 @@
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+.help-block {
+	color: #f44;
+}
+
+// LEGACY MEDOO
+// 
+#entries .category {
+    border: 1px solid #666;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+#entries h2 {
+    margin: 2px;
+    background: #ddd;
+    font-size: 120%;
+    border: 1px solid #666;
+    padding: 5px;
+}
+#entries h3 {
+    margin: 2px;
+    background: #fff;
+    font-size: 100%;
+    font-weight: normal;
+    border: 0px solid #666;
+    padding: 5px;
+    border-top: 1px solid #666;
+    background-color: #888;
+    color: #fff;
+}
+
+#entries .entry {
+    border-bottom: 1px dashed #888;
+    margin-left: 20px;
+}
+#entries .control {
+    float:right;
+    width: 30px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+#entries .delete {
+    background: #f44;
+}
+#entries .promote {
+    background: #44f;
+    margin-right:20px;
+}
+#entries .delete:hover {
+    background: #f22;
+}
+#entries .promote:hover {
+    background: #22f;
+}
+
+/* msgBox styles */
+#msgBox.error {
+    color: white;
+    padding: 10px;
+    background: #d66;
+}
+#msgBox.success {
+    color: white;
+    padding: 10px;
+    background: #4c4;
+}
+#msgBox.warning {
+    color: white;
+    padding: 10px;
+    background: #66c;
+}
+
+#total_cost {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+.vcategory h3 {
+    background: #666;
+    color: #fff;
+    padding: 8px;
+}
+.vcategory h4 {
+    background: #ddd;
+    padding: 5px;
+}
+.ventry {
+    margin-bottom: 10px;
+}
+.vhead {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 3px;
+    margin-left:1px;
+    margin-right: 1px;
+}
+

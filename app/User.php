@@ -49,4 +49,21 @@ class User extends Authenticatable
 
         $this->save();
     }
+
+    public function hasApplication()
+    {
+        //dd($this->application);
+        return $this->application;
+    }
+
+    // A user has zero or one Application
+    public function application()
+    {
+        return $this->hasOne('\App\Application');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany('\App\Photo');
+    }
 }

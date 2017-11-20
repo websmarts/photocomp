@@ -142,4 +142,15 @@ class RegisterController extends Controller
 
         return redirect('login');
     }
+    /**
+     * Display a page telling the newly registered user
+     * that they need to verify their email address
+     *
+     * @method registered
+     * @return [type]     [View]
+     */
+    public function registered()
+    {
+        return view('auth.registered');
+    }
 }

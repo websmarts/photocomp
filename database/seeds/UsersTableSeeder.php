@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'ian@there.com',
             'password' => 'pass',
             'is_admin' => 'no',
+            'verified' => 1,
 
         ]);
     }

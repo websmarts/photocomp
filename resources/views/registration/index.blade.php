@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading"><h2>Entrant registration form<h2></div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -13,26 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <h3> Display Enrty status</h3>
-                    <p><a href="{{ route('show_application_form') }}" >Registration form </a>
-                        @if(Auth::user()->application->registration_status)
-                            (completed)
-                        @else
-                            (NOT completed)
-                        @endif
-                    </p>
-
-                    <p><a href="{{ route('entries_upload_form') }}">Entry form</a> (in progress)</p>
-
-
-                    <p>Application submitted (no)</p>
-
                     @can('admin')
                     I can admin
                     @endcan
 
-
+                    @include('registration.partials.registration_form')
 
                 </div>
             </div>

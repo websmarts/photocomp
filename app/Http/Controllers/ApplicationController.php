@@ -16,7 +16,7 @@ class ApplicationController extends Controller
 
         ];
 
-        return view('step_one', compact('options'));
+        return view('home', compact('options'));
     }
 
     /**
