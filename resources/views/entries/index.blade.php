@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" >
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -15,7 +15,11 @@
                     @endif
 
                      <!-- AT include('entries.partials.userinfo')-->
-
+                     <div id="loadingDiv" class="display-none">
+                        <div>
+                            <h7>Please wait...</h7>
+                        </div>
+                    </div>
                     @include('entries.partials.form')
 
 

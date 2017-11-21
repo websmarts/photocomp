@@ -18,6 +18,9 @@ window.onload = function() {
       photoTitle = document.getElementById('photoTitle'),
       photoCategory_Section = document.getElementById('category_section');
 
+      loadingDiv = document.getElementById('loadingDiv');
+      
+
   // Return postage changes
   $('#return_postage').on('keyup', function(e){
     // console.log('RETURN POSTAGE CHANGE', $('#return_postage').val());
@@ -123,6 +126,7 @@ window.onload = function() {
   var $uploaderExtError = false; 
   var $sectionCounter = []; // holds section entry couters.
   var $maxSectionEntries = 4; // max entries accepted per section
+  var ajaxActive = false;
 
   // click manager for photo list
 
@@ -130,16 +134,29 @@ window.onload = function() {
 
     // console.log('entry clicked',e.target);
     // if e.target has class control and delte then delete the item via ajax
-    if( $(e.target).hasClass("control") ){
+    if( !ajaxActive && $(e.target).hasClass("control") ){
       
       if( $(e.target).hasClass("delete") ){
         var photo_id = $(e.target).parent().attr('photo_id');
-        remoteCall('delete', photo_id);
+        ajaxActive = true;
+        $(loadingDiv).removeClass('display-none');
+        remoteCall('delete', photo_id).then(function(data){
+          list_entries($entries);
+          ajaxActive = false;
+          $(loadingDiv).addClass('display-none');
+        });
       }
 
       if( $(e.target).hasClass("promote") ){
         var photo_id = $(e.target).parent().attr('photo_id');
-        remoteCall('promote', photo_id);
+        ajaxActive = true;
+
+        $(loadingDiv).removeClass('display-none');
+        remoteCall('promote', photo_id).then(function(data){
+          list_entries($entries);
+          ajaxActive = false;
+          $(loadingDiv).addClass('display-none');
+        });
       }
     }
     e.preventDefault();   
@@ -167,17 +184,17 @@ window.onload = function() {
         var section_item_count = 0;
         $.each(section_entries, function(index, section_item){
           // console.log('SECTION_ENTRY_index', index);
-          console.log('SECTION_ITEM', section_item);
+          //console.log('SECTION_ITEM', section_item);
           section_item_count++;
           $entryCount++;
           $sectionCounter[section_item.section_id] = section_item_count;
           
           
-          parts.push('<div class="entry" photo_id="' + section_item.id + '" ><div title="delete item"class="control delete">X</div>');
+          parts.push('<div class="entry" photo_id="' + section_item.id + '" ><div title="delete image"class="control delete">X</div>');
           if (section_item_count > 1 ){
-              parts.push('<div class="control promote" title="promote item">^</div>');
+              parts.push('<div class="control promote" title="move image up">^</div>');
           }
-          parts.push( section_item_count + ' ' +section_item.section_entry_number + ' <img src="/storage/photos/' + section_item.filepath + '" width="60">' +  section_item.title + '</div>');
+          parts.push( '<div class="img-container"><img src="/storage/photos/' + section_item.filepath + '"></div><span>' +  section_item.title + '</span></div>');
           //parts.push( section_item.section_entry_number + ' - ' +  section_item.title + '</div>');
 
         });
@@ -207,7 +224,7 @@ window.onload = function() {
 
 // Function used to make ajax call init, delete and promote items 
 var remoteCall = function (action, data) {
-  $.ajax({
+  return $.ajax({
       method: "POST",
       dataType: "json",
       url: "/process",
@@ -220,14 +237,14 @@ var remoteCall = function (action, data) {
       // var response = $.parseJSON(data)
       $entries = response.entries;
       // $user = response.user;
-      console.log(response.status)
+      //console.log(response.status)
 
-      list_entries($entries);
+      
       
     });
 
 }
-  
+ 
 
  
 
@@ -266,6 +283,7 @@ var remoteCall = function (action, data) {
         responseType: 'json',
         customHeaders: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         startXHR: function() {
+            ajaxActive = true;
             progressOuter.style.display = 'block'; // make progress bar visible
             this.setProgressBar( progressBar );
         },
@@ -298,14 +316,14 @@ var remoteCall = function (action, data) {
         onComplete: function( filename, response ) {
             btn.innerHTML = 'Choose Another File';
             progressOuter.style.display = 'none'; // hide progress bar when upload is completed
-
+            ajaxActive = false;
             if ( !response ) {
                 showMsg('Unable to upload file', 'error');
                 return;
             }
 
             if ( response.entries ) {
-                console.log(response);
+                //console.log(response);
                 // display entries
                 list_entries(response.entries);
                 showMsg('<strong>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.', 'success');
@@ -323,6 +341,7 @@ var remoteCall = function (action, data) {
             }
           },
         onError: function() {
+            ajaxActive = false;
             progressOuter.style.display = 'none';
             showMsg('Unable to upload file','warning');
           }
@@ -393,6 +412,13 @@ var remoteCall = function (action, data) {
 
   $('#msgBox').hide().html(''); // empty the message box
   $('#return_postage').val($returnPostageCost);
-  remoteCall('init');
+
+  ajaxActive = true;
+  $(loadingDiv).removeClass('display-none');
+  remoteCall('init').then(function(data){
+    list_entries($entries);
+    $(loadingDiv).addClass('display-none');
+    ajaxActive = false;
+  });;
   
 };
