@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -94,20 +95,87 @@ class EntriesController extends Controller
         $user->photos()->create($data);
         //return $data;
         // Return
-        return ['entries' => $this->getEntries()];
+        return ['entries' => $this->getUserEntries()];
 
     }
 
     public function process(Request $request)
     {
         $action = $request->input('action');
-        if ($action == 'init') {
-            return ['entries' => $this->getEntries()];
+        $photoId = (int) $request->input('data', 0);
+
+        switch ($action) {
+            case 'delete':
+                $this->deletePhoto($photoId);
+                break;
+
+            case 'promote':
+                $this->promotePhoto($photoId);
+                break;
+        }
+        return [
+            'entries' => $this->getUserEntries(),
+            'status' => 'success',
+        ];
+
+    }
+
+    private function deletePhoto($id)
+    {
+        if (!is_int($id)) {
+            return;
+        }
+        $photo = Photo::findOrFail($id);
+
+        $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
+
+        $sectionEntryNumber = 0;
+        $sectionEntries->filter(function ($model) use (&$photo) {
+            return $model->id != $photo->id;
+        })->map(function ($model) use (&$sectionEntryNumber) {
+            $model->section_entry_number = ++$sectionEntryNumber;
+            $model->save();
+        });
+        $photo->delete();
+    }
+
+    private function promotePhoto($id)
+    {
+        if (!is_int($id)) {
+            return;
+        }
+        $photo = Photo::findOrFail($id);
+
+        $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
+
+        $swapEntry = $sectionEntries->filter(function ($entry) use (&$photo) {
+            return $entry->section_entry_number < $photo->section_entry_number;
+        })
+            ->sortBy('section_item_number')
+            ->pop();
+
+        if ($swapEntry) {
+            $tmp = $swapEntry->section_entry_number;
+            \Log::info('swap section_entry_number: ' . $tmp);
+            \Log::info('photo section_entry_number: ' . $photo->section_entry_number);
+            // do the swap
+            $swapEntry->section_entry_number = $photo->section_entry_number;
+            $photo->section_entry_number = $tmp;
+
+            $swapEntry->save();
+            $photo->save();
         }
 
     }
 
-    private function getEntries()
+    private function sectionEntries($userId, $sectionId)
+    {
+        return Photo::where(['user_id' => $userId, 'section_id' => $sectionId])
+            ->orderBy('section_entry_number')
+            ->get();
+    }
+
+    private function getUserEntries()
     {
 
         $categories = Category::with('sections')->orderBy('display_order', 'asc')->get();
@@ -118,9 +186,8 @@ class EntriesController extends Controller
             $sections->each(function ($section, $skey) use ($photos, $category) {
 
                 $res = $photos->filter(function ($photo, $pkey) use ($category, $section) {
-
                     return ($photo->section_id == $section->id) && ($photo->category_id == $category->id);
-                });
+                })->sortBy('section_entry_number');
                 if (count($res)) {
                     foreach ($res->toArray() as $entry) {
                         $this->entries[$category->name][$section->name][] = $entry;

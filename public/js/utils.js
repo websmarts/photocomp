@@ -2467,7 +2467,7 @@ window.onload = function () {
         var section_item_count = 0;
         $.each(section_entries, function (index, section_item) {
           // console.log('SECTION_ENTRY_index', index);
-          //console.log('SECTION_ITEM', section_item);
+          console.log('SECTION_ITEM', section_item);
           section_item_count++;
           $entryCount++;
           $sectionCounter[section_item.section_id] = section_item_count;
@@ -2515,7 +2515,8 @@ window.onload = function () {
     }).done(function (response) {
       // var response = $.parseJSON(data)
       $entries = response.entries;
-      $user = response.user;
+      // $user = response.user;
+      console.log(response.status);
 
       list_entries($entries);
     });
