@@ -1,6 +1,6 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Variables
 @import "variables";
@@ -13,15 +13,8 @@
 }
 
 // LEGACY MEDOO
-// 
-.json-overlay {
-    background-color: #333;
-    opacity: 0.4;
-    
-    height: 90%;
-    width: 90%;
-    margin: 0 auto;
-} 
+
+
 #entries .category {
     border: 1px solid #666;
     margin-bottom: 20px;
@@ -59,6 +52,7 @@
     padding: 2px;
     float: left;
 
+
 }
 
 #entries .entry img {
@@ -67,34 +61,62 @@
 
 
 }
-#entries .entry span {
+#entries .entry span.delete {
+    display: block;
+    float: right;
+    margin-left: 10px;
+    font-size: 24px;
+    color: #f88;
+    
+}
+#entries .entry span.delete:hover {
+    cursor:pointer;
+    color: #f00;
+}
+
+#entries .entry span.promote {
     display: block;
     float: left;
+    width:80px;
     margin-left: 10px;
-    font-size: 14px;
-    color: #f33;
+    font-size: 24px;
+    color: #333;
+    
 }
+#entries .entry span.promote:hover {
+    cursor:pointer;
+    color:#388;
+
+}
+
+
+#entries .left-spacer {
+    float: left;
+    height:50px;
+    width:110px;
+}
+#entries .entry span.title {
+    float: left;
+    font-size: 16px;
+}
+
 #entries .control {
     float:right;
-    width: 30px;
-    color: #fff;
+    width: 50px;
+   
     text-align: center;
     cursor: pointer;
 }
 
 #entries .delete {
-    background: #f44;
+    //background: #f44;
 }
 #entries .promote {
-    background: #44f;
+    //background: #44f;
+    //font-size: 18px;
     margin-right:20px;
 }
-#entries .delete:hover {
-    background: #f22;
-}
-#entries .promote:hover {
-    background: #22f;
-}
+
 
 /* msgBox styles */
 #msgBox.error {
@@ -149,11 +171,27 @@
   right:0px;
   width:100%;
   height:100%;
-  background-color:#666;
+  background-color:#fff;
   background-image:url('../images/loading.gif');
   background-repeat:no-repeat;
   background-position:center;
   z-index:10000000;
-  opacity: 0.4;
+  opacity: 0.7;
   filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+#loadingDiv h1 {
+    background-color: #fff;
+    color: #000;
+    font-size:16pt;
+    border: 0px solid #000;
+    text-align:center;
+    height: 50px;/*height needs to be set*/
+    width: 100px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 200px;
+    left: 0;
 }

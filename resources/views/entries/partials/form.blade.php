@@ -2,27 +2,37 @@
 
 
 <div class="no-print">
-	<h3>Upload Images</h3>
+
 	<div style="background: #eee; padding: 5px;" >
+		<h3>Upload images</h3>
 		<div class="row" style="padding-top:10px;">
-
-			<div class="col-xs-6">
-			  <button id="uploadBtn" class="btn btn-large btn-success btn-block" style="padding:24px" >Select image to upload</button>
+			<div class="col-xs-2" style="padding-top:30px; text-align: right;">
+				<div>Title:</div>
 			</div>
-			<div class="col-xs-6">
-			  <div class="notice">NOTE: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high.</div>
+
+			<div class="col-xs-4" >
+			  <button id="uploadBtn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click to<br />select image to upload</button>
+			</div>
+			<div class="col-xs-4">
+			  <div class="notice">IMPORTANT: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high.</div>
 			</div>
 
 		</div>
 		<div class="row" style="padding-top:10px;">
-			<div class="col-xs-10">
-			  <span>Photo title:</span>&nbsp;<input class="form-control" type=text id="photoTitle"	/>
+			<div class="col-xs-2" style="padding-top:30px; text-align: right;">
+				<div>Title:</div>
+			</div>
+			<div class="col-xs-8">
+			  &nbsp;<input class="form-control" type=text id="photoTitle"	placeholder="Image title ..."/>
 			</div>
 		</div>
 
 		<div class="row" style="padding-top:10px;">
-			<div class="col-xs-10">
-			  <span>Photo section:</span>&nbsp;
+			<div class="col-xs-2" style="padding-top:10px; text-align: right;">
+				<div>Section:</div>
+			</div>
+
+			<div class="col-xs-8">
 			  <select class="form-control" id="category_section" name="category_section">
 			  <option value="0">Select section....</option>
 			  @php
@@ -36,7 +46,7 @@
 
 		<div class="row" style="padding-top:40px;">
 			<div class="col-xs-12" style="text-align: center">
-			  <button id="my_submit_btn" class="btn btn-large btn-primary">Upload</button>
+			  <button id="my_submit_btn" class="btn btn-large btn-primary"  >Upload</button>
 			</div>
 		</div><!-- row end -->
 

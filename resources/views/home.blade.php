@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <h3> Display Enrty status</h3>
+                    <h3> Display steps and status</h3>
                     <p><a href="{{ route('show_application_form') }}" >Registration form </a>
                         @if(Auth::user()->application->registration_status)
                             (completed)

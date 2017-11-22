@@ -2317,13 +2317,16 @@ function escapeTags(str) {
 window.onload = function () {
 
   var btn = document.getElementById('uploadBtn'),
+      uploadBtn = document.getElementById('my_submit_btn'),
       progressBar = document.getElementById('progressBar'),
       progressOuter = document.getElementById('progressOuter'),
       msgBox = document.getElementById('msgBox'),
       photoTitle = document.getElementById('photoTitle'),
-      photoCategory_Section = document.getElementById('category_section');
+      photoCategory_Section = document.getElementById('category_section'),
+      loadingDiv = document.getElementById('loadingDiv');
 
-  loadingDiv = document.getElementById('loadingDiv');
+  var $btnText = btn.innerHTML; // text in the btn
+
 
   // Return postage changes
   $('#return_postage').on('keyup', function (e) {
@@ -2358,62 +2361,77 @@ window.onload = function () {
   $('#category_section').on('change', function (e) {
     // console.log(e.target.value);
     $('#msgBox').hide(); // empty the message box
-    var sectionId = getSectionId(e.target.value);
-    if ($sectionCounter[sectionId] >= $maxSectionEntries) {
-      showMsg('Max entries reached for selected section', 'warning');
-    }
+    // var sectionId = getSectionId(e.target.value);
+    // if ($sectionCounter[sectionId] >= $maxSectionEntries){
+    //   showMsg('Max entries reached for selected section','warning');
+    // }
+    // 
+    validateInputs();
   });
 
-  // Ajax file uploader submit
-  $('#my_submit_btn').on('click', function (e) {
-    // console.log('Upload clicked');
+  var validateInputs = function validateInputs() {
+    var silent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-    // validate inputs
+    console.log('validateInput');
     var valid = true;
     var msgParts = [];
 
     var filename = btn.innerHTML;
     if (!/\.jp[eg]$/i.test(filename)) {
-      msgParts.push("File selected");
+      msgParts.push("Select an image (JPEG) file to upload");
       valid = false;
     }
 
     // console.log('Title length', photoTitle.value.length);
     if (photoTitle.value.length < 2) {
-      msgParts.push("Photo title"); // invalid title
+      msgParts.push("Enter a title (must be more than 2 characters long) "); // invalid title
       valid = false;
     }
+
     var cs = getSectionId();
-    // console.log('Section', cs);
+    console.log('Section', cs);
+    console.log('$sectionCounter[cs]', $sectionCounter[cs]);
     if (typeof cs == 'undefined' || cs < 1) {
-      msgParts.push("Photo section"); // invalid section
+      msgParts.push("Select an Section"); // invalid section
       valid = false;
-    } else if ($sectionCounter[cs] > $maxSectionEntries) {
+    } else if ($sectionCounter[cs] >= $maxSectionEntries) {
       //console.log('MaxSection Entries reached');
       msgParts.push("Maximum entries for selected section has been reached"); // invalid section
       valid = false;
     }
-    // elseif count of section entries is already max
-    // then report max section entries reached
+    if (!valid && !silent) {
+      var msgCombined = 'Issues: ' + msgParts.join(',<br />');
+      showMsg(msgCombined, 'error');
+    }
 
     if (!valid) {
-      var msgCombined = 'Invalid inputs for:<br />' + msgParts.join(',<br />');
-      showMsg(msgCombined, 'error');
-      if ($uploaderExtError) {
-        uploader.clearQueue(); //remove the invalid entry
-        $uploaderExtError = false; // clear error flag
-      }
-
-      //  return ; // prevent upload starting
-    }
-    // console.log(valid);
-    //showMsg('Uploading ' + photoTitle.value + '....','success');
-    if (valid) {
-      uploader.submit(); // Submit upload when #my_submit_btn is clicked
+      $(uploadBtn).prop('disabled', true); // disable upload btn
+    } else {
+      $(uploadBtn).prop('disabled', false); // disable upload btn
     }
 
-    e.preventDefault();
-  });
+    return valid;
+  };
+
+  // // Ajax file uploader submit
+  // $(uploadBtn).on('click', function( e ) {
+  //   console.log('uploadBtn clicked');
+  //   var valid = validateInputs();
+  //   if(! valid ){ 
+  //     if($uploaderExtError){
+  //       uploader.clearQueue(); //remove the invalid entry
+  //       $uploaderExtError = false; // clear error flag
+  //     }
+
+  //      return ; // prevent upload starting
+  //   }
+
+  //   if ( valid ){
+  //     uploader.submit(); // Submit upload when #my_submit_btn is clicked
+  //   }
+
+  //   e.preventDefault();
+  // });
 
   // GLOBAL STATE VARS
   window.$entries; // list of entries
@@ -2421,6 +2439,7 @@ window.onload = function () {
   window.$entryCount = 0;
   var $entriesCost = 0;
   var $returnPostageCost = 0;
+  var $sectionCost = 0;
 
   var $uploaderExtError = false;
   var $sectionCounter = []; // holds section entry couters.
@@ -2436,23 +2455,23 @@ window.onload = function () {
     if (!ajaxActive && $(e.target).hasClass("control")) {
 
       if ($(e.target).hasClass("delete")) {
-        var photo_id = $(e.target).parent().attr('photo_id');
+        var photo_id = $(e.target).attr('photo_id');
         ajaxActive = true;
         $(loadingDiv).removeClass('display-none');
         remoteCall('delete', photo_id).then(function (data) {
-          list_entries($entries);
+          list_entries(data.entries);
           ajaxActive = false;
           $(loadingDiv).addClass('display-none');
         });
       }
 
       if ($(e.target).hasClass("promote")) {
-        var photo_id = $(e.target).parent().attr('photo_id');
+        var photo_id = $(e.target).attr('photo_id');
         ajaxActive = true;
 
         $(loadingDiv).removeClass('display-none');
         remoteCall('promote', photo_id).then(function (data) {
-          list_entries($entries);
+          list_entries(data.entries);
           ajaxActive = false;
           $(loadingDiv).addClass('display-none');
         });
@@ -2488,11 +2507,13 @@ window.onload = function () {
           $entryCount++;
           $sectionCounter[section_item.section_id] = section_item_count;
 
-          parts.push('<div class="entry" photo_id="' + section_item.id + '" ><div title="delete image"class="control delete">X</div>');
+          parts.push('<div class="entry"><div class="control"><span photo_id="' + section_item.id + '" title="Delete this image" class="glyphicon glyphicon-remove-circle  control delete" aria-hidden="true"></span></div>');
           if (section_item_count > 1) {
-            parts.push('<div class="control promote" title="move image up">^</div>');
+            parts.push('<span  photo_id="' + section_item.id + '" title="Move image up" class="glyphicon glyphicon-circle-arrow-up  control promote" aria-hidden="true"></span>');
+          } else {
+            parts.push('<div class="left-spacer"></div>');
           }
-          parts.push('<div class="img-container"><img src="/storage/photos/' + section_item.filepath + '"></div><span>' + section_item.title + '</span></div>');
+          parts.push('<div class="img-container"><img src="/storage/photos/' + section_item.filepath + '"></div><span class="title">' + section_item.title + '</span></div>');
           //parts.push( section_item.section_entry_number + ' - ' +  section_item.title + '</div>');
         });
         if (section_item_count < 1) {
@@ -2530,9 +2551,10 @@ window.onload = function () {
       }
     }).done(function (response) {
       // var response = $.parseJSON(data)
-      $entries = response.entries;
+      // $entries = response.entries;
       // $user = response.user;
       //console.log(response.status)
+
 
     });
   };
@@ -2543,12 +2565,12 @@ window.onload = function () {
   };
 
   var getCategoryId = function getCategoryId() {
-    res = photoCategory_Section.value.split('_');
+    var res = photoCategory_Section.value.split('_');
     return res[0];
   };
 
   var getSectionId = function getSectionId() {
-    res = photoCategory_Section.value.split('_');
+    var res = photoCategory_Section.value.split('_');
     // console.log(res[1]);
     return res[1];
   };
@@ -2571,14 +2593,16 @@ window.onload = function () {
       this.setProgressBar(progressBar);
     },
     onChange: function onChange(filename, extension, uploadBtn, filesize, file) {
-      // console.log('Extension',extension);
+      console.log('Extension', extension);
       if (!/\jp[eg]$/i.test(extension)) {
         this.removeCurrent();
         // this.clearQueue();
         showMsg('Files must be a JPEG', 'error');
         return false;
       }
+
       btn.innerHTML = filename;
+      return validateInputs();
       // return false; // stops file auto uploading with change event
     },
     onSubmit: function onSubmit() {
@@ -2596,10 +2620,11 @@ window.onload = function () {
     },
 
     onComplete: function onComplete(filename, response) {
-      btn.innerHTML = 'Choose Another File';
+      btn.innerHTML = $btnText; //'Choose Another File';
       progressOuter.style.display = 'none'; // hide progress bar when upload is completed
       ajaxActive = false;
       if (!response) {
+        console.log('onComplete respones:', response);
         showMsg('Unable to upload file', 'error');
         return;
       }
@@ -2689,10 +2714,13 @@ window.onload = function () {
   $('#msgBox').hide().html(''); // empty the message box
   $('#return_postage').val($returnPostageCost);
 
+  // disable the upload button
+  validateInputs(true);
+
   ajaxActive = true;
   $(loadingDiv).removeClass('display-none');
   remoteCall('init').then(function (data) {
-    list_entries($entries);
+    list_entries(data.entries);
     $(loadingDiv).addClass('display-none');
     ajaxActive = false;
   });;

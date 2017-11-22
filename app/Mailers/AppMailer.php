@@ -10,7 +10,9 @@ class AppMailer
 
     protected $mailer;
 
-    protected $from = 'admin@here.com';
+    protected $from;
+
+    protected $fromName;
 
     protected $to;
 
@@ -21,13 +23,15 @@ class AppMailer
     public function __construct(Mailer $mailer)
     {
         $this->mailer = $mailer;
+        $this->from = env('MAIL_FROM_ADDRESS', 'admin@websmarts.com.au');
+        $this->fromName = env('MAIL_FROM_NAME', 'Administrator');
     }
 
     public function deliver()
     {
         $this->mailer->send($this->view, $this->data, function ($message) {
-            $message->from($this->from, 'Administrator')
-                ->to($this->to);
+            $message->from($this->from, $this->fromName)
+                ->to($this->to)->subject('Confirm your email address');
         });
     }
 
