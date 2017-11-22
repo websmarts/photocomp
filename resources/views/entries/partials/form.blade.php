@@ -11,7 +11,7 @@
 			</div>
 
 			<div class="col-xs-4" >
-			  <button id="uploadBtn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click to<br />select image to upload</button>
+			  <button id="select_file_btn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click to<br />select image to upload</button>
 			</div>
 			<div class="col-xs-4">
 			  <div class="notice">IMPORTANT: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high.</div>
@@ -46,7 +46,7 @@
 
 		<div class="row" style="padding-top:40px;">
 			<div class="col-xs-12" style="text-align: center">
-			  <button id="my_submit_btn" class="btn btn-large btn-primary"  >Upload</button>
+			  <button id="upload_entry_btn" class="btn btn-large btn-primary"  >Upload</button>
 			</div>
 		</div><!-- row end -->
 

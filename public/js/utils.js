@@ -2316,8 +2316,22 @@ function escapeTags(str) {
 
 window.onload = function () {
 
-  var btn = document.getElementById('uploadBtn'),
-      uploadBtn = document.getElementById('my_submit_btn'),
+  // GLOBAL STATE VARS
+  window.$entries; // list of entries
+  window.$user; // User data
+  window.$entryCount = 0;
+  var $entriesCost = 0;
+  var $returnPostageCost = 0;
+  var $sectionCost = 0;
+
+  var $uploaderExtError = false;
+  var $sectionCounter = []; // holds section entry couters.
+  var $maxSectionEntries = 4; // max entries accepted per section
+  var ajaxActive = false;
+
+  // Element selectors
+  var selectFileBtn = document.getElementById('select_file_btn'),
+      uploadEntryBtn = document.getElementById('upload_entry_btn'),
       progressBar = document.getElementById('progressBar'),
       progressOuter = document.getElementById('progressOuter'),
       msgBox = document.getElementById('msgBox'),
@@ -2325,37 +2339,7 @@ window.onload = function () {
       photoCategory_Section = document.getElementById('category_section'),
       loadingDiv = document.getElementById('loadingDiv');
 
-  var $btnText = btn.innerHTML; // text in the btn
-
-
-  // Return postage changes
-  $('#return_postage').on('keyup', function (e) {
-    // console.log('RETURN POSTAGE CHANGE', $('#return_postage').val());
-    var postage = $('#return_postage').val();
-    postage = postage.replace('$', '');
-    postage = postage.replace(' ', '');
-    // TODO Should replace anything that is not a number type char with ''
-
-
-    if (postage == '') {
-      postage = 0;
-    }
-
-    // remove $ sign if present TODO
-
-    if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(postage)) {
-      if (!isNaN(postage)) {
-        $returnPostageCost = parseFloat(postage);
-      }
-    } else {
-      $returnPostageCost = 0;
-    }
-    if ($returnPostageCost > 0) {
-      $('#return_postage').val($returnPostageCost);
-    }
-
-    updateTotalCost();
-  });
+  var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restored after upload
 
   // category selector change event handler
   $('#category_section').on('change', function (e) {
@@ -2372,11 +2356,11 @@ window.onload = function () {
   var validateInputs = function validateInputs() {
     var silent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-    console.log('validateInput');
+    //console.log('validateInput');
     var valid = true;
     var msgParts = [];
 
-    var filename = btn.innerHTML;
+    var filename = selectFileBtn.innerHTML;
     if (!/\.jp[eg]$/i.test(filename)) {
       msgParts.push("Select an image (JPEG) file to upload");
       valid = false;
@@ -2389,8 +2373,8 @@ window.onload = function () {
     }
 
     var cs = getSectionId();
-    console.log('Section', cs);
-    console.log('$sectionCounter[cs]', $sectionCounter[cs]);
+    // console.log('Section', cs);
+    // console.log('$sectionCounter[cs]', $sectionCounter[cs]);
     if (typeof cs == 'undefined' || cs < 1) {
       msgParts.push("Select an Section"); // invalid section
       valid = false;
@@ -2405,46 +2389,33 @@ window.onload = function () {
     }
 
     if (!valid) {
-      $(uploadBtn).prop('disabled', true); // disable upload btn
+      $(uploadEntryBtn).prop('disabled', true); // disable upload btn
     } else {
-      $(uploadBtn).prop('disabled', false); // disable upload btn
+      $(uploadEntryBtn).prop('disabled', false); // disable upload btn
     }
 
     return valid;
-  };
+  }; // end validate form
 
-  // // Ajax file uploader submit
-  // $(uploadBtn).on('click', function( e ) {
-  //   console.log('uploadBtn clicked');
-  //   var valid = validateInputs();
-  //   if(! valid ){ 
-  //     if($uploaderExtError){
-  //       uploader.clearQueue(); //remove the invalid entry
-  //       $uploaderExtError = false; // clear error flag
-  //     }
+  // Upload the phote button clicked
+  $(uploadEntryBtn).on('click', function (e) {
+    //console.log('uploadBtn clicked');
+    var valid = validateInputs();
+    if (!valid) {
+      if ($uploaderExtError) {
+        uploader.clearQueue(); //remove the invalid entry
+        $uploaderExtError = false; // clear error flag
+      }
 
-  //      return ; // prevent upload starting
-  //   }
+      return; // prevent upload starting
+    }
 
-  //   if ( valid ){
-  //     uploader.submit(); // Submit upload when #my_submit_btn is clicked
-  //   }
+    if (valid) {
+      uploader.submit(); // Submit upload when #upload_entry_btn is clicked
+    }
 
-  //   e.preventDefault();
-  // });
-
-  // GLOBAL STATE VARS
-  window.$entries; // list of entries
-  window.$user; // User data
-  window.$entryCount = 0;
-  var $entriesCost = 0;
-  var $returnPostageCost = 0;
-  var $sectionCost = 0;
-
-  var $uploaderExtError = false;
-  var $sectionCounter = []; // holds section entry couters.
-  var $maxSectionEntries = 4; // max entries accepted per section
-  var ajaxActive = false;
+    e.preventDefault();
+  });
 
   // click manager for photo list
 
@@ -2575,87 +2546,13 @@ window.onload = function () {
     return res[1];
   };
 
-  var uploader = new ss.SimpleUpload({
-    debug: false,
-    button: btn,
-    url: '/upload',
-    autoSubmit: false,
-    allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
-    name: 'image',
-    multipart: true,
-    hoverClass: 'hover',
-    focusClass: 'focus',
-    responseType: 'json',
-    customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-    startXHR: function startXHR() {
-      ajaxActive = true;
-      progressOuter.style.display = 'block'; // make progress bar visible
-      this.setProgressBar(progressBar);
-    },
-    onChange: function onChange(filename, extension, uploadBtn, filesize, file) {
-      console.log('Extension', extension);
-      if (!/\jp[eg]$/i.test(extension)) {
-        this.removeCurrent();
-        // this.clearQueue();
-        showMsg('Files must be a JPEG', 'error');
-        return false;
-      }
-
-      btn.innerHTML = filename;
-      return validateInputs();
-      // return false; // stops file auto uploading with change event
-    },
-    onSubmit: function onSubmit() {
-
-      var self = this;
-      $('#msgBox').hide(); // empty the message box
-
-
-      btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
-      self.setData({
-        title: photoTitle.value,
-        section_id: getSectionId(),
-        category_id: getCategoryId()
-      });
-    },
-
-    onComplete: function onComplete(filename, response) {
-      btn.innerHTML = $btnText; //'Choose Another File';
-      progressOuter.style.display = 'none'; // hide progress bar when upload is completed
-      ajaxActive = false;
-      if (!response) {
-        console.log('onComplete respones:', response);
-        showMsg('Unable to upload file', 'error');
-        return;
-      }
-
-      if (response.entries) {
-        //console.log(response);
-        // display entries
-        list_entries(response.entries);
-        showMsg('<strong>' + escapeTags(filename) + '</strong>' + ' successfully uploaded.', 'success');
-        // TODO clear the form
-        clear_upload_form();
-      } else {
-        if (response.msg) {
-          clear_upload_form();
-          showMsg(escapeTags(response.msg), 'error');
-        } else {
-          showMsg('An error occurred and the upload failed.', 'error');
-        }
-      }
-    },
-    onError: function onError() {
-      ajaxActive = false;
-      progressOuter.style.display = 'none';
-      showMsg('Unable to upload file', 'warning');
-    }
-  });
-
   function showMsg(message, msgType) {
     // console.log(message,msgType);
     $('#msgBox').html(message);
     $('#msgBox').removeClass('success error warning').addClass(msgType).show();
+    setTimeout(function () {
+      $('#msgBox').fadeOut(100);
+    }, 3000);
   }
 
   function updateTotalCost() {
@@ -2668,6 +2565,30 @@ window.onload = function () {
     }
     $('#total_cost').html('$' + total.toFixed(2));
   }
+
+  // Return postage changes
+  $('#return_postage').on('keyup', function (e) {
+    // console.log('RETURN POSTAGE CHANGE', $('#return_postage').val());
+    var postage = $('#return_postage').val();
+    postage = postage.replace('$', '');
+    postage = postage.replace(' ', '');
+    // TODO Should replace anything that is not a number type char with ''
+    if (postage == '') {
+      postage = 0;
+    }
+    // remove $ sign if present TODO
+    if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(postage)) {
+      if (!isNaN(postage)) {
+        $returnPostageCost = parseFloat(postage);
+      }
+    } else {
+      $returnPostageCost = 0;
+    }
+    if ($returnPostageCost > 0) {
+      $('#return_postage').val($returnPostageCost);
+    }
+    updateTotalCost();
+  });
 
   // FINAL FORM SUBMISSSION
   $('#final_submit_button').on('click', function (e) {
@@ -2713,6 +2634,85 @@ window.onload = function () {
 
   $('#msgBox').hide().html(''); // empty the message box
   $('#return_postage').val($returnPostageCost);
+
+  var uploader = new ss.SimpleUpload({
+    debug: false,
+    button: selectFileBtn,
+    url: '/upload',
+    autoSubmit: false,
+    allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
+    name: 'image',
+    multipart: true,
+    hoverClass: 'hover',
+    focusClass: 'focus',
+    responseType: 'json',
+    customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+    startXHR: function startXHR() {
+      ajaxActive = true;
+      progressOuter.style.display = 'block'; // make progress bar visible
+      this.setProgressBar(progressBar);
+    },
+    onChange: function onChange(filename, extension, selectFileBtn, filesize, file) {
+
+      if (!/\jp[eg]$/i.test(extension)) {
+        this.removeCurrent();
+        // this.clearQueue();
+        showMsg('Files must be a JPEG', 'error');
+        return false;
+      }
+
+      selectFileBtn.innerHTML = filename;
+      validateInputs();
+
+      // return false; // stops file auto uploading with change event
+    },
+    onSubmit: function onSubmit() {
+
+      var self = this;
+      $('#msgBox').hide(); // empty the message box
+
+
+      selectFileBtn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
+      self.setData({
+        title: photoTitle.value,
+        section_id: getSectionId(),
+        category_id: getCategoryId()
+      });
+    },
+
+    onComplete: function onComplete(filename, response) {
+      selectFileBtn.innerHTML = $btnText; //'Choose Another File';
+      progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+      ajaxActive = false;
+      if (!response) {
+        //console.log('onComplete respones:',response);
+        showMsg('Unable to upload file', 'error');
+        return;
+      }
+
+      if (response.entries) {
+        //console.log(response);
+        // display entries
+        list_entries(response.entries);
+
+        showMsg('<strong>' + escapeTags(filename) + '</strong>' + ' successfully uploaded.', 'success');
+        // TODO clear the form
+        clear_upload_form();
+      } else {
+        if (response.msg) {
+          clear_upload_form();
+          showMsg(escapeTags(response.msg), 'error');
+        } else {
+          showMsg('An error occurred and the upload failed.', 'error');
+        }
+      }
+    },
+    onError: function onError() {
+      ajaxActive = false;
+      progressOuter.style.display = 'none';
+      showMsg('Unable to upload file', 'warning');
+    }
+  });
 
   // disable the upload button
   validateInputs(true);
