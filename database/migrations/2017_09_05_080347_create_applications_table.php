@@ -16,7 +16,6 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->boolean('registration_status')->default(false); // rego form status
             $table->enum('salutation', ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr'])->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
@@ -30,15 +29,20 @@ class CreateApplicationsTable extends Migration
             $table->string('vaps_affiliated')->nullable();
             $table->string('aps_member')->nullable();
             $table->string('club_nomination')->nullable();
+            $table->string('confirm_terms')->nullable();
 
+            $table->integer('number_of_entries')->unsigned()->default(0);
+            $table->integer('number_of_sections')->unsigned()->default(0);
             $table->string('return_postage')->nullable();
             $table->string('return_post_option')->nullable();
-            $table->float('total_amount_charged')->nullable();
-            $table->float('payment_received_amount')->nullable();
+            $table->float('entries_cost')->default(0);
+            //$table->float('total_amount_charged')->nullable();
+            $table->boolean('submitted')->default(false);
+            //$table->float('payment_received_amount')->nullable();
             $table->datetime('payment_datetime')->nullable();
             $table->string('payment_method')->nullable();
 
-            $table->enum('status', ['open', 'closed'])->default('open');
+            //$table->enum('status', ['open', 'closed'])->default('open');
             $table->timestamps();
         });
     }

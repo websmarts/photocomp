@@ -25,7 +25,10 @@ class EntriesController extends Controller
     public function index()
     {
         $categories = Category::with('sections')->get();
-        //dd($categories[0]->toArray());
+
+        if (Auth::user()->application->submitted) {
+            return view('entries.show', compact('categories'));
+        }
 
         return view('entries.index', compact('categories'));
     }
@@ -118,6 +121,29 @@ class EntriesController extends Controller
             'status' => 'success',
         ];
 
+    }
+
+/**
+ * Handles the entry form checkout submission
+ * @method submit
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function submit(Request $request)
+    {
+
+        $data = [
+            'number_of_entries' => (int) $request->input('number_of_entries'),
+            'number_of_sections' => (int) $request->input('number_of_sections'),
+            'entries_cost' => (float) $request->input('entries_cost'),
+            'return_postage' => (string) $request->input('return_postage'),
+            'return_post_option' => (string) $request->input('return_post_option'),
+            'submitted' => true,
+        ];
+
+        $request->user()->application->update($data);
+
+        return (['success' => true]);
     }
 
     private function deletePhoto($id)

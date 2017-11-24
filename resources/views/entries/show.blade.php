@@ -21,7 +21,7 @@
                             <h1>Please wait...</h1>
                         </div>
                     </div>
-                    @include('entries.partials.form')
+                    @include('entries.partials.show')
 
                 </div>
             </div>
@@ -37,7 +37,7 @@
     var additional_section_cost = {{ $settings->additional_section_cost }};
 </script>
 
-<script type="text/javascript" src="{{ mix('js/utils.js') }}>"></script>
+<script type="text/javascript" src="{{ mix('js/show_entries.js') }}>"></script>
 
 
 @endsection

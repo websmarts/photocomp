@@ -8,8 +8,14 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+@import "navbar";
+
 .help-block {
 	color: #f44;
+}
+
+.dashboard .row {
+    margin-top: 50px;
 }
 
 // LEGACY MEDOO

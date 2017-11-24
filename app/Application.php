@@ -13,7 +13,6 @@ class Application extends Model
      */
     protected $fillable = [
         'user_id',
-        'registration_status',
         'salutation',
         'firstname',
         'lastname',
@@ -27,11 +26,42 @@ class Application extends Model
         'vaps_affiliated',
         'aps_member',
         'club_nomination',
+        'confirm_terms',
+
+        // Entry form
+        'number_of_entries',
+        'number_of_sections',
+        'entries_cost',
         'return_postage',
-        'total_amount_charged',
         'return_post_option',
-        'payment_received_amount',
+        'submitted',
         'payment_datetime',
         'payment_method',
     ];
+
+    protected $casts = [
+        'entries_cost' => 'float',
+        'number_of_entries' => 'integer',
+    ];
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullnameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function getCompletedAttribute()
+    {
+        return $this->confirm_terms == 'checked';
+    }
+
+    public function getPaidAttribute()
+    {
+        return $this->paymentDatetime;
+    }
+
 }

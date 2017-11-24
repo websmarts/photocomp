@@ -21,6 +21,7 @@ var $sectionCost = 0;
 
 var $uploaderExtError = false; 
 var $sectionCounter = []; // holds section entry couters.
+var $sectionCount; // number of sections entered
 var $maxSectionEntries = 4; // max entries accepted per section
 var ajaxActive = false;
 
@@ -152,6 +153,7 @@ var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restore
     var parts = []; // html parts
     parts.push('<div id="thelist"><span id="cost_display"></span>');
     $sectionCounter =[]; // reset section counters
+    $sectionCount =0;
     $.each(entries, function(category_name, sections){
       // console.log('CATEGORY_NAME', category_name);
       //console.log('sections', sections);
@@ -165,6 +167,9 @@ var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restore
         parts.push('<h3>' + section_name + '</h3>');
 
         var section_item_count = 0;
+        if(section_entries.length > 0){
+          $sectionCount++;
+        }
         $.each(section_entries, function(index, section_item){
           // console.log('SECTION_ENTRY_index', index);
           //console.log('SECTION_ITEM', section_item);
@@ -308,9 +313,10 @@ var remoteCall = function (action, data) {
       method: "POST",
       url: "/submit",
       data: { 
-        button: 'submit',
         number_of_entries: $entryCount,
-        postage: $returnPostageCost,
+        number_of_sections:$sectionCount,
+        entries_cost: $entriesCost,
+        return_postage: $returnPostageCost,
         return_post_option: $('#return_instructions').val()
        }
     })
@@ -318,7 +324,7 @@ var remoteCall = function (action, data) {
       // var response = $.parseJSON(data)
 
       if(response.success){
-        document.location ='/final';
+        //document.location ='/checkout';
       } else {
 
         var message = 'A problem was encountered ';
@@ -326,20 +332,12 @@ var remoteCall = function (action, data) {
         if($entryCount < 1) {
           message +=' make sure you add at least one photo!';
         }
-
         alert(message);
       }
       
       
     });
-
- 
-  
-
-    // After Call redirect to final page
-    
-    // document.location ='index.php?' + encodeURI('action=submit&postage=' + $returnPostageCost + '&return_post_option=' + $('#return_instructions').val() );
-  }); 
+ }); 
 
   $('#msgBox').hide().html(''); // empty the message box
   $('#return_postage').val($returnPostageCost);

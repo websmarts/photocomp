@@ -25,7 +25,7 @@ Route::get('/admin', function () {
 Auth::routes();
 
 // Display the first application form
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware(['auth', 'can:enter']);
 
 // Show and Process the  application form
 Route::get('/registration', 'RegistrationController@showRegistrationForm')->name('show_application_form');
@@ -35,10 +35,28 @@ Route::post('/registration', 'RegistrationController@processRegistrationForm')->
 Route::get('/entries', 'EntriesController@index')->name('entries_upload_form');
 Route::post('/process', 'EntriesController@process')->name('process');
 Route::post('/upload', 'EntriesController@uploader')->name('uploader');
+Route::post('/submit', 'EntriesController@submit');
 
-Route::get('/test', 'EntriesController@process');
+// Checkout
+Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+
+Route::get('/test', function () {
+    $p = (object) [];
+    $to = 'fred';
+    $many = [1, 2, 3, 4];
+    foreach ($many as $i) {
+        $p->{$to}[] = [$i];
+    }
+    dd($p);
+});
 
 // User registration
 Route::get('registered', 'Auth\RegisterController@registered')->name('registered');
 Route::get('register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
-Route::get('step1', 'ApplicationController@index')->name('step1');
+// Route::get('step1', 'ApplicationController@index')->name('step1');
+//
+//
+
+// Payment
+
+Route::get('payment', 'PaymentController@index')->name('payment');

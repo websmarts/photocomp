@@ -13,5 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/utils.js', 'public/js')
+   .js('resources/assets/js/show_entries.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .version();
+
+mix.copy('resources/assets/images/logo.jpg', 'public/images/logo.jpg');

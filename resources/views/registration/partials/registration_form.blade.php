@@ -3,6 +3,8 @@
  {{-- dump($options) --}}
  {{-- dump($application) --}}
  {{-- dump($errors) --}}
+
+
 <form method="post" action="{{route('process_application_form')}}" id="registrationForm">
     {{ csrf_field() }}
 <div class="form-group">
@@ -181,11 +183,10 @@
 
 <div class="row">
         <div class="col-xs-9">
-            <input type="checkbox"  id="confirm_terms" name="confirm_terms" value="checked"
-            @if(old('confirm_terms') == 'checked')
-             checked
-            @endif
-            >
+
+            <input type="checkbox"  id="confirm_terms" name="confirm_terms" value="checked" {{ old('confirm_terms',$application->confirm_terms) }} >
+
+
 
              I confirm that I have read and agree to the <a href="{{ $settings->terms_and_conditions_url }}" target="_blank">competition terms and conditions</a>
              @if ($errors->has('confirm_terms'))

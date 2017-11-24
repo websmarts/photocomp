@@ -48,15 +48,10 @@ class RegistrationController extends Controller
             $user->application()->save($application);
         }
 
-        // Set registration_status to invalid just in case it fails validation
-        $user->application->registration_status = false;
-        $user->application->save();
-
         // Validate the Registration form submission
         $this->validator($request->all())->validate();
 
         // Request is valid so registration_status is true
-        $user->application->registration_status = true;
         $user->application->save();
 
         // Update the users application data
@@ -80,7 +75,7 @@ class RegistrationController extends Controller
             'salutation' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'honours' => 'required|string|max:255',
+            //'honours' => 'required|string|max:255',
             'address1' => 'required|string|max:255',
             //'address2' => 'required|string|nullable|max:255',
             'city' => 'required|string|max:255',
@@ -89,7 +84,7 @@ class RegistrationController extends Controller
             'phone' => 'required|string|max:255',
             'vaps_affiliated' => 'required|string|max:255',
             'aps_member' => 'required|string|max:255',
-            'club_nomination' => 'required|string|max:255',
+            //'club_nomination' => 'required|string|max:255',
             'confirm_terms' => 'required',
         ]);
     }

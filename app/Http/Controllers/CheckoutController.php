@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-class HomeController extends Controller
+class CheckoutController extends Controller
 {
-
     /**
      * Create a new controller instance.
      *
@@ -12,12 +11,12 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
+        $this->middleware('can:enter');
     }
 
     public function index()
     {
-        return view('home');
+        return view('checkout.index');
     }
-
 }

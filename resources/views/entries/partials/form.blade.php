@@ -3,6 +3,7 @@
 
 <div class="no-print">
 
+
 	<div style="background: #eee; padding: 5px;" >
 		<h3>Upload images</h3>
 		<div class="row" style="padding-top:10px;">
@@ -60,6 +61,8 @@
 	</div>
 <div id="msgBox"></div>
 </div>
+
+
 <h3>Photo entries</h3>
 
 
@@ -106,10 +109,10 @@
 
 	<hr>
 
-	<p>Once you have completed the application form, click on the button below to submit your application</p>
-	<p>Note: An application confirmation email will be sent to the email address provided: <?php //echo $user['email'] ?>. </p>
-	<h3>Be sure to check your junk folder if you don't see our confirmation email in your in-box!</h3>
-	<button id="final_submit_button" class="btn btn-primary">Submit Application</button>
+	<p>Once you have completed the application form, click on the CHECKOUT button below to finalise your application</p>
+	<p>Note: Only checkout once you have completed the form above. If you have not completed the entry form you can logout and login later to complete it. However once you <strong>Checkout</strong> you will no longer be able to make changes to the your application or entry details </p>
+
+	<button id="final_submit_button" class="btn btn-primary">Checkout</button>
 	<p>&nbsp;</p>
-</div><!-- container end -->
+
 

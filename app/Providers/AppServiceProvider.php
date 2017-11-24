@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->is_admin == 'yes';
         });
 
+        Gate::define('enter', function ($user) {
+            return $user->is_admin !== 'yes';
+        });
+
         /**
          * Make settings data available to all views
          *

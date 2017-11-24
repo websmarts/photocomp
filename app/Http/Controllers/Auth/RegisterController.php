@@ -61,6 +61,11 @@ class RegisterController extends Controller
         //$this->guard()->login($user);
         $mailer->sendEmailConfirmationTo($user);
 
+        // the following failed on line 491 in mailable.php with
+        // the error that [] oprator does not work with strings
+        // Soooo using a basic sychronous mailer for now
+        // Mail::to($user->email)->queue(new ConfirmEmail($user));
+
         flash('Please confirm your email address');
 
         return redirect('registered');

@@ -4,8 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            @include('layouts.partials.back_to_dashboard_link')
+
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Entrant registration form<h2></div>
+                <div class="panel-heading">Registration details</div>
 
                 <div class="panel-body">
                     @if (session('status'))

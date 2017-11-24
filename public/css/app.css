@@ -8350,8 +8350,22 @@ button.close {
   }
 }
 
+.navbar {
+  height: 90px;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar-brand {
+    max-width: 80%;
+  }
+}
+
 .help-block {
   color: #f44;
+}
+
+.dashboard .row {
+  margin-top: 50px;
 }
 
 #entries .category {

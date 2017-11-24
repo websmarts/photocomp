@@ -5,32 +5,76 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Dashboard:
+                    @if(Auth::user()->application->completed )
+                        {{ Auth::user()->application->fullname }}
+                    @else
+                        {{ Auth::user()->email }}
+                    @endif
 
-                <div class="panel-body">
+                </div>
+
+                <div class="panel-body dashboard">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    <h3> Display steps and status</h3>
-                    <p><a href="{{ route('show_application_form') }}" >Registration form </a>
-                        @if(Auth::user()->application->registration_status)
-                            (completed)
-                        @else
-                            (NOT completed)
-                        @endif
-                    </p>
+                    <p>The section below lists the current status of your entry</p>
+                    <div class="row" >
+                        <div class="col-md-4">Step 1<br /><a href="{{ route('show_application_form') }}" >Fill out the registration form </a></div>
+                        <div class="col-md-6">
+                            <p>
+                                @if(Auth::user()->application->completed )
+                                    (Completed)
+                                @else
+                                    (NOT completed)
+                                @endif
+                            </p>
+                        </div>
+                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->completed ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                    </div>
 
-                    <p><a href="{{ route('entries_upload_form') }}">Entry form</a> (in progress)</p>
+                    <div class="row" >
+                        <div class="col-md-4">Step 2:<br /><a href="{{ route('entries_upload_form') }}">Upload photos and fill out return postage preferences</a></div>
+                        <div class="col-md-6">
+                            <p>
+                               @if(Auth::user()->application->submitted )
+                                    (Completed)<br />
+                                    You can view your entry details but you cannot make changes after you have submitted the entry
+                                @else
+                                    (Work in progres)<br />
+                                    View and edit your entry details
+                                @endif
+                            </p>
+                        </div>
+                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->submitted ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">Step 3<br />
+                            @if(Auth::user()->application->submitted)
+                                <a href="{{ route('checkout') }}">Checkout and pay your entry fee</a>
+                            @else
+                                Checkout and pay your entry fee
+                            @endif
 
 
-                    <p>Application submitted (no)</p>
 
-                    @can('admin')
-                    I can admin
-                    @endcan
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @if(Auth::user()->application->paid)
+                                    List the date , payment method , the amount and the return option selected
+                                @else
+                                    No checkout details available as yet
+                                @endif
+
+                            </p>
+                        </div>
+                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                    </div>
 
 
 
