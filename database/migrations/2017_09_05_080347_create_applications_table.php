@@ -37,7 +37,8 @@ class CreateApplicationsTable extends Migration
             $table->string('return_post_option')->nullable();
             $table->float('entries_cost')->default(0);
             //$table->float('total_amount_charged')->nullable();
-            $table->boolean('submitted')->default(false);
+            $table->timestamp('submitted')->nullable();
+
             //$table->float('payment_received_amount')->nullable();
             $table->datetime('payment_datetime')->nullable();
             $table->string('payment_method')->nullable();

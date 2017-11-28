@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Jobs\ExportPhoto;
 use App\Photo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class EntriesController extends Controller
@@ -31,6 +34,31 @@ class EntriesController extends Controller
         }
 
         return view('entries.index', compact('categories'));
+    }
+
+    /**
+     * Handles the entry form checkout submission
+     * @method submit
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function submit(Request $request)
+    {
+
+        $data = [
+            'number_of_entries' => (int) $request->input('number_of_entries'),
+            'number_of_sections' => (int) $request->input('number_of_sections'),
+            'entries_cost' => (float) $request->input('entries_cost'),
+            'return_postage' => (string) $request->input('return_postage'),
+            'return_post_option' => (string) $request->input('return_post_option'),
+            'submitted' => Carbon::now(),
+        ];
+
+        $request->user()->application->update($data);
+
+        $this->exportPhotos(); // Photo export to S3 store
+
+        return (['success' => true]);
     }
 
     public function uploader(Request $request)
@@ -123,29 +151,6 @@ class EntriesController extends Controller
 
     }
 
-/**
- * Handles the entry form checkout submission
- * @method submit
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function submit(Request $request)
-    {
-
-        $data = [
-            'number_of_entries' => (int) $request->input('number_of_entries'),
-            'number_of_sections' => (int) $request->input('number_of_sections'),
-            'entries_cost' => (float) $request->input('entries_cost'),
-            'return_postage' => (string) $request->input('return_postage'),
-            'return_post_option' => (string) $request->input('return_post_option'),
-            'submitted' => true,
-        ];
-
-        $request->user()->application->update($data);
-
-        return (['success' => true]);
-    }
-
     private function deletePhoto($id)
     {
         if (!is_int($id)) {
@@ -228,4 +233,25 @@ class EntriesController extends Controller
         return $this->entries;
 
     }
+
+    public function exportPhotos()
+    {
+
+        $photos = Photo::OrderBy('user_id', 'asc')
+            ->orderBy('section_id', 'asc')
+            ->orderBy('section_entry_number', 'asc')
+            ->get(); // Always export ALL photos
+
+        Storage::disk('local')->put('logs/export.log', 'Photo  export date: ' . \Carbon\Carbon::now()->toFormattedDateString());
+
+        $photos->map(function ($photo) {
+            $this->dispatch(new ExportPhoto($photo));
+        });
+
+        // Display a view that displays the number  of
+        // photos NOT exported. ie via ajax query
+        return view('admin.export_monitor');
+
+    }
+
 }

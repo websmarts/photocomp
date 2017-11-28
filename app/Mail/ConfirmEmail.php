@@ -40,4 +40,29 @@ class ConfirmEmail extends Mailable
             ->from('admin@websmarts.com.au')
             ->view('emails.confirm');
     }
+
+    /**
+     * Set the recipients of the message.
+     *
+     * All recipients are stored internally as [['name' => ?, 'address' => ?]]
+     *
+     * @param  object|array|string  $address
+     * @param  string|null  $name
+     * @param  string  $property
+     * @return $this
+     */
+    protected function setAddress($address, $name = null, $property = 'to')
+    {
+        foreach ($this->addressesToArray($address, $name) as $recipient) {
+            $recipient = $this->normalizeRecipient($recipient);
+
+            $tmp[] = [
+                'name' => $recipient->name ?? null,
+                'address' => $recipient->email,
+            ];
+            $this->{$property} = $tmp;
+        }
+
+        return $this;
+    }
 }

@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
 
         // Create the admin users
         User::create([
-            'email' => 'ian@there.com',
+            'email' => 'iwmaclagan@gmail.com',
             'password' => 'pass',
             'is_admin' => 'no',
             'verified' => 1,

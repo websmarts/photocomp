@@ -24,6 +24,8 @@ class CreatePhotosTable extends Migration
             $table->integer('width')->unsigned();
             $table->integer('height')->unsigned();
             $table->integer('section_entry_number')->unsigned()->nullable();
+            $table->string('export_filename')->nullable();
+            $table->enum('exported', ['yes', 'no'])->default('no');
             $table->timestamps();
         });
     }

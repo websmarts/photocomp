@@ -37,12 +37,16 @@
                     </div>
 
                     <div class="row" >
-                        <div class="col-md-4">Step 2:<br /><a href="{{ route('entries_upload_form') }}">Upload photos and fill out return postage preferences</a></div>
+                        <div class="col-md-4">Step 2:<br />
+
+                            {!! linkRouteIf(' Upload photos and fill out return postage preferences','entries_upload_form',!Auth::user()->application->submitted ) !!}
+
+                        </div>
                         <div class="col-md-6">
                             <p>
                                @if(Auth::user()->application->submitted )
                                     (Completed)<br />
-                                    You can view your entry details but you cannot make changes after you have submitted the entry
+                                    You can <a href="{{ route('entries_upload_form') }}">view your entry details</a> but you cannot make changes after you have submitted the entry
                                 @else
                                     (Work in progres)<br />
                                     View and edit your entry details

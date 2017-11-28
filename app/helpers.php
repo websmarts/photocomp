@@ -23,6 +23,16 @@ function category_section_options($categories)
     return $html;
 }
 
+function linkRouteIf($linktext, $route, $condition)
+{
+    if ($condition) {
+        return '<a href="' . route($route) . '">' . $linktext . '<a>';
+    } else {
+        return $linktext;
+    }
+
+}
+
 function clean_string($s)
 {
     return preg_replace(CLEAN_STRING, "", $s);

@@ -37,7 +37,7 @@
     var additional_section_cost = {{ $settings->additional_section_cost }};
 </script>
 
-<script type="text/javascript" src="{{ mix('js/utils.js') }}>"></script>
+<script type="text/javascript" src="{{ mix('js/entries_form.js') }}>"></script>
 
 
 @endsection

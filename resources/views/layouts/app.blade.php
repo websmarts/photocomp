@@ -53,6 +53,12 @@
                             </li>
                             @endcan
 
+                            @can('admin')
+                                <li>
+                                    <a href="{{ route('admin') }}">Manager</a>
+                                </li>
+                            @endcan
+
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

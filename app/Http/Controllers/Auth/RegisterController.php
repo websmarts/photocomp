@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserHasRegistered;
 use App\Http\Controllers\Controller;
 use App\Mailers\AppMailer;
+use App\Mail\ConfirmEmail;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -58,13 +61,15 @@ class RegisterController extends Controller
 
         $user = $this->create($request->all());
 
+        event(new UserHasRegistered($user));
+
         //$this->guard()->login($user);
-        $mailer->sendEmailConfirmationTo($user);
+        //$mailer->sendEmailConfirmationTo($user);
 
         // the following failed on line 491 in mailable.php with
         // the error that [] oprator does not work with strings
         // Soooo using a basic sychronous mailer for now
-        // Mail::to($user->email)->queue(new ConfirmEmail($user));
+        //Mail::to($user->email)->queue(new ConfirmEmail($user));
 
         flash('Please confirm your email address');
 

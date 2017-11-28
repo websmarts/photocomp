@@ -16,7 +16,7 @@ return [
     |
      */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'log'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
      */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'photocomp@warragulnational.org'),
+        'name' => env('MAIL_FROM_NAME', 'Photo Competition'),
     ],
 
     /*
@@ -117,6 +117,20 @@ return [
 
         'paths' => [
             resource_path('views/vendor/mail'),
+        ],
+    ],
+
+    /**
+    |
+    |The options below fix the annoying ca-certifiacte problem
+    | caused by swiftmailer wanting to verify peer
+     */
+
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
         ],
     ],
 

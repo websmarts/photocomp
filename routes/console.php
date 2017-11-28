@@ -1,5 +1,6 @@
 <?php
 
+use App\Utility\Utils;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -11,8 +12,13 @@ use Illuminate\Foundation\Inspiring;
 | commands. Each Closure is bound to a command instance allowing a
 | simple approach to interacting with each command's IO methods.
 |
-*/
+ */
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('ro', function () {
+    $count = Utils::trashOrphanPhotos();
+    $this->comment('Removing ' . $count . ' orphan photos from storage ...');
+})->describe('Remove any orphan photos from local storage');

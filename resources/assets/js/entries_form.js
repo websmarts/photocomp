@@ -324,7 +324,7 @@ var remoteCall = function (action, data) {
       // var response = $.parseJSON(data)
 
       if(response.success){
-        //document.location ='/checkout';
+        document.location ='/home';
       } else {
 
         var message = 'A problem was encountered ';
