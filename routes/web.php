@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,13 @@ Route::get('ro', function () {
 });
 
 Route::get('paypal/ipn', function () {
-    dd(request()->all());
+    $inputs = request()->all();
+    $str = '-------------' . "\n";
+    foreach ($inputs as $k => $v) {
+        $str .= $k . ': ' . $v . "\n";
+    }
+
+    Storage::append('logs/ipn.log', $str);
 });
 
 Route::get('export', 'EntriesController@exportPhotos');
