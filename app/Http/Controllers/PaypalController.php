@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Request;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use Illuminate\Support\Facades\Log;
 
 class PaypalController extends Controller
 {
 
-    public function ipn()
+    public function ipn(Request $request)
     {
         $ipn = new PaypalIPNListener();
         $ipn->use_sandbox = true;
@@ -22,7 +23,7 @@ class PaypalController extends Controller
         Log::info($report);
 
         if ($verified) {
-            if ($_POST['address_status'] == 'confirmed') {
+            if ($request->input('address_status') == 'confirmed') {
                 // Check outh POST variable and insert your logic here
                 Log::info("payment verified and inserted to db");
             }
