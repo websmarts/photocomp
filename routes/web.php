@@ -19,7 +19,7 @@ Route::get('ro', function () {
     $result = Artisan::call('ro');
 });
 
-Route::get('paypal/ipn', function () {
+Route::post('paypal/ipn', function () {
     $inputs = request()->all();
     $str = '-------------' . "\n";
     foreach ($inputs as $k => $v) {
