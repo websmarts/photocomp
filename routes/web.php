@@ -12,8 +12,14 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+// Remove orphan files
 Route::get('ro', function () {
     $result = Artisan::call('ro');
+});
+
+Route::get('paypal/ipn', function () {
+    dd(request()->all());
 });
 
 Route::get('export', 'EntriesController@exportPhotos');
