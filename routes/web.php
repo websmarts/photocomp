@@ -19,7 +19,7 @@ Route::get('ro', function () {
     $result = Artisan::call('ro');
 });
 
-Route::post('paypal/ipn', function () {
+Route::match(['get', 'post'], 'paypal/ipn', function () {
     $inputs = request()->all();
     $str = '-------------' . "\n";
     foreach ($inputs as $k => $v) {
@@ -27,6 +27,8 @@ Route::post('paypal/ipn', function () {
     }
 
     Storage::append('logs/ipn.log', $str);
+
+    return ['message' => 'Logged data', 'data' => $inputs];
 });
 
 Route::get('export', 'EntriesController@exportPhotos');
