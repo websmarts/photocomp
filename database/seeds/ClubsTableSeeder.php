@@ -22,7 +22,7 @@ class ClubsTableSeeder extends Seeder
         $clubs = file($file);
         sort($clubs);
         foreach ($clubs as $club) {
-            Club::create(['name' => $club]);
+            Club::create(['name' => trim($club)]);
         }
 
     }

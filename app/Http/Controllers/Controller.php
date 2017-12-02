@@ -29,6 +29,10 @@ class Controller extends BaseController
         if ($key && isset($this->settings->$key)) {
             return $this->settings->$key;
         }
-        return $this->settings;
+
+        if (!$key) {
+            return $this->settings;
+        }
+
     }
 }

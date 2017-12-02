@@ -37,33 +37,45 @@ var selectFileBtn = document.getElementById('select_file_btn'),
   loadingDiv = document.getElementById('loadingDiv');
 
 var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restored after upload
+
+$('#photoTitle').on('keyup', function(e){
+  //console.log('title changed - validate silently with title_check')
+  validateInputs(true,'title_check'); 
+
+})
  
   // category selector change event handler
   $('#category_section').on('change', function(e){
-    // console.log(e.target.value);
-    $('#msgBox').hide(); // empty the message box
-    // var sectionId = getSectionId(e.target.value);
-    // if ($sectionCounter[sectionId] >= $maxSectionEntries){
-    //   showMsg('Max entries reached for selected section','warning');
+  //   // console.log(e.target.value);
+  //   $('#msgBox').hide(); // empty the message box
+  //   var sectionId = getSectionId(e.target.value);
+  //   if ($sectionCounter[sectionId] >= $maxSectionEntries){
+  //     showMsg('Max entries reached for selected section','warning');
     // }
     // 
-    validateInputs();
+    validateInputs(true,'section_check'); // 
   });
 
-  var validateInputs = function (silent = false) {
+  var validateInputs = function (silent = false,report_on='') {
     //console.log('validateInput');
     var valid = true;
     var msgParts =[];
     
     var filename = selectFileBtn.innerHTML;
-    if(  ! /\.jp[eg]$/i.test(filename) ){
-      msgParts.push("Select an image (JPEG) file to upload");
+    if(   ! /\.jp[eg]$/i.test(filename) ){
+      if(report_on == 'all'  || report_on == 'file_check'){
+         msgParts.push("Select an image (JPEG) file to upload");
+      }
+     
       valid=false;
     }
 
+    // console.log('title', photoTitle.value);
     // console.log('Title length', photoTitle.value.length);
-    if (photoTitle.value.length < 2){
-      msgParts.push("Enter a title (must be more than 2 characters long) "); // invalid title
+    if (photoTitle.value.length < 3){
+      if(report_on == 'all'  || report_on == 'title_check'){
+        msgParts.push("Enter a title (must be more than 2 characters long) "); // invalid title
+      }
       valid=false;
     }
 
@@ -71,14 +83,21 @@ var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restore
     // console.log('Section', cs);
     // console.log('$sectionCounter[cs]', $sectionCounter[cs]);
     if (typeof cs == 'undefined' ||  cs  < 1 ){
-      msgParts.push("Select an Section"); // invalid section
+      if(report_on == 'all'  || report_on == 'section_check'){
+         msgParts.push("Select an Section"); // invalid section
+      }
       valid=false;
-    } else if ($sectionCounter[cs] >= $maxSectionEntries){
+    } 
+
+    if ($sectionCounter[cs] >= $maxSectionEntries){
       //console.log('MaxSection Entries reached');
-      msgParts.push("Maximum entries for selected section has been reached"); // invalid section
+      if(report_on == 'all'  || report_on == 'section_check'){
+        msgParts.push("Maximum entries for selected section has been reached"); // invalid section
+      }
+      silent = false; // force report to be seen
       valid=false;
     }
-    if(! valid && ! silent){
+    if(! valid && msgParts.length > 0 && ! silent){
       var msgCombined = 'Issues: ' + msgParts.join(',<br />')
       showMsg(msgCombined,'error');
     }
@@ -92,10 +111,10 @@ var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restore
     return valid; 
   }// end validate form
 
-  // Upload the phote button clicked
+  // Upload the photo button clicked
   $(uploadEntryBtn).on('click', function( e ) {
     //console.log('uploadBtn clicked');
-    var valid = validateInputs();
+    var valid = validateInputs(false,'all');
     if(! valid ){ 
       if($uploaderExtError){
         uploader.clearQueue(); //remove the invalid entry
@@ -371,7 +390,7 @@ var remoteCall = function (action, data) {
           }
 
           selectFileBtn.innerHTML = filename;
-          validateInputs();
+          validateInputs(true,'file_check');
           
           // return false; // stops file auto uploading with change event
         },

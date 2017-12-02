@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class PaymentController extends Controller
 {
 
@@ -12,8 +10,4 @@ class PaymentController extends Controller
         return view('payment.index');
     }
 
-    public function IPN(Request $request)
-    {
-        dd($request->all());
-    }
 }

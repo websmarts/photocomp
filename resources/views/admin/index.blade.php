@@ -8,8 +8,9 @@
 
 			<h1>Admin Dashboard</h1>
 
-			<p>Settings</p>
-			<p>List Entries</p>
+			<p><a href="{{ route('admin.settings') }}">Edit Competition Settings</a></p>
+			<p><a href="{{ route('admin.clubs') }}">Edit list of VAPS Clubs</a></p>
+			<p><a href="{{ route('admin.applications') }}">List Entrant Applications</a></p>
 
 		</div>
 	</div>

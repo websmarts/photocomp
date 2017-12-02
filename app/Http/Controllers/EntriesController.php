@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Jobs\ExportPhoto;
-use App\Photo;
+use App\Http\Controllers\Controller;
+use App\Utility\PhotosHandler;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
 class EntriesController extends Controller
 {
     private $entries = []; // an array of entries we return with ahr requests
+
+    private $photosHandler;
 
     /**
      * Create a new controller instance.
@@ -23,17 +23,22 @@ class EntriesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->photosHandler = new PhotosHandler($this->setting());
     }
 
     public function index()
     {
+
         $categories = Category::with('sections')->get();
 
         if (Auth::user()->application->submitted) {
             return view('entries.show', compact('categories'));
         }
 
-        return view('entries.index', compact('categories'));
+        $returnOptions = explode("\n", $this->setting('return_instructions'));
+
+        return view('entries.index', compact('categories', 'returnOptions'));
     }
 
     /**
@@ -56,8 +61,6 @@ class EntriesController extends Controller
 
         $request->user()->application->update($data);
 
-        $this->exportPhotos(); // Photo export to S3 store
-
         return (['success' => true]);
     }
 
@@ -73,61 +76,22 @@ class EntriesController extends Controller
 
         ]);
 
-        $user = $request->user();
-        $sectionId = (int) $request->input('section_id');
-        $categoryId = (int) $request->input('category_id');
+        $result = $this->photosHandler->upload($request, $this->setting('max_entries_per_section'));
 
-        $sectionEntries = $user->photos()->where('section_id', $sectionId)->get();
-        $count = $sectionEntries->count();
-        if ($count > $this->setting('max_entries_per_section')) {
-            return [
-                'message' => 'Maximum entries per section',
-                'errors' => ['max_entries_per_section' => 'Maximum number of entries for section reached'],
-            ];
+        if (is_array($result)) {
+            return $result;
         }
 
-        // Save the file to storage/app/photos
-        $photo = $request->file('image');
+        return $this->success();
 
-        $image = Image::make($photo);
-        $width = $image->width();
-        $height = $image->height();
+    }
 
-        if ($height > 1080) {
-            return ['message' => 'image dimensions exceed maximum allowed', 'errors' => ['height' => 'Maximum dimension exceeded']];
-        }
-        if ($width > 1920) {
-            return ['message' => 'image dimensions exceed maximum allowed', 'errors' => ['width' => 'Maximum dimension exceeded']];
-        }
-
-        $filename = time() . '.' . $photo->getClientOriginalExtension();
-        $photo->storeAs('photos', $filename);
-
-        // resize the image to a width of 300 and constrain aspect ratio (auto height)
-
-        $image->resize(100, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $image->save(storage_path('app/public/photos/' . $filename));
-
-        // Insert photo table into db
-        //
-        $data = [
-            'category_id' => $categoryId,
-            'section_id' => $sectionId,
-            'title' => $request->input('title'),
-            'filepath' => $filename,
-            'filesize' => $photo->getClientSize(),
-            'width' => $width,
-            'height' => $height,
-            'section_entry_number' => $count++,
+    public function success()
+    {
+        return [
+            'entries' => $this->getUserEntries(),
+            'status' => 'success',
         ];
-
-        $user->photos()->create($data);
-        //return $data;
-        // Return
-        return ['entries' => $this->getUserEntries()];
-
     }
 
     public function process(Request $request)
@@ -137,73 +101,15 @@ class EntriesController extends Controller
 
         switch ($action) {
             case 'delete':
-                $this->deletePhoto($photoId);
+                $this->photosHandler->delete($photoId);
                 break;
 
             case 'promote':
-                $this->promotePhoto($photoId);
+                $this->photosHandler->promote($photoId);
                 break;
         }
-        return [
-            'entries' => $this->getUserEntries(),
-            'status' => 'success',
-        ];
+        return $this->success();
 
-    }
-
-    private function deletePhoto($id)
-    {
-        if (!is_int($id)) {
-            return;
-        }
-        $photo = Photo::findOrFail($id);
-
-        $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
-
-        $sectionEntryNumber = 0;
-        $sectionEntries->filter(function ($model) use (&$photo) {
-            return $model->id != $photo->id;
-        })->map(function ($model) use (&$sectionEntryNumber) {
-            $model->section_entry_number = ++$sectionEntryNumber;
-            $model->save();
-        });
-        $photo->delete();
-    }
-
-    private function promotePhoto($id)
-    {
-        if (!is_int($id)) {
-            return;
-        }
-        $photo = Photo::findOrFail($id);
-
-        $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
-
-        $swapEntry = $sectionEntries->filter(function ($entry) use (&$photo) {
-            return $entry->section_entry_number < $photo->section_entry_number;
-        })
-            ->sortBy('section_item_number')
-            ->pop();
-
-        if ($swapEntry) {
-            $tmp = $swapEntry->section_entry_number;
-            \Log::info('swap section_entry_number: ' . $tmp);
-            \Log::info('photo section_entry_number: ' . $photo->section_entry_number);
-            // do the swap
-            $swapEntry->section_entry_number = $photo->section_entry_number;
-            $photo->section_entry_number = $tmp;
-
-            $swapEntry->save();
-            $photo->save();
-        }
-
-    }
-
-    private function sectionEntries($userId, $sectionId)
-    {
-        return Photo::where(['user_id' => $userId, 'section_id' => $sectionId])
-            ->orderBy('section_entry_number')
-            ->get();
     }
 
     private function getUserEntries()
@@ -233,25 +139,4 @@ class EntriesController extends Controller
         return $this->entries;
 
     }
-
-    public function exportPhotos()
-    {
-
-        $photos = Photo::OrderBy('user_id', 'asc')
-            ->orderBy('section_id', 'asc')
-            ->orderBy('section_entry_number', 'asc')
-            ->get(); // Always export ALL photos
-
-        Storage::disk('local')->put('logs/export.log', 'Photo  export date: ' . \Carbon\Carbon::now()->toFormattedDateString());
-
-        $photos->map(function ($photo) {
-            $this->dispatch(new ExportPhoto($photo));
-        });
-
-        // Display a view that displays the number  of
-        // photos NOT exported. ie via ajax query
-        return view('admin.export_monitor');
-
-    }
-
 }

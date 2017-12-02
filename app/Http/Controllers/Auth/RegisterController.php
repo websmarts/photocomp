@@ -117,23 +117,6 @@ class RegisterController extends Controller
             'password' => $data['password'],
         ]);
 
-        // Application::create([
-        //     'salutation' => $data['salutation'],
-        //     'firstname' => $data['firstname'],
-        //     'lastname' => $data['lastname'],
-        //     'honours' => $data['honours'],
-        //     'address1' => $data['address1'],
-        //     'address2' => $data['address2'],
-        //     'city' => $data['city'],
-        //     'postcode' => $data['postcode'],
-        //     'state' => $data['state'],
-        //     'phone' => $data['phone'],
-        //     'vaps_affiliated' => $data['vaps_affiliated'],
-        //     'aps_member' => $data['aps_member'],
-        //     'club_nomination' => $data['club_nomination'],
-        //     'user_id' => $user->id,
-        // ]);
-
         return $user;
     }
 

@@ -49,13 +49,13 @@
                 @else
                             @can('enter')
                             <li>
-                                <a href="{{ route('home') }}">My dashboard</a>
+                                <a href="{{ route('home') }}">Entry dashboard</a>
                             </li>
                             @endcan
 
                             @can('admin')
                                 <li>
-                                    <a href="{{ route('admin') }}">Manager</a>
+                                    <a href="{{ route('admin.dashboard') }}">Manager dashboard</a>
                                 </li>
                             @endcan
 

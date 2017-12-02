@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Application;
+use App\Club;
+use Illuminate\Http\Request;
+
 class ApplicationController extends Controller
 {
-
     /**
      * Create a new controller instance.
      *
@@ -15,9 +18,13 @@ class ApplicationController extends Controller
         $this->middleware('auth');
     }
 
-    public function register()
+    /**
+     * Show the Registration Form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
     {
-
         $options = [
             'salutations' => ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr'],
             'yesno' => ['Yes', 'No'],
@@ -26,44 +33,37 @@ class ApplicationController extends Controller
 
         ];
 
-        return view('home', compact('options'));
+        $application = auth()->user()->application;
+
+        return view('registration.index', compact('options', 'application'));
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function processRegistrationForm(Request $request)
     {
-
-        return Validator::make($data, [
+        $attributes = $request->validate([
             'salutation' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'honours' => 'required|string|max:255',
+            'honours' => 'nullable|string|max:255',
             'address1' => 'required|string|max:255',
-            'address2' => 'required|string|nullable|max:255',
+            'address2' => 'nullable|string|nullable|max:255',
             'city' => 'required|string|max:255',
             'postcode' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'vaps_affiliated' => 'required|string|max:255',
-            'vaps_member' => 'required|string|max:255',
-            'club_nomination' => 'required|string|max:255',
+            'aps_member' => 'required|string|max:255',
+            'club_nomination' => 'nullable|string|max:255',
+            'confirm_terms' => 'required',
         ]);
+
+        $application = Application::firstOrCreate(['user_id' => $request->user()->id]);
+
+        $application->update($attributes);
+
+        flash('Your registration details have been updated successfully');
+
+        return redirect()->route('home');
     }
 
-    /**
-     * Display a page telling the newly registered user
-     * that they need to verify their email address
-     *
-     * @method registered
-     * @return [type]     [View]
-     */
-    public function registered()
-    {
-        return view('registered');
-    }
 }

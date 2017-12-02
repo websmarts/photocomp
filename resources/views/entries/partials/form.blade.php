@@ -77,8 +77,8 @@
 	<hr>
 
 	<p>ENTRY FEES<br />
-	First section: $14.00<br />
-	Additional sections: $10.00 each<br />
+	First section: ${{ number_format($settings->first_section_cost,2)  }}<br />
+	Additional sections: ${{ number_format($settings->additional_section_cost,2) }} each<br />
 	</p>
 	<hr>
 
@@ -87,11 +87,9 @@
 		<div class="col-xs-12">
 			<select class="form-control" name="return_instructions" id="return_instructions">
 			<option value="">Select option ...</option>
-			<option value="">No Return Required (default)</option>
-			<option>Return by Post (typically $20)</option>
-			<option>Pickup Roylaines - Warragul</option>
-			<option>Pickup Roylaines - Pakenham</option>
-			<option>Forward to Pakenham National</option>
+			@foreach( $returnOptions as $opt)
+				<option {{ old('return_instructions'),auth()->user()->application->return_instructions == $opt ? 'selected' : '' }} value="{{$opt}}">{{ $opt }}</option>
+			@endforeach
 			</select>
 		</div>
 	</div>

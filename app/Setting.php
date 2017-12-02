@@ -12,5 +12,7 @@ class Setting extends Model
         'additional_section_cost',
         'max_entries_per_section',
         'terms_and_conditions_url',
+        'competition_status',
+        'return_instructions',
     ];
 }

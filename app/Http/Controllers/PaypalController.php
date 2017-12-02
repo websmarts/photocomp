@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Log;
 
 class PaypalController extends Controller
 {
+    public function success()
+    {
+        // Paypal success url endpoint
+        //
+        //   Record the success amount paid
+
+    }
 
     public function ipn(Request $request)
     {

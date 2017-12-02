@@ -12,7 +12,7 @@ class Utils
         $records = DB::table('photos')->select('filepath as filename')->get();
 
         $keep = $records->pluck('filename');
-        // dd($keep->contains("1a511765030.jpg"));
+
         $fileDir = 'photos/';
         $files = Storage::files($fileDir);
 

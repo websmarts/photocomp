@@ -20,6 +20,8 @@ class CreateSettingsTable extends Migration
             $table->float('additional_section_cost')->default(10);
             $table->integer('max_entries_per_section')->default(4);
             $table->string('terms_and_conditions_url');
+            $table->enum('competition_status', ['Open', 'Closed'])->default('Closed');
+            $table->mediumText('return_instructions');
             $table->timestamps();
         });
     }
