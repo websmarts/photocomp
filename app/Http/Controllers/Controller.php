@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\Jsend;
 use App\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -34,5 +35,19 @@ class Controller extends BaseController
             return $this->settings;
         }
 
+    }
+
+    /**
+     * Send a Jsend response to ajax requests
+     * @method Jsend
+     * @param  [type]  $status      [description]
+     * @param  [type]  $data        [description]
+     * @param  [type]  $message     [description]
+     * @param  boolean $transformer [description]
+     */
+    public function Jsend($status, $data, $message = null, $transformer = false)
+    {
+        $jsend = new Jsend($status, $data, $message, $transformer);
+        return $jsend->response();
     }
 }

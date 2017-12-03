@@ -8,6 +8,7 @@ use App\Utility\PhotosHandler;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EntriesController extends Controller
 {
@@ -61,20 +62,23 @@ class EntriesController extends Controller
 
         $request->user()->application->update($data);
 
-        return (['success' => true]);
+        return $this->Jsend('success', null, null, false);
     }
 
     public function uploader(Request $request)
     {
-
-        $this->validate($request, [
-
+        $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,jpeg|max:2048',
             'category_id' => 'required|integer|min:1',
             'section_id' => 'required|integer|min:1',
             'title' => 'required|min:3',
 
         ]);
+        if ($validator->fails()) {
+            // handle it
+            $messages = $validator->messages();
+            return $this->Jsend('fail', null, implode('<br />', $messages->all()), false);
+        };
 
         $result = $this->photosHandler->upload($request, $this->setting('max_entries_per_section'));
 
@@ -88,10 +92,11 @@ class EntriesController extends Controller
 
     public function success()
     {
-        return [
-            'entries' => $this->getUserEntries(),
-            'status' => 'success',
-        ];
+        // return [
+        //     'entries' => $this->getUserEntries(),
+        //     'status' => 'success',
+        // ];
+        return $this->Jsend('success', $this->getUserEntries(), null, false);
     }
 
     public function process(Request $request)

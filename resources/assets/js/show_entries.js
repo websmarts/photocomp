@@ -15,8 +15,6 @@ var $sectionCounter = []; // holds section entry couters.
 var $sectionCount; // number of sections entered
 
 
-
-
 // Function used to make ajax call init, delete and promote items 
 var remoteCall = function (action, data) {
   return $.ajax({
@@ -31,11 +29,6 @@ var remoteCall = function (action, data) {
     .done(function( response ) {   
     });
 }
-  
-
-  
-
-  
 
   var  list_entries = function (entries) {
     $entryCount = 0;
@@ -122,8 +115,8 @@ var remoteCall = function (action, data) {
   }
 
  
-  remoteCall('init').then(function(data){
-    list_entries(data.entries);
+  remoteCall('init').then(function(response){
+    list_entries(response.data);
     $(loadingDiv).addClass('display-none');
     
   });;

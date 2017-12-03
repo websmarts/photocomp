@@ -143,8 +143,8 @@ $('#photoTitle').on('keyup', function(e){
         var photo_id = $(e.target).attr('photo_id');
         ajaxActive = true;
         $(loadingDiv).removeClass('display-none');
-        remoteCall('delete', photo_id).then(function(data){
-          list_entries(data.entries);
+        remoteCall('delete', photo_id).then(function(response){
+          list_entries(response.data);
           ajaxActive = false;
           $(loadingDiv).addClass('display-none');
         });
@@ -155,8 +155,8 @@ $('#photoTitle').on('keyup', function(e){
         ajaxActive = true;
 
         $(loadingDiv).removeClass('display-none');
-        remoteCall('promote', photo_id).then(function(data){
-          list_entries(data.entries);
+        remoteCall('promote', photo_id).then(function(response){
+          list_entries(response.data);
           ajaxActive = false;
           $(loadingDiv).addClass('display-none');
         });
@@ -342,7 +342,7 @@ var remoteCall = function (action, data) {
     .done(function( response ) {
       // var response = $.parseJSON(data)
 
-      if(response.success){
+      if(response.status == 'success'){
         document.location ='/home';
       } else {
 
@@ -418,20 +418,21 @@ var remoteCall = function (action, data) {
                 showMsg('Unable to upload file', 'error');
                 return;
             }
+            //console.log(response)
 
-            if ( response.entries ) {
+            if ( response.status =='success' ) {
                 //console.log(response);
                 // display entries
-                list_entries(response.entries);
+                list_entries(response.data);
 
                 showMsg('<strong>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.', 'success');
                 // TODO clear the form
                 clear_upload_form();
 
             } else {
-                if ( response.msg )  {
+                if ( response.status == 'fail' )  {
                     clear_upload_form();
-                    showMsg(escapeTags( response.msg ), 'error');
+                    showMsg(escapeTags( response.message ), 'error');
 
                 } else {
                     showMsg('An error occurred and the upload failed.','error') ;
@@ -450,8 +451,8 @@ var remoteCall = function (action, data) {
 
   ajaxActive = true;
   $(loadingDiv).removeClass('display-none');
-  remoteCall('init').then(function(data){
-    list_entries(data.entries);
+  remoteCall('init').then(function(response){
+    list_entries(response.data);
     $(loadingDiv).addClass('display-none');
     ajaxActive = false;
   });;

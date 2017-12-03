@@ -1,6 +1,7 @@
 <?php
 namespace App\Utility;
 
+use App\Http\Responses\Jsend;
 use App\Photo;
 use App\User;
 use Illuminate\Support\Facades\Storage;
@@ -32,13 +33,12 @@ class PhotosHandler
         $count = $this->entryCount($user->id, $sectionId);
 
         if ($count >= $this->maxEntriesPerSection) {
-            return [
-                'message' => 'Maximum entries per section',
-                'errors' => ['max_entries_per_section' => 'Maximum number of entries for section reached'],
-            ];
+            $jsend = new Jsend('fail', null, 'Maximum number of entries for section reached');
+            return $jsend->response();
         }
 
         // Save the file to storage/app/photos
+
         $photo = $request->file('image');
 
         $image = Image::make($photo);
@@ -81,11 +81,14 @@ class PhotosHandler
         $height = $image->height();
 
         if ($height > 1080) {
-            return ['message' => 'image dimensions exceed maximum allowed', 'errors' => ['height' => 'Maximum dimension exceeded']];
+            $jsend = new Jsend('fail', null, 'Image height dimensions exceed maximum allowed');
+            $jsend->response();
         }
         if ($width > 1920) {
-            return ['message' => 'image dimensions exceed maximum allowed', 'errors' => ['width' => 'Maximum dimension exceeded']];
+            $jsend = new Jsend('fail', null, 'Image width dimensions exceed maximum allowed');
+            $jsend->response();
         }
+
         return [$width, $height];
     }
 

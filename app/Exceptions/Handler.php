@@ -54,6 +54,20 @@ class Handler extends ExceptionHandler
             return redirect('/login');
         }
 
+        if ($request->wantsJson()) {
+            // Define the response
+            $response = [
+                'status' => 'fail',
+                'message' => $exception->getMessage(),
+            ];
+
+            $status = 200;
+
+            // Return a JSON response with the response array and status code
+            return response()->json($response, $status);
+
+        }
+
         return parent::render($request, $exception);
     }
 }
