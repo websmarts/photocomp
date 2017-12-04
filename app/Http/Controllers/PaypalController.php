@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Application;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaypalController extends Controller
 {
