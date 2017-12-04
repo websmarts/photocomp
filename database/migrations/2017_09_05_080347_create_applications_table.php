@@ -36,14 +36,18 @@ class CreateApplicationsTable extends Migration
             $table->string('return_postage')->nullable();
             $table->string('return_post_option')->nullable();
             $table->float('entries_cost')->default(0);
-            //$table->float('total_amount_charged')->nullable();
+
             $table->timestamp('submitted')->nullable();
 
-            //$table->float('payment_received_amount')->nullable();
-            $table->datetime('payment_datetime')->nullable();
             $table->string('payment_method')->nullable();
 
-            //$table->enum('status', ['open', 'closed'])->default('open');
+            $table->float('mc_gross')->nullable();
+            $table->float('mc_gross_1')->nullable();
+            $table->float('mc_gross_2')->nullable();
+            $table->float('mc_fee')->nullable();
+            $table->string('txn_id')->nullable();
+            $table->datetime('payment_date')->nullable();
+
             $table->timestamps();
         });
     }

@@ -27,30 +27,33 @@
 		<input type="text" name="currency_code" value="AUD"><br>
 
 		<!-- a custome tracking var -->
-		<input type="text" name="invoice" value="{{ $application->user_id }}"><br>
+		<input type="text" name="custom" value="{{ $application->user_id }}"><br>
 
 		<input type="text" name="image_url" value="http://photocomp.warragulnational.org/images/logo.jpg"><br>
 
-		<input type="text" name="cancel_return" value="http://photocomp.warragulnational.org/paypal/cancel"><br>
-		<input type="text" name="return" value="http://photocomp.warragulnational.org/paypal/return"><br>
-		<input type="text" name="notify_url" value="http://photocomp.warragulnational.org/paypal/ipn"><br>
+		<input type="text" name="cancel_return" value="{{ env('PAYPAL_CANCEL_URL') }}"><br>
+		<input type="text" name="return" value="{{ env('PAYPAL_SUCCESS_URL') }}"><br>
+		<input type="text" name="notify_url" value="{{ env('PAYPAL_NOTIFY_URL') }}"><br>
 		<input type="text" name="rm" value="2"><br>
 
 		<input type="text" name="address1" value="{{ $application->address1 }}"><br>
 		<input type="text" name="address2" value="{{ $application->address2 }}"><br>
 		<input type="text" name="city" value="{{ $application->city }}"><br>
+		<input type="text" name="state" value="{{ $application->state }}"><br>
 		<input type="text" name="country" value="AU"><br>
 		<input type="text" name="zip" value="{{ $application->postcode }}"><br>
 		<input type="text" name="first_name" value="{{ $application->firstname }}"><br>
 		<input type="text" name="last_name" value="{{ $application->lastname }}"><br>
 		<input type="text" name="email" value="{{ Auth::user()->email }}"><br>
-		<input type="text" name="phone" value="{{ $application->phone  }}"><br>
+
 
 <!-- 4239538223886700 12/22 -->
 		<!--<input type="text" name="image_url" value="150px">-->
 
 
 		<input type="submit" name="Pay now">
+
+		<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Credit Card Badges">
 		</form>
 
 		</div>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Fahim\PaypalIPN\PaypalIPNListener;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class PaypalController extends Controller
 {
@@ -33,17 +32,31 @@ class PaypalController extends Controller
 
         $report = $ipn->getTextReport();
 
-        Log::info("-----new payment-----");
+        // Log::info("-----new payment-----");
 
-        Log::info($report);
+        // Log::info($report);
 
         if ($verified) {
             if ($request->input('address_status') == 'confirmed') {
-                // Check outh POST variable and insert your logic here
-                Log::info("payment verified and inserted to db");
+                $data['mc_gross'] = $request->mc_gross;
+                $data['mc_gross_1'] = $request->mc_gross_1;
+                $data['mc_gross_2'] = $request->mc_gross_2;
+                $data['mc_fee'] = $request->mc_fee;
+                $data['txn_id'] = $request->txn_id;
+                $data['payment_date'] = $request->payment_date;
+
+                $userId = (int) $request->custom;
+
+                // Check if txn_id has already been processed
+                $txn = Application::where('txn_id', $data['txn_id'])->first();
+
+                if (!$txn && $userId > 0) {
+                    Application::where('user_id', $userId)->update($data);
+                }
+
             }
         } else {
-            Log::info("Some thing went wrong in the payment !");
+            // Log::info("Some thing went wrong in the payment !");
         }
     }
 
