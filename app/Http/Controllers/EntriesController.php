@@ -14,6 +14,10 @@ class EntriesController extends Controller
 {
     private $entries = []; // an array of entries we return with ahr requests
 
+    private $categoryName; // tmp holder of category name for process loops
+
+    private $sectionName; // tmp holder of section name for process loops
+
     private $photosHandler;
 
     /**
@@ -33,13 +37,16 @@ class EntriesController extends Controller
 
         $categories = Category::with('sections')->get();
 
-        if (Auth::user()->application->submitted) {
+        // Show view that does not allow any changes if entrant has paid
+        if (Auth::user()->application->paid) {
             return view('entries.show', compact('categories'));
         }
 
         $returnOptions = explode("\n", $this->setting('return_instructions'));
 
-        return view('entries.index', compact('categories', 'returnOptions'));
+        $application = Auth::user()->application;
+
+        return view('entries.index', compact('categories', 'returnOptions', 'application'));
     }
 
     /**
@@ -130,15 +137,17 @@ class EntriesController extends Controller
                 $res = $photos->filter(function ($photo, $pkey) use ($category, $section) {
                     return ($photo->section_id == $section->id) && ($photo->category_id == $category->id);
                 })->sortBy('section_entry_number');
-                if (count($res)) {
-                    foreach ($res->toArray() as $entry) {
-                        $this->entries[$category->name][$section->name][] = $entry;
-                    }
-                } else {
-                    $this->entries[$category->name][$section->name] = [];
-                }
 
-            });;
+                $this->categoryName = $category->name;
+                $this->sectionName = $section->name;
+
+                $this->entries[$this->categoryName][$this->sectionName] = []; // init to empty array
+
+                $res->each(function ($entry) {
+                    $this->entries[$this->categoryName][$this->sectionName][] = $entry;
+                });
+
+            });
         });
 
         return $this->entries;

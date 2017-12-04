@@ -174,10 +174,12 @@ window.onload = function () {
     $('#total_cost').html('$' + total.toFixed(2));
   }
 
-  remoteCall('init').then(function (data) {
-    list_entries(data.entries);
+  remoteCall('init').then(function (response) {
+    list_entries(response.data);
     $(loadingDiv).addClass('display-none');
   });;
+
+  $returnPostageCost = application_return_postage; // initial value on page load
 };
 
 /***/ }),

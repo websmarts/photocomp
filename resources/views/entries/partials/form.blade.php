@@ -82,13 +82,14 @@
 	</p>
 	<hr>
 
+
 	<div class="row">
 		<div class="col-xs-12">RETURN INSTRUCTIONS</div>
 		<div class="col-xs-12">
 			<select class="form-control" name="return_instructions" id="return_instructions">
 			<option value="">Select option ...</option>
 			@foreach( $returnOptions as $opt)
-				<option {{ old('return_instructions'),auth()->user()->application->return_instructions == $opt ? 'selected' : '' }} value="{{$opt}}">{{ $opt }}</option>
+				<option {{ $application->return_post_option == $opt ? 'selected' : '' }} value="{{$opt}}">{{ $opt }}</option>
 			@endforeach
 			</select>
 		</div>
@@ -98,19 +99,17 @@
 	<p>RETURN POSTAGE</p>
 	Return postage for prints only - enter an amount sufficient to cover return:
 	<div class="input-group">
-	<div class="input-group-addon">$</div><input type=text id="return_postage" class="form-control" style="width:5em" /></div>
+	<div class="input-group-addon">$</div><input type=text id="return_postage" class="form-control" style="width:5em" value="{{ $application->return_postage }}" /></div>
 	<hr>
 	<p>TOTAL COST OF ENTRY<br />
 	<div id="total_cost">0.00</div>
 
-	<?php // include 'payment_details.php';?>
+
 
 	<hr>
 
-	<p>Once you have completed the application form, click on the CHECKOUT button below to finalise your application</p>
-	<p>Note: Only checkout once you have completed the form above. If you have not completed the entry form you can logout and login later to complete it. However once you <strong>Checkout</strong> you will no longer be able to make changes to the your application or entry details </p>
+	<p>Only click the CHECKOUT button below after you have completed uploading all of your photos and indicated your return instructions.</p>
+	<p>If you would like to complete this section later it is safe to logout and login again later when you are ready to continue updating the form, the system will remember all the photos you have uploaded to date.</p>
 
 	<button id="final_submit_button" class="btn btn-primary">Checkout</button>
 	<p>&nbsp;</p>
-
-

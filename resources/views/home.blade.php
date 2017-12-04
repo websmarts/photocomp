@@ -23,51 +23,60 @@
 
                     <p>The section below lists the current status of your entry</p>
                     <div class="row" >
-                        <div class="col-md-4">Step 1<br /><a href="{{ route('show_application_form') }}" >Fill out the registration form </a></div>
-                        <div class="col-md-6">
+                        <div class="col-sm-4">Step 1<br />
+                             <a href="{{ route('show_application_form') }}" >
+                            @if(Auth::user()->application->completed )
+                                Edit your registration form
+                            @else
+                                Fill out your registration form
+                            @endif
+                           </a>
+
+                        </div>
+                        <div class="col-sm-6">
                             <p>
                                 @if(Auth::user()->application->completed )
-                                    (Completed)
+                                    (Registration form is complete)
                                 @else
-                                    (NOT completed)
+                                    (NOT complete)
                                 @endif
                             </p>
                         </div>
-                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->completed ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->completed ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
                     <div class="row" >
-                        <div class="col-md-4">Step 2:<br />
+                        <div class="col-sm-4">Step 2:<br />
 
-                            {!! linkRouteIf(' Upload photos and fill out return postage preferences','entries_upload_form',!Auth::user()->application->submitted ) !!}
+                            {!! linkRouteIf(' Upload photos and complete return instructions','entries_upload_form',!Auth::user()->application->submitted ) !!}
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <p>
                                @if(Auth::user()->application->submitted )
                                     (Completed)<br />
-                                    You can <a href="{{ route('entries_upload_form') }}">view your entry details</a> but you cannot make changes after you have submitted the entry
+                                    <a href="{{ route('entries_upload_form') }}">View your entries</a>
                                 @else
                                     (Work in progres)<br />
                                     View and edit your entry details
                                 @endif
                             </p>
                         </div>
-                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->submitted ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->submitted ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4">Step 3<br />
-                            @if(Auth::user()->application->submitted)
-                                <a href="{{ route('checkout') }}">Checkout and pay your entry fee</a>
+                        <div class="col-sm-4">Step 3<br />
+                            @if(Auth::user()->application->submitted && ! Auth::user()->application->paid)
+                                <a href="{{ route('checkout') }}">Pay entry fee</a>
                             @else
-                                Checkout and pay your entry fee
+                                Pay entry fee
                             @endif
 
 
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <p>
                                 @if(Auth::user()->application->paid)
                                     List the date , payment method , the amount and the return option selected
@@ -77,7 +86,7 @@
 
                             </p>
                         </div>
-                        <div class="col-md-2"><span class="icon glyphicon {{Auth::user()->application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
 

@@ -26,7 +26,7 @@ function category_section_options($categories)
 function linkRouteIf($linktext, $route, $condition)
 {
     if ($condition) {
-        return '<a href="' . route($route) . '">' . $linktext . '<a>';
+        return '<a href="' . route($route) . '">' . $linktext . '</a>';
     } else {
         return $linktext;
     }

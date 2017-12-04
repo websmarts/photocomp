@@ -1,1 +1,1 @@
-<p><a href="{{ route('admin.dashboard') }}">Return to dashboard</a></p>
+<p><a href="{{ route('admin.dashboard') }}">Back to dashboard</a></p>

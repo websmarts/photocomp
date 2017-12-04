@@ -2652,9 +2652,6 @@ window.onload = function () {
     });
   });
 
-  $('#msgBox').hide().html(''); // empty the message box
-  $('#return_postage').val($returnPostageCost);
-
   var uploader = new ss.SimpleUpload({
     debug: false,
     button: selectFileBtn,
@@ -2734,6 +2731,11 @@ window.onload = function () {
       showMsg('Unable to upload file', 'warning');
     }
   });
+
+  $returnPostageCost = application_return_postage; // initial value on page load
+
+  $('#msgBox').hide().html(''); // empty the message box
+  $('#return_postage').val($returnPostageCost);
 
   // disable the upload button
   validateInputs(true);

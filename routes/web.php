@@ -20,7 +20,10 @@ Route::get('ro', function () {
 
 Route::prefix('paypal')->group(function () {
     Route::post('ipn', 'PaypalController@ipn'); // needs CSRF middleware disabled
+    Route::post('success', 'PaypalController@success');
+    Route::post('cancel', 'PaypalController@cancel');
     Route::get('success', 'PaypalController@success');
+    Route::get('cancel', 'PaypalController@cancel');
 });
 
 Route::get('export', 'EntriesController@exportPhotos');

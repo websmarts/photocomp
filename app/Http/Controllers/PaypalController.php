@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\Log;
 
 class PaypalController extends Controller
 {
-    public function success()
+    public function success(Request $request)
     {
-        // Paypal success url endpoint
-        //
-        //   Record the success amount paid
+
+        $data = $request->all();
+        return view('paypal.success', compact('data'));
+
+    }
+
+    public function cancel(Request $request)
+    {
+
+        $data = $request->all();
+        return view('paypal.cancel', compact('data'));
 
     }
 

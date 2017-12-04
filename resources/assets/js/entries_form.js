@@ -358,9 +358,7 @@ var remoteCall = function (action, data) {
     });
  }); 
 
-  $('#msgBox').hide().html(''); // empty the message box
-  $('#return_postage').val($returnPostageCost);
-
+  
   
 
   var uploader = new ss.SimpleUpload({
@@ -446,8 +444,16 @@ var remoteCall = function (action, data) {
           }
   });
 
+  $returnPostageCost = application_return_postage; // initial value on page load
+  
+  $('#msgBox').hide().html(''); // empty the message box
+  $('#return_postage').val($returnPostageCost);
+
   // disable the upload button
   validateInputs(true);
+
+
+
 
   ajaxActive = true;
   $(loadingDiv).removeClass('display-none');

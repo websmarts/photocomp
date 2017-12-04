@@ -61,7 +61,7 @@ class Application extends Model
 
     public function getPaidAttribute()
     {
-        return $this->paymentDatetime;
+        return !$this->paymentMethod == null;
     }
 
     public function user()

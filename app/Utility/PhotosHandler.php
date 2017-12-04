@@ -95,12 +95,13 @@ class PhotosHandler
     public function delete($id)
     {
         $photo = Photo::findOrFail($id);
-
-        $this->resequenceEntriesWithout($photo);
+        $sectionId = $photo->section_id;
+        $userId = $photo->user_id;
 
         $this->deletePhotoFiles($photo);
-
         $photo->delete();
+
+        $this->resequenceSectionEntries($userId, $sectionId);
     }
 
     private function deletePhotoFiles($photo)
@@ -113,25 +114,25 @@ class PhotosHandler
         Storage::disk('local')->delete('photos/' . $photo->filepath);
     }
 
-    private function resequenceEntriesWithout($photo)
-    {
-        $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
+    // private function resequenceEntriesWithout($photo)
+    // {
+    //     $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
 
-        $sectionEntryNumber = 0;
-        $sectionEntries->filter(function ($model) use (&$photo) {
-            return $model->id != $photo->id;
-        })->map(function ($model) use (&$sectionEntryNumber) {
-            $model->section_entry_number = ++$sectionEntryNumber;
-            $model->save();
-        });
-    }
+    //     $sectionEntryNumber = 0;
+    //     $sectionEntries->filter(function ($model) use (&$photo) {
+    //         return $model->id != $photo->id;
+    //     })->map(function ($model) use (&$sectionEntryNumber) {
+    //         $model->section_entry_number = ++$sectionEntryNumber;
+    //         $model->save();
+    //     });
+    // }
 
     private function getSwapPhoto($photo)
     {
         $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
 
         return $sectionEntries->filter(function ($entry) use (&$photo) {
-            return $entry->section_entry_number < $photo->section_entry_number;
+            return $entry->section_entry_number == ($photo->section_entry_number - 1);
         })
             ->sortBy('section_item_number')
             ->pop();
@@ -140,7 +141,13 @@ class PhotosHandler
 
     public function promote($id)
     {
+
         $photo = Photo::findOrFail($id);
+        $this->resequenceSectionEntries($photo->user_id, $photo->section_id);
+
+        $photo = Photo::findOrFail($id);
+
+        // force resquence to ensure consecutive section item numbers
         $swapPhoto = $this->getSwapPhoto($photo);
 
         if ($swapPhoto) {
@@ -153,6 +160,20 @@ class PhotosHandler
             $photo->save();
         }
 
+    }
+
+    private function resequenceSectionEntries($userId, $sectionId)
+    {
+        $photos = $this->sectionEntries($userId, $sectionId);
+        $seq = 0;
+        $photos->map(function ($photo) use (&$seq) {
+            if ($photo->section_entry_number != $seq) {
+                $photo->section_entry_number = $seq;
+                $photo->save();
+            }
+            $seq++;
+        });
+        return $photos;
     }
 
     private function sectionEntries($userId, $sectionId)
