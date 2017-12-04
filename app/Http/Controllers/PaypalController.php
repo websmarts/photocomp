@@ -34,27 +34,26 @@ class PaypalController extends Controller
 
         // Log::info("-----new payment-----");
 
-        // Log::info($report);
+        Log::info($report);
 
         if ($verified) {
-            if ($request->input('address_status') == 'confirmed') {
-                $data['mc_gross'] = $request->mc_gross;
-                $data['mc_gross_1'] = $request->mc_gross_1;
-                $data['mc_gross_2'] = $request->mc_gross_2;
-                $data['mc_fee'] = $request->mc_fee;
-                $data['txn_id'] = $request->txn_id;
-                $data['payment_date'] = $request->payment_date;
 
-                $userId = (int) $request->custom;
+            $data['mc_gross'] = $request->mc_gross;
+            $data['mc_gross_1'] = $request->mc_gross_1;
+            $data['mc_gross_2'] = $request->mc_gross_2;
+            $data['mc_fee'] = $request->mc_fee;
+            $data['txn_id'] = $request->txn_id;
+            $data['payment_date'] = $request->payment_date;
 
-                // Check if txn_id has already been processed
-                $txn = Application::where('txn_id', $data['txn_id'])->first();
+            $userId = (int) $request->custom;
 
-                if (!$txn && $userId > 0) {
-                    Application::where('user_id', $userId)->update($data);
-                }
+            // Check if txn_id has already been processed
+            $txn = Application::where('txn_id', $data['txn_id'])->first();
 
+            if (!$txn && $userId > 0) {
+                Application::where('user_id', $userId)->update($data);
             }
+
         } else {
             // Log::info("Some thing went wrong in the payment !");
         }
