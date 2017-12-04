@@ -35,7 +35,7 @@
 <script>
     var first_section_cost = {{ $settings->first_section_cost }};
     var additional_section_cost = {{ $settings->additional_section_cost }};
-    var application_return_postage = parseInt({{ $application->return_postage }});
+    var application_return_postage = parseInt({{ $application->return_postage or 0 }});
 </script>
 
 <script type="text/javascript" src="{{ mix('js/entries_form.js') }}>"></script>

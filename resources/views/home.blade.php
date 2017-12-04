@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard:
-                    @if(Auth::user()->application->completed )
+                    @if(optional(Auth::user()->application->completed) )
                         {{ Auth::user()->application->fullname }}
                     @else
                         {{ Auth::user()->email }}
@@ -25,7 +25,7 @@
                     <div class="row" >
                         <div class="col-sm-4">Step 1<br />
                              <a href="{{ route('show_application_form') }}" >
-                            @if(Auth::user()->application->completed )
+                            @if(optional(Auth::user()->application->completed ))
                                 Edit your registration form
                             @else
                                 Fill out your registration form
@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-sm-6">
                             <p>
-                                @if(Auth::user()->application->completed )
+                                @if(optional(Auth::user()->application->completed ))
                                     (Registration form is complete)
                                 @else
                                     (NOT complete)
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-sm-6">
                             <p>
-                               @if(Auth::user()->application->submitted )
+                               @if(optional(Auth::user()->application->submitted ))
                                     (Completed)<br />
                                     <a href="{{ route('entries_upload_form') }}">View your entries</a>
                                 @else
@@ -67,7 +67,7 @@
 
                     <div class="row">
                         <div class="col-sm-4">Step 3<br />
-                            @if(Auth::user()->application->submitted && ! Auth::user()->application->paid)
+                            @if(optional(Auth::user()->application->submitted) &&  !! optional(Auth::user()->application->paid) )
                                 <a href="{{ route('checkout') }}">Pay entry fee</a>
                             @else
                                 Pay entry fee
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-sm-6">
                             <p>
-                                @if(Auth::user()->application->paid)
+                                @if(optional(Auth::user()->application->paid))
                                     List the date , payment method , the amount and the return option selected
                                 @else
                                     No checkout details available as yet

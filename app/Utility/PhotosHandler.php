@@ -43,7 +43,7 @@ class PhotosHandler
 
         $image = Image::make($photo);
 
-        [$width, $height] = $this->checkImageDimensions($image);
+        list($width, $height) = $this->checkImageDimensions($image);
 
         $filename = time() . '.' . $photo->getClientOriginalExtension();
         $photo->storeAs('photos', $filename);

@@ -65,7 +65,7 @@ class LoginController extends Controller
         // User is not an admin so ensure they have an application
         if (!$user->hasApplication()) {
             $user->application()->create([]);
-            $user->refresh();
+            $user->fresh(['application']);
         }
     }
 }
