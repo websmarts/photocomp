@@ -46,7 +46,7 @@ class CreateApplicationsTable extends Migration
             $table->float('mc_gross_2')->nullable();
             $table->float('mc_fee')->nullable();
             $table->string('txn_id')->nullable();
-            $table->datetime('payment_date')->nullable();
+            $table->string('payment_date')->nullable();
 
             $table->timestamps();
         });
