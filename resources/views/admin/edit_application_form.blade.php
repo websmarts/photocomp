@@ -48,7 +48,7 @@
 			<div class="form-group">
 			    <div class="row">
 			        <div class="col-xs-12">
-			            <label for="notes" class="control-label">Payment method</label>
+			            <label for="notes" class="control-label">Notes or Comments</label>
 			            <textarea style="min-height:80px;" class="form-control" id="notes" name="notes" >{{ old('notes',$application->notes) }}</textarea>
 			            @if ($errors->has('notes'))
 			                <span class="help-block">

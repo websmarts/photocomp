@@ -14,7 +14,7 @@
 			@if($applications->count())
 			<table class="table table-stiped">
 				<tr>
-					<th>#id}</th>
+					<th>#id</th>
 					<th>Name</th>
 					<th>Pay via</th>
 					<th>Cost</th>

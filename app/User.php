@@ -50,13 +50,7 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function hasApplication()
-    {
-        //dd($this->application);
-        return $this->application;
-    }
-
-    // A user has zero or one Application
+    // Relationships
     public function application()
     {
         return $this->hasOne('\App\Application');

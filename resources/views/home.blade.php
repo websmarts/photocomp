@@ -7,7 +7,7 @@
         {{-- dump($application->completed) --}}
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>Dashboard</h3>
+                <div class="panel-heading"><h3>Entrant Dashboard</h3>
                     @if($application->completed)
                         {{ $application->fullname }}
                     @else
@@ -83,7 +83,7 @@
 
                     <div class="row">
                         <div class="col-sm-4">Step 3<br />
-                            @if($application->submitted &&  ! $application->paid )
+                            @if(!$application->submitted )
                                 <a href="{{ route('checkout') }}">Pay entry fee</a>
                             @elseif($application->paid)
                                 Pay entry fee (Entry fee has been paid)
@@ -95,7 +95,7 @@
 
                         </div>
                         <div class="col-sm-6">
-                            <p>
+                            <div>
                                 @if($application->paid)
                                     <table>
                                         <tr>
@@ -114,13 +114,24 @@
                                     </table>
                                 @else
                                     @if($application->submitted)
-                                        The fee for your current entries will be ${{ number_format($application->entries_cost + $application->return_postage,2) }}
+                                        <p>The fee for your current entries will be ${{ number_format($application->entries_cost + $application->return_postage,2) }}</p>
+                                        @if($application->payment_method == 'direct_debit')
+                                        <p>You have indicated you will be paying the entry fee by <strong>Direct Debit</strong>.</p>
+
+                                        @endif
+
+                                         @if($application->payment_method == 'paypal')
+                                        <p>You have indicated you will be paying the entry fee via <strong>Paypal</strong>. </p>
+                                        @endif
+
+                                        <p>Once your payment has been received your entry will be updated and the payment details will be displayed here.</p>
+                                        <p>If you have not made your payment you may change your payment method by <a href="{{ route('checkout') }}">clicking here</a></p>
                                     @else
-                                        Complete Step 1 and Step 2 before making payment
+                                       <p>Complete Step 1 and Step 2 before making payment</p>
                                     @endif
                                 @endif
 
-                            </p>
+                            </div>
                         </div>
                         <div class="col-sm-2"><span class="icon glyphicon {{ $application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>

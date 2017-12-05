@@ -54,12 +54,13 @@
                             @can('enter')
                             <li>
                                 <a href="{{ route('home') }}">Dashboard</a>
+
                             </li>
                             @endcan
 
                             @can('admin')
                                 <li>
-                                    <a href="{{ route('admin.dashboard') }}">Manager dashboard</a>
+                                    <a href="{{ route('admin.dashboard') }}">Admin dashboard</a>
                                 </li>
                             @endcan
 
@@ -69,6 +70,7 @@
                                              document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
+
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}

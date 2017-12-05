@@ -86,19 +86,6 @@ class RegisterController extends Controller
     {
 
         return Validator::make($data, [
-            // 'salutation' => 'required|string|max:255',
-            // 'firstname' => 'required|string|max:255',
-            // 'lastname' => 'required|string|max:255',
-            //'honours' => 'required|string|max:255',
-            // 'address1' => 'required|string|max:255',
-            //'address2' => 'required|string|nullable|max:255',
-            // 'city' => 'required|string|max:255',
-            // 'postcode' => 'required|string|max:255',
-            // 'state' => 'required|string|max:255',
-            // 'phone' => 'required|string|max:255',
-            // 'vaps_affiliated' => 'required|string|max:255',
-            // 'vaps_member' => 'required|string|max:255',
-            //'club_nomination' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);

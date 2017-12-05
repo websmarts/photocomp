@@ -24,8 +24,13 @@ Route::get('register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
 // App admin routes
 Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+
     Route::get('settings', 'SettingsController@index')->name('admin.settings');
     Route::post('settings', 'SettingsController@update')->name('admin.settings.update');
+
+    Route::get('credentials', 'AdminCredentialsController@index')->name('admin.credentials.form');
+    Route::post('credentials', 'AdminCredentialsController@update')->name('admin.credentials.update');
+
     Route::get('clubs', 'ClubsController@index')->name('admin.clubs');
     Route::post('clubs', 'ClubsController@update')->name('admin.clubs.update');
 // List, Edit, Update applications
@@ -35,7 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 
     Route::get('export/photos', 'ExportPhotosController@export')->name('admin.export.photos');
 
-    Route::get('reset', 'AdminController@reset')->name('admin.master.reset');
+    Route::get('reset', 'AdminResetController@reset')->name('admin.master.reset');
 });
 
 Route::middleware(['auth', 'can:enter'])->group(function () {

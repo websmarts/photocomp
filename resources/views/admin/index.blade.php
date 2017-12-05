@@ -11,6 +11,7 @@
 			<h3>Setup</h3>
 			<p><a href="{{ route('admin.settings') }}">Edit Competition Settings</a></p>
 			<p><a href="{{ route('admin.clubs') }}">Edit list of VAPS Clubs</a></p>
+			<p><a href="{{ route('admin.credentials.form') }}">Change the Administrator</a></p>
 			<hr>
 
 			<h3>Applications ({{ $applicationCount }})</h3>

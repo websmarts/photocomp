@@ -64,7 +64,6 @@ class LoginController extends Controller
         }
 
         // Check if Competition Status is Open or Closed
-        // Logout and redirect to welcome if closed
 
         if (strtolower($this->setting('competition_status')) !== 'open') {
             Auth::logout();
@@ -72,9 +71,8 @@ class LoginController extends Controller
             return redirect('/');
         }
 
-        // Okay competition is OPEN and
-        // user is not an admin so ensure they have an application
-        if (!$user->hasApplication()) {
+        // Ensure user has an application
+        if (!$user->application) {
             $user->application()->create([]);
             $user->fresh(['application']);
         }

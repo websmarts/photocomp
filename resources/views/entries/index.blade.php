@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             @include('layouts.partials.back_to_dashboard_link')
             <div class="panel panel-default">
-                <div class="panel-heading">Entry details<br /></div>
+                <div class="panel-heading"><h4>Competition Entries Form</h4></div>
 
                 <div class="panel-body">
                     @if (session('status'))
