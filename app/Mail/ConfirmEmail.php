@@ -24,8 +24,6 @@ class ConfirmEmail extends Mailable
      */
     public function __construct(User $user)
     {
-        $this->from = env('MAIL_FROM_ADDRESS', 'admin@websmarts.com.au');
-        // $this->fromName = env('MAIL_FROM_NAME', 'Administrator');
         $this->user = $user;
     }
 
@@ -37,7 +35,6 @@ class ConfirmEmail extends Mailable
     public function build()
     {
         return $this->subject('Confirm your email address')
-            ->from('admin@websmarts.com.au')
             ->view('emails.confirm');
     }
 

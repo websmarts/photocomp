@@ -45,11 +45,15 @@
                 <!-- Authentication Links -->
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
+
+                    @if($settings->competition_status == 'Open')
                     <li><a href="{{ route('register') }}">Register</a></li>
+                    @endif
+
                 @else
                             @can('enter')
                             <li>
-                                <a href="{{ route('home') }}">Entry dashboard</a>
+                                <a href="{{ route('home') }}">Dashboard</a>
                             </li>
                             @endcan
 

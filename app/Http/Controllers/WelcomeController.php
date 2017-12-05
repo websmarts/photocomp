@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-class PaymentController extends Controller
+class WelcomeController extends Controller
 {
-
     public function index()
     {
-        return view('payment.index');
+        return view('welcome');
     }
-
 }

@@ -61,7 +61,7 @@ class Application extends Model
 
     public function getPaidAttribute()
     {
-        return !$this->paymentMethod == null;
+        return $this->txn_id !== null;
     }
 
     public function user()

@@ -4,7 +4,11 @@
 <div class="container" >
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-			<h1>Direct Debit Checkout</h1>
+        	@include('layouts.partials.back_to_dashboard_link')
+
+			<h1>Payments by Direct Debit</h1>
+
+			<h3>Warragul National Bank Details:</h3>
 
 
 

@@ -18,7 +18,7 @@ class EntriesController extends Controller
 
     private $sectionName; // tmp holder of section name for process loops
 
-    private $photosHandler;
+    private $photosHandler; // handler for processing photo actions
 
     /**
      * Create a new controller instance.
@@ -27,8 +27,6 @@ class EntriesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-
         $this->photosHandler = new PhotosHandler($this->setting());
     }
 

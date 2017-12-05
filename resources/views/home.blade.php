@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard:
-                    @if(optional(Auth::user()->application->completed) )
-                        {{ Auth::user()->application->fullname }}
+                <div class="panel-heading"><h3>Dashboard</h3>
+                    @if($application->completed)
+                        {{ $application->fullname }}
                     @else
                         {{ Auth::user()->email }}
                     @endif
@@ -22,10 +22,11 @@
                     @endif
 
                     <p>The section below lists the current status of your entry</p>
+
                     <div class="row" >
                         <div class="col-sm-4">Step 1<br />
                              <a href="{{ route('show_application_form') }}" >
-                            @if(optional(Auth::user()->application->completed ))
+                            @if($application->completed )
                                 Edit your registration form
                             @else
                                 Fill out your registration form
@@ -35,25 +36,25 @@
                         </div>
                         <div class="col-sm-6">
                             <p>
-                                @if(optional(Auth::user()->application->completed ))
+                                @if( $application->completed )
                                     (Registration form is complete)
                                 @else
                                     (NOT complete)
                                 @endif
                             </p>
                         </div>
-                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->completed ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{ $application->completed ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
                     <div class="row" >
                         <div class="col-sm-4">Step 2:<br />
 
-                            {!! linkRouteIf(' Upload photos and complete return instructions','entries_upload_form',!Auth::user()->application->submitted ) !!}
+                            {!! linkRouteIf(' Upload photos and complete return instructions','entries_upload_form',!$application->submitted ) !!}
 
                         </div>
                         <div class="col-sm-6">
                             <p>
-                               @if(optional(Auth::user()->application->submitted ))
+                               @if($application->submitted )
                                     (Completed)<br />
                                     <a href="{{ route('entries_upload_form') }}">View your entries</a>
                                 @else
@@ -67,8 +68,10 @@
 
                     <div class="row">
                         <div class="col-sm-4">Step 3<br />
-                            @if(optional(Auth::user()->application->submitted) &&  !! optional(Auth::user()->application->paid) )
+                            @if($application->submitted &&  ! $application->paid )
                                 <a href="{{ route('checkout') }}">Pay entry fee</a>
+                            @elseif($application->paid)
+                                Pay entry fee (Entry fee has been paid)
                             @else
                                 Pay entry fee
                             @endif
@@ -78,15 +81,29 @@
                         </div>
                         <div class="col-sm-6">
                             <p>
-                                @if(optional(Auth::user()->application->paid))
-                                    List the date , payment method , the amount and the return option selected
+                                @if($application->paid)
+                                    <table>
+                                        <tr>
+                                            <td>Payment Method:&nbsp;</td>
+                                            <td>{{ ucWords(strtolower($application->payment_method)) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment date:&nbsp;</td>
+                                            <td>{{ $application->payment_date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment amount:&nbsp;</td>
+                                            <td>${{ number_format($application->mc_gross,2) }}</td>
+                                        </tr>
+
+                                    </table>
                                 @else
                                     No checkout details available as yet
                                 @endif
 
                             </p>
                         </div>
-                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{ $application->paid ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
 

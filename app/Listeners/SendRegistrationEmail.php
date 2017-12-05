@@ -27,6 +27,6 @@ class SendRegistrationEmail
     public function handle(UserHasRegistered $event)
     {
         $user = $event->user;
-        Mail::to($user->email)->send(new ConfirmEmail($user));
+        Mail::to($user->email)->queue(new ConfirmEmail($user));
     }
 }

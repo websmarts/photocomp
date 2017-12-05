@@ -2,58 +2,64 @@
 
 @section('content')
 <div class="container" >
-	{{ dump($application) }}
+	{{-- dump($application) --}}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-			<h1>Paypal Checkout</h1>
+        	@include('layouts.partials.back_to_dashboard_link')
+
+			<h1>Make payment via PayPal</h1>
 
 		<form target="_self" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
-		<input type="text" name="upload" value="1"><br>
+		<input type="hidden" name="upload" value="1">
 
-		<input type="text" name="cmd" value="_cart"><br>
-		<input type="text" name="business" value="enquiries-facilitator@warragulnational.org"><br>
+		<input type="hidden" name="cmd" value="_cart">
+		<input type="hidden" name="business" value="enquiries-facilitator@warragulnational.org">
 
-		<input type="text" name="item_name_1" value="Entry fee"><br>
-		<input type="text" name="quantity_1" value="1"><br>
-		<input type="text" name="amount_1" value="{{ $application->entries_cost }}"><br>
+		<input type="hidden" name="item_name_1" value="Entry fee">
+		<input type="hidden" name="quantity_1" value="1">
+		<input type="hidden" name="amount_1" value="{{ $application->entries_cost }}">
 
-		<input type="text" name="item_name_2" value="Return handling fee"><br>
-		<input type="text" name="quantity_2" value="1"><br>
-		<input type="text" name="amount_2" value="{{ $application->return_postage }}"><br>
+		<input type="hidden" name="item_name_2" value="Return handling fee">
+		<input type="hidden" name="quantity_2" value="1">
+		<input type="hidden" name="amount_2" value="{{ $application->return_postage }}">
 
 
 
-		<input type="text" name="currency_code" value="AUD"><br>
+		<input type="hidden" name="currency_code" value="AUD">
 
 		<!-- a custome tracking var -->
-		<input type="text" name="custom" value="{{ $application->user_id }}"><br>
+		<input type="hidden" name="custom" value="{{ $application->user_id }}">
 
-		<input type="text" name="image_url" value="http://photocomp.warragulnational.org/images/logo.jpg"><br>
+		<input type="hidden" name="image_url" value="http://photocomp.warragulnational.org/images/logo.jpg">
 
-		<input type="text" name="cancel_return" value="{{ env('PAYPAL_CANCEL_URL') }}"><br>
-		<input type="text" name="return" value="{{ env('PAYPAL_SUCCESS_URL') }}"><br>
-		<input type="text" name="notify_url" value="{{ env('PAYPAL_NOTIFY_URL') }}"><br>
-		<input type="text" name="rm" value="2"><br>
+		<input type="hidden" name="cancel_return" value="{{ env('PAYPAL_CANCEL_URL') }}">
+		<input type="hidden" name="return" value="{{ env('PAYPAL_SUCCESS_URL') }}">
+		<input type="hidden" name="notify_url" value="{{ env('PAYPAL_NOTIFY_URL') }}">
+		<input type="hidden" name="rm" value="0">
 
-		<input type="text" name="address1" value="{{ $application->address1 }}"><br>
-		<input type="text" name="address2" value="{{ $application->address2 }}"><br>
-		<input type="text" name="city" value="{{ $application->city }}"><br>
-		<input type="text" name="state" value="{{ $application->state }}"><br>
-		<input type="text" name="country" value="AU"><br>
-		<input type="text" name="zip" value="{{ $application->postcode }}"><br>
-		<input type="text" name="first_name" value="{{ $application->firstname }}"><br>
-		<input type="text" name="last_name" value="{{ $application->lastname }}"><br>
-		<input type="text" name="email" value="{{ Auth::user()->email }}"><br>
+		<input type="hidden" name="address1" value="{{ $application->address1 }}">
+		<input type="hidden" name="address2" value="{{ $application->address2 }}">
+		<input type="hidden" name="city" value="{{ $application->city }}">
+		<input type="hidden" name="state" value="{{ $application->state }}">
+		<input type="hidden" name="country" value="AU">
+		<input type="hidden" name="zip" value="{{ $application->postcode }}">
+		<input type="hidden" name="first_name" value="{{ $application->firstname }}">
+		<input type="hidden" name="last_name" value="{{ $application->lastname }}">
+		<input type="hidden" name="email" value="{{ Auth::user()->email }}">
 
 
 <!-- 4239538223886700 12/22 -->
-		<!--<input type="text" name="image_url" value="150px">-->
+		<!--<input type="hidden" name="image_url" value="150px">-->
+
+		<p>The cost for your competition entry is ${{ number_format($application->entries_cost + $application->return_postage,2) }}</p>
+		<p>Click the button below to make you payment via PayPal. Note you will be offered options to pay by credit cards or from your PayPal ccount if you have one.</p><br />
 
 
-		<input type="submit" name="Pay now">
+		<input type="submit" name="Pay now" value="Make payment via PayPal">
+		<p>&nbsp;</p>
 
-		<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Credit Card Badges">
+		<p><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Credit Card Badges"></p>
 		</form>
 
 		</div>

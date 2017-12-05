@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Photo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -9,20 +10,18 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class ExportPhoto implements ShouldQueue
+class SetupForPhotoExport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public $photo;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($photo)
+    public function __construct()
     {
-        $this->photo = $photo;
+        //
     }
 
     /**
@@ -32,16 +31,10 @@ class ExportPhoto implements ShouldQueue
      */
     public function handle()
     {
+        Photo::where('exported', 'yes')->update(['exported' => 'no']);
 
-        $fileContents = Storage::get('photos/' . $this->photo->filepath);
+        Storage::disk('s3')->deleteDirectory(env('AWS_EXPORT_FOLDER'));
 
-        Storage::disk('s3')->put(env('AWS_EXPORT_FOLDER') . '/' . $this->photo->export_filename, $fileContents);
-
-        $this->photo->exported = 'yes';
-
-        $this->photo->save();
-
-        Storage::append('logs/export.log', $this->photo->updated_at . ' - ' . $this->photo->export_filename);
-
+        Storage::disk('s3')->makeDirectory(env('AWS_EXPORT_FOLDER'));
     }
 }
