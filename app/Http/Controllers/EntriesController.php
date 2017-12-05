@@ -40,7 +40,7 @@ class EntriesController extends Controller
             return view('entries.show', compact('categories'));
         }
 
-        $returnOptions = explode("\n", $this->setting('return_instructions'));
+        $returnOptions = explode("\r\n", $this->setting('return_instructions'));
 
         $application = Auth::user()->application;
 

@@ -28,8 +28,14 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::post('settings', 'SettingsController@update')->name('admin.settings.update');
     Route::get('clubs', 'ClubsController@index')->name('admin.clubs');
     Route::post('clubs', 'ClubsController@update')->name('admin.clubs.update');
-    Route::get('applications', 'AdminController@applications')->name('admin.applications');
+// List, Edit, Update applications
+    Route::get('applications', 'AdminApplicationController@index')->name('admin.applications');
+    Route::get('application/{application}/edit', 'AdminApplicationController@edit')->name('admin.application.edit');
+    Route::post('application/{application}', 'AdminApplicationController@update')->name('admin.application.update');
+
     Route::get('export/photos', 'ExportPhotosController@export')->name('admin.export.photos');
+
+    Route::get('reset', 'AdminController@reset')->name('admin.master.reset');
 });
 
 Route::middleware(['auth', 'can:enter'])->group(function () {

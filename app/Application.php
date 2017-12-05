@@ -35,13 +35,23 @@ class Application extends Model
         'return_postage',
         'return_post_option',
         'submitted',
-        'payment_datetime',
         'payment_method',
+
+        'mc_gross',
+        'mc_gross_1',
+        'mc_gross_2',
+        'mc_fee',
+        'txn_id',
+        'payment_date',
     ];
 
     protected $casts = [
         'entries_cost' => 'float',
         'number_of_entries' => 'integer',
+        'mc_gross' => 'float',
+        'mc_gross_1' => 'float',
+        'mc_gross_2' => 'float',
+        'mc_fee' => 'float',
     ];
 
     /**
@@ -51,7 +61,7 @@ class Application extends Model
      */
     public function getFullnameAttribute()
     {
-        return "{$this->firstname} {$this->lastname}";
+        return "{$this->salutation} {$this->firstname} {$this->lastname}";
     }
 
     public function getCompletedAttribute()

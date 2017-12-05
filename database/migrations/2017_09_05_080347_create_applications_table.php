@@ -33,7 +33,7 @@ class CreateApplicationsTable extends Migration
 
             $table->integer('number_of_entries')->unsigned()->default(0);
             $table->integer('number_of_sections')->unsigned()->default(0);
-            $table->string('return_postage')->nullable();
+            $table->float('return_postage')->nullable();
             $table->string('return_post_option')->nullable();
             $table->float('entries_cost')->default(0);
 
@@ -47,6 +47,8 @@ class CreateApplicationsTable extends Migration
             $table->float('mc_fee')->nullable();
             $table->string('txn_id')->nullable();
             $table->string('payment_date')->nullable();
+
+            $table->mediumText('notes')->nullable();
 
             $table->timestamps();
         });

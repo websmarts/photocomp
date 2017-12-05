@@ -68,6 +68,8 @@
 
 
 	<div id="entries"></div>
+	{{-- dump($application->toArray()) --}}
+	{{-- dump($returnOptions) --}}
 
 	<p>PLEASE ADDRESS ENTRIES TO</p>
 	<p>Warragul Camera Club 42nd National Photographic Exhibition<br />
@@ -108,8 +110,8 @@
 
 	<hr>
 
-	<p>Only click the CHECKOUT button below after you have completed uploading all of your photos and indicated your return instructions.</p>
+	<p>Only click the SAVE ENTRY FORM button below after you have completed uploading all of your photos and indicated your return instructions.</p>
 	<p>If you would like to complete this section later it is safe to logout and login again later when you are ready to continue updating the form, the system will remember all the photos you have uploaded to date.</p>
 
-	<button id="final_submit_button" class="btn btn-primary">Checkout</button>
+	<button id="final_submit_button" class="btn btn-primary">Save Entry Form</button>
 	<p>&nbsp;</p>

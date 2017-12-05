@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row">
+        {{-- dump($application) --}}
+        {{-- dump($application->completed) --}}
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Dashboard</h3>
@@ -25,21 +27,21 @@
 
                     <div class="row" >
                         <div class="col-sm-4">Step 1<br />
-                             <a href="{{ route('show_application_form') }}" >
-                            @if($application->completed )
-                                Edit your registration form
-                            @else
-                                Fill out your registration form
+                            @if(!$application->completed )
+                             <a href="{{ route('show_application_form') }}" >Complete the Application Form</a>
+                             @else
+                             Complete the Application Form
                             @endif
-                           </a>
+
 
                         </div>
                         <div class="col-sm-6">
                             <p>
                                 @if( $application->completed )
-                                    (Registration form is complete)
+                                    Application Form has been completed<br />
+                                    <a href="{{ route('show_application_form') }}" >Edit Application Form</a>
                                 @else
-                                    (NOT complete)
+                                    Application Form has NOT been completed
                                 @endif
                             </p>
                         </div>
@@ -48,22 +50,35 @@
 
                     <div class="row" >
                         <div class="col-sm-4">Step 2:<br />
-
-                            {!! linkRouteIf(' Upload photos and complete return instructions','entries_upload_form',!$application->submitted ) !!}
+                            @if($application->completed && !$application->submitted)
+                            <a href="{{ route('entries_upload_form') }}">Complete the Entry Form</a>
+                            @else
+                            Complete the Entry Form
+                            @endif
 
                         </div>
                         <div class="col-sm-6">
                             <p>
-                               @if($application->submitted )
-                                    (Completed)<br />
-                                    <a href="{{ route('entries_upload_form') }}">View your entries</a>
+
+
+                               @if($application->completed)
+                                    @if($application->submitted )
+                                        Entry form has been completed<br />
+                                        @if( !$application->paid)
+                                            <a href="{{ route('entries_upload_form') }}">Edit Entry Form</a>
+                                        @else( $application->paid)
+                                            <a href="{{ route('entries_upload_form') }}">View Entry Form</a>
+                                        @endif
+                                    @else
+                                        Entry Form has NOT been completed
+                                    @endif
+
                                 @else
-                                    (Work in progres)<br />
-                                    View and edit your entry details
+                                    Please complete Step 1 before Step 2<br />
                                 @endif
                             </p>
                         </div>
-                        <div class="col-sm-2"><span class="icon glyphicon {{Auth::user()->application->submitted ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
+                        <div class="col-sm-2"><span class="icon glyphicon {{ $application->submitted ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span></div>
                     </div>
 
                     <div class="row">
@@ -73,7 +88,7 @@
                             @elseif($application->paid)
                                 Pay entry fee (Entry fee has been paid)
                             @else
-                                Pay entry fee
+                                Pay the entry fee
                             @endif
 
 
@@ -98,7 +113,11 @@
 
                                     </table>
                                 @else
-                                    No checkout details available as yet
+                                    @if($application->submitted)
+                                        The fee for your current entries will be ${{ number_format($application->entries_cost + $application->return_postage,2) }}
+                                    @else
+                                        Complete Step 1 and Step 2 before making payment
+                                    @endif
                                 @endif
 
                             </p>

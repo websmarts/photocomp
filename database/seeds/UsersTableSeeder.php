@@ -14,8 +14,8 @@ class UsersTableSeeder extends Seeder
     {
         // Create the admin users
         User::create([
-            'email' => 'ian@here.com',
-            'password' => 'pass',
+            'email' => env('APP_ADMIN_USERNAME', 'admin'),
+            'password' => env('APP_ADMIN_PASSWORD', 'pass'),
             'is_admin' => 'yes',
             'verified' => 1,
         ]);
