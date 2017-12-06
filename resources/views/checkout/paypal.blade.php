@@ -9,12 +9,12 @@
 
 			<h1>Make payment via PayPal</h1>
 
-		<form target="_self" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+		<form target="_self" action="{{ env('PAYPAL_PAYMENT_URL')}}" method="post">
 
 		<input type="hidden" name="upload" value="1">
 
 		<input type="hidden" name="cmd" value="_cart">
-		<input type="hidden" name="business" value="enquiries-facilitator@warragulnational.org">
+		<input type="hidden" name="business" value="{{ env('PAYPAL_ACCOUNT_EMAIL') }}">
 
 		<input type="hidden" name="item_name_1" value="Entry fee">
 		<input type="hidden" name="quantity_1" value="1">
