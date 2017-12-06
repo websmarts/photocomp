@@ -120,12 +120,14 @@
 
                                         @endif
 
-                                         @if($application->payment_method == 'paypal')
+                                        @if($application->payment_method == 'paypal')
                                         <p>You have indicated you will be paying the entry fee via <strong>Paypal</strong>. </p>
                                         @endif
 
+                                        @if($application->payment_method)
                                         <p>Once your payment has been received your entry will be updated and the payment details will be displayed here.</p>
                                         <p>If you have not made your payment you may change your payment method by <a href="{{ route('checkout') }}">clicking here</a></p>
+                                        @endif
                                     @else
                                        <p>Complete Step 1 and Step 2 before making payment</p>
                                     @endif
