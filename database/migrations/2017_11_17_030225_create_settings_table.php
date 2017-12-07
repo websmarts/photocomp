@@ -18,10 +18,12 @@ class CreateSettingsTable extends Migration
             $table->string('title');
             $table->float('first_section_cost')->default(14);
             $table->float('additional_section_cost')->default(10);
+            $table->float('digital_only_entry_surcharge')->default(2);
             $table->integer('max_entries_per_section')->default(4);
             $table->string('terms_and_conditions_url');
             $table->enum('competition_status', ['Open', 'Closed'])->default('Closed');
             $table->mediumText('return_instructions');
+            $table->enum('paypal_mode', ['Sandbox', 'Live'])->default('Sandbox');
             $table->timestamps();
         });
     }

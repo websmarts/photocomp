@@ -2323,6 +2323,8 @@ window.onload = function () {
   var $entriesCost = 0;
   var $returnPostageCost = 0;
   var $sectionCost = 0;
+  var $categoryCounters = [];
+  var $categoryCounterIndex = [];
 
   var $uploaderExtError = false;
   var $sectionCounter = []; // holds section entry couters.
@@ -2341,6 +2343,8 @@ window.onload = function () {
       loadingDiv = document.getElementById('loadingDiv');
 
   var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restored after upload
+
+  var jpegRegex = /\.jpe?g$/i;
 
   $('#photoTitle').on('keyup', function (e) {
     //console.log('title changed - validate silently with title_check')
@@ -2367,14 +2371,14 @@ window.onload = function () {
     var valid = true;
     var msgParts = [];
 
-    var filename = selectFileBtn.innerHTML;
-    if (!/\.jp[eg]$/i.test(filename)) {
-      if (report_on == 'all' || report_on == 'file_check') {
-        msgParts.push("Select an image (JPEG) file to upload");
-      }
+    // var filename = selectFileBtn.innerHTML;
+    // if(   ! jpegRegex.test(filename) ){
+    //   if(report_on == 'all'  || report_on == 'file_check'){
+    //      msgParts.push("Select an image (JPEG) file to upload");
+    //   }
 
-      valid = false;
-    }
+    //   valid=false;
+    // }
 
     // console.log('title', photoTitle.value);
     // console.log('Title length', photoTitle.value.length);
@@ -2477,13 +2481,20 @@ window.onload = function () {
     var cost = 0;
     var parts = []; // html parts
     parts.push('<div id="thelist"><span id="cost_display"></span>');
+
     $sectionCounter = []; // reset section counters
+    $categoryCounters = []; // reset category counters
     $sectionCount = 0;
+    $categoryCounterIndex = 0;
     $.each(entries, function (category_name, sections) {
       // console.log('CATEGORY_NAME', category_name);
       //console.log('sections', sections);
+      $categoryCounterIndex++;
+
       parts.push('<div class="category">');
       parts.push('<h2>' + category_name + '</h2>');
+
+      $categoryCounters[$categoryCounterIndex] = 0;
 
       $sectionCost = 0;
       $.each(sections, function (section_name, section_entries) {
@@ -2494,10 +2505,13 @@ window.onload = function () {
         var section_item_count = 0;
         if (section_entries.length > 0) {
           $sectionCount++;
+
+          $categoryCounters[$categoryCounterIndex] = 1; // indicates category has entries
         }
         $.each(section_entries, function (index, section_item) {
           // console.log('SECTION_ENTRY_index', index);
           //console.log('SECTION_ITEM', section_item);
+
           section_item_count++;
           $entryCount++;
           $sectionCounter[section_item.section_id] = section_item_count;
@@ -2529,6 +2543,7 @@ window.onload = function () {
     $('#entries').hide().html(combined).fadeIn('slow');
     // $('#total_cost').html('$' + cost);
     // console.log('SECTION COUNTERS',$sectionCounter);
+    // console.log('CATEGORY_COUNTERS',$categoryCounters);
     $entriesCost = cost;
 
     updateTotalCost();
@@ -2579,8 +2594,18 @@ window.onload = function () {
     }, 3000);
   }
 
+  function isDigitalOnlyEntry() {
+    return $categoryCounters[1] > $categoryCounters[2]; // true if only Digital category used
+  }
+
   function updateTotalCost() {
     var total = parseFloat($entriesCost) + parseFloat($returnPostageCost);
+    // Add $2 if enrty is Digital Only if only $categoryCounter[1] ==1
+    if (isDigitalOnlyEntry()) {
+      // Add the $2 cataglog postage fee
+      total += digital_only_entry_surcharge;
+    }
+
     // console.log('TOTAL COST', total);
     if (total > 0) {
       $('#final_submit_button').removeAttr('disabled');
@@ -2639,7 +2664,7 @@ window.onload = function () {
       // var response = $.parseJSON(data)
 
       if (response.status == 'success') {
-        document.location = '/home';
+        document.location = '/checkout';
       } else {
 
         var message = 'A problem was encountered ';
@@ -2671,10 +2696,11 @@ window.onload = function () {
     },
     onChange: function onChange(filename, extension, selectFileBtn, filesize, file) {
 
-      if (!/\jp[eg]$/i.test(extension)) {
+      // console.log(filename,extension,filesize)
+      if (!/jpe?g$/i.test(extension) || filesize > 2047) {
         this.removeCurrent();
         // this.clearQueue();
-        showMsg('Files must be a JPEG', 'error');
+        showMsg('Files must be a JPEG and smaller than 2MB', 'error');
         return false;
       }
 

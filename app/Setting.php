@@ -10,9 +10,11 @@ class Setting extends Model
         'title',
         'first_section_cost',
         'additional_section_cost',
+        'digital_only_entry_surcharge',
         'max_entries_per_section',
         'terms_and_conditions_url',
         'competition_status',
         'return_instructions',
+        'paypal_mode',
     ];
 }

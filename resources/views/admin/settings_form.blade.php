@@ -57,7 +57,18 @@
 				                </span>
 				            @endif
 				        </div>
-						</div>
+					</div>
+					<div class="row" style="margin-top:20px;">
+				        <div class="col-xs-12">
+				            <label for="digital_only_entry_surcharge" class="control-label">Digital only entry surcharge (eg 2.00)</label>
+				            <input type="text" class="form-control" id="digital_only_entry_surcharge" name="digital_only_entry_surcharge" value="{{ old('digital_only_entry_surcharge',$settings->digital_only_entry_surcharge) }}" />
+				            @if ($errors->has('digital_only_entry_surcharge'))
+				                <span class="help-block">
+				                    <strong>{{ $errors->first('digital_only_entry_surcharge') }}</strong>
+				                </span>
+				            @endif
+				        </div>
+					</div>
 			       	<div class="row" style="margin-top:20px;">
 				        <div class="col-xs-12">
 				            <label for="max_entries_per_section" class="control-label">Maximum entries per section</label>
@@ -83,7 +94,7 @@
 				        </div>
 			    	</div>
 
-			    	 <div class="row">
+			    	<div class="row">
 				        <div class="col-xs-12">
 				            <label class="control-label">Competition status</label>
 				            <select  class="form-control" name="competition_status" >
@@ -95,6 +106,22 @@
 				            @if ($errors->has('club_nomination'))
 				                <span class="help-block">
 				                    <strong>{{ $errors->first('club_nomination') }}</strong>
+				                </span>
+				            @endif
+				        </div>
+				    </div>
+				    <div class="row">
+				        <div class="col-xs-12">
+				            <label class="control-label">Paypal mode (Sandbox or Live) </label>
+				            <select  class="form-control" name="paypal_mode" >
+				            <option  value="">Select status</option>
+				           	@foreach(['Sandbox','Live'] as $v)
+								<option {{ old('paypal_mode',$settings->paypal_mode) == $v ? 'selected' : '' }} value="{{$v}}">{{ $v }}</option>
+							@endforeach
+				            </select>
+				            @if ($errors->has('paypal_mode'))
+				                <span class="help-block">
+				                    <strong>{{ $errors->first('paypal_mode') }}</strong>
 				                </span>
 				            @endif
 				        </div>
