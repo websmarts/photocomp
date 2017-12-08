@@ -15,7 +15,7 @@
 			  <button id="select_file_btn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click to<br />select image to upload</button>
 			</div>
 			<div class="col-xs-4">
-			  <div class="notice">IMPORTANT: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high.</div>
+			  <div class="notice">IMPORTANT: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high. Maximum file size that can be uploaded is 2MB.</div>
 			</div>
 
 		</div>
@@ -113,5 +113,5 @@
 	<p>Only click the SAVE ENTRY FORM button below after you have completed uploading all of your photos and indicated your return instructions.</p>
 	<p>If you would like to complete this section later it is safe to logout and login again later when you are ready to continue updating the form, the system will remember all the photos you have uploaded to date.</p>
 
-	<button id="final_submit_button" class="btn btn-primary">Save Entry Form</button>
+	<button id="final_submit_button" class="btn btn-primary">Finalise Entry Form</button>
 	<p>&nbsp;</p>
