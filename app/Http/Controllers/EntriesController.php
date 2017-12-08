@@ -79,7 +79,7 @@ class EntriesController extends Controller
         ];
 
         // Send Email with Application confirmation
-        Mail::to($to)->send(new ApplicationReport($this->user));
+        Mail::to($to)->queue(new ApplicationReport($this->user));
 
         return $this->Jsend('success', null, null, false);
     }
