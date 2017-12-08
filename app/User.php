@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'is_admin',
+        'email', 'password', 'is_admin', 'api_token',
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token' . 'api_token',
     ];
 
     public static function boot()
@@ -33,6 +33,7 @@ class User extends Authenticatable
 
         static::creating(function ($user) {
             $user->token = str_random(30);
+            $user->api_token = str_random(60);
         });
 
     }

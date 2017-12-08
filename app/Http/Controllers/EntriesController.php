@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Mail\ApplicationReport;
 use App\Utility\PhotosHandler;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class EntriesController extends Controller
@@ -20,6 +22,8 @@ class EntriesController extends Controller
 
     private $photosHandler; // handler for processing photo actions
 
+    public $user;
+
     /**
      * Create a new controller instance.
      *
@@ -27,7 +31,9 @@ class EntriesController extends Controller
      */
     public function __construct()
     {
-        $this->photosHandler = new PhotosHandler($this->setting());
+
+        $this->user = Auth::user();
+
     }
 
     public function index()
@@ -36,7 +42,7 @@ class EntriesController extends Controller
         $categories = Category::with('sections')->get();
 
         // Show view that does not allow any changes if entrant has paid
-        if (Auth::user()->application->paid) {
+        if (Auth::user()->application->submitted) {
             return view('entries.show', compact('categories'));
         }
 
@@ -55,6 +61,7 @@ class EntriesController extends Controller
      */
     public function submit(Request $request)
     {
+        $this->user = Auth::guard('api')->user();
 
         $data = [
             'number_of_entries' => (int) $request->input('number_of_entries'),
@@ -65,13 +72,24 @@ class EntriesController extends Controller
             'submitted' => Carbon::now(),
         ];
 
-        $request->user()->application->update($data);
+        $this->user->application->update($data);
+
+        $to = [
+            'email' => $this->user->email,
+        ];
+
+        // Send Email with Application confirmation
+        Mail::to($to)->send(new ApplicationReport($this->user));
 
         return $this->Jsend('success', null, null, false);
     }
 
     public function uploader(Request $request)
     {
+
+        $this->user = Auth::guard('api')->user();
+        $this->photosHandler = new PhotosHandler($this->setting(), $this->user);
+
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,jpeg|max:2048',
             'category_id' => 'required|integer|min:1',
@@ -106,6 +124,9 @@ class EntriesController extends Controller
 
     public function process(Request $request)
     {
+        $this->user = Auth::guard('api')->user();
+        $this->photosHandler = new PhotosHandler($this->setting(), $this->user);
+
         $action = $request->input('action');
         $photoId = (int) $request->input('data', 0);
 
@@ -126,7 +147,7 @@ class EntriesController extends Controller
     {
 
         $categories = Category::with('sections')->orderBy('display_order', 'asc')->get();
-        $photos = Auth::user()->photos;
+        $photos = $this->user->photos;
 
         $categories->each(function ($category, $ckey) use ($photos) {
             $sections = $category->sections->sortBy('display_order');

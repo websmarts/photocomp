@@ -39,7 +39,7 @@
                             <p>
                                 @if( $application->completed )
                                     Application Form has been completed<br />
-                                    <a href="{{ route('show_application_form') }}" >Edit Application Form</a>
+                                    <!--<a href="{{ route('show_application_form') }}" >Edit Application Form</a>-->
                                 @else
                                     Application Form has NOT been completed
                                 @endif
@@ -64,8 +64,8 @@
                                @if($application->completed)
                                     @if($application->submitted )
                                         Entry form has been completed<br />
-                                        @if( !$application->paid)
-                                            <a href="{{ route('entries_upload_form') }}">Edit Entry Form</a>
+                                        @if( !$application->submitted)
+                                            <a href="{{ route('entries_upload_form') }}">View Entry Form</a>
                                         @else( $application->paid)
                                             <a href="{{ route('entries_upload_form') }}">View Entry Form</a>
                                         @endif

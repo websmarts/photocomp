@@ -2308,6 +2308,8 @@ return ss;
 /***/ "./resources/assets/js/entries_form.js":
 /***/ (function(module, exports, __webpack_require__) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var ss = __webpack_require__("./node_modules/simple-ajax-uploader/SimpleAjaxUploader.js");
 
 function escapeTags(str) {
@@ -2315,6 +2317,7 @@ function escapeTags(str) {
 }
 
 window.onload = function () {
+  var _ref;
 
   // GLOBAL STATE VARS
   window.$entries; // list of entries
@@ -2415,7 +2418,7 @@ window.onload = function () {
     if (!valid) {
       $(uploadEntryBtn).prop('disabled', true); // disable upload btn
     } else {
-      $(uploadEntryBtn).prop('disabled', false); // disable upload btn
+      $(uploadEntryBtn).prop('disabled', false); // enable upload btn
     }
 
     return valid;
@@ -2554,8 +2557,9 @@ window.onload = function () {
     return $.ajax({
       method: "POST",
       dataType: "json",
-      url: "/process",
+      url: "api/process",
       data: {
+        api_token: $apiToken,
         action: action,
         data: data
       }
@@ -2563,8 +2567,7 @@ window.onload = function () {
       // var response = $.parseJSON(data)
       // $entries = response.entries;
       // $user = response.user;
-      //console.log(response.status)
-
+      //console.log(response.status   
 
     });
   };
@@ -2652,13 +2655,14 @@ window.onload = function () {
     // make a POST call
     $.ajax({
       method: "POST",
-      url: "/submit",
+      url: "api/submit",
       data: {
         number_of_entries: $entryCount,
         number_of_sections: $sectionCount,
         entries_cost: $entriesCost,
         return_postage: $returnPostageCost,
-        return_post_option: $('#return_instructions').val()
+        return_post_option: $('#return_instructions').val(),
+        api_token: $apiToken
       }
     }).done(function (response) {
       // var response = $.parseJSON(data)
@@ -2677,10 +2681,10 @@ window.onload = function () {
     });
   });
 
-  var uploader = new ss.SimpleUpload({
+  var uploader = new ss.SimpleUpload((_ref = {
     debug: false,
     button: selectFileBtn,
-    url: '/upload',
+    url: 'api/upload',
     autoSubmit: false,
     allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
     name: 'image',
@@ -2688,75 +2692,73 @@ window.onload = function () {
     hoverClass: 'hover',
     focusClass: 'focus',
     responseType: 'json',
-    customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-    startXHR: function startXHR() {
-      ajaxActive = true;
-      progressOuter.style.display = 'block'; // make progress bar visible
-      this.setProgressBar(progressBar);
-    },
-    onChange: function onChange(filename, extension, selectFileBtn, filesize, file) {
+    customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+  }, _defineProperty(_ref, 'customHeaders', { 'Authorization': 'Bearer ' + $apiToken }), _defineProperty(_ref, 'startXHR', function startXHR() {
+    ajaxActive = true;
+    progressOuter.style.display = 'block'; // make progress bar visible
+    this.setProgressBar(progressBar);
+  }), _defineProperty(_ref, 'onChange', function onChange(filename, extension, selectFileBtn, filesize, file) {
 
-      // console.log(filename,extension,filesize)
-      if (!/jpe?g$/i.test(extension) || filesize > 2047) {
-        this.removeCurrent();
-        // this.clearQueue();
-        showMsg('Files must be a JPEG and smaller than 2MB', 'error');
-        return false;
-      }
-
-      selectFileBtn.innerHTML = filename;
-      validateInputs(true, 'file_check');
-
-      // return false; // stops file auto uploading with change event
-    },
-    onSubmit: function onSubmit() {
-
-      var self = this;
-      $('#msgBox').hide(); // empty the message box
-
-
-      selectFileBtn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
-      self.setData({
-        title: photoTitle.value,
-        section_id: getSectionId(),
-        category_id: getCategoryId()
-      });
-    },
-
-    onComplete: function onComplete(filename, response) {
-      selectFileBtn.innerHTML = $btnText; //'Choose Another File';
-      progressOuter.style.display = 'none'; // hide progress bar when upload is completed
-      ajaxActive = false;
-      if (!response) {
-        //console.log('onComplete respones:',response);
-        showMsg('Unable to upload file', 'error');
-        return;
-      }
-      //console.log(response)
-
-      if (response.status == 'success') {
-        //console.log(response);
-        // display entries
-        list_entries(response.data);
-
-        showMsg('<strong>' + escapeTags(filename) + '</strong>' + ' successfully uploaded.', 'success');
-        // TODO clear the form
-        clear_upload_form();
-      } else {
-        if (response.status == 'fail') {
-          clear_upload_form();
-          showMsg(escapeTags(response.message), 'error');
-        } else {
-          showMsg('An error occurred and the upload failed.', 'error');
-        }
-      }
-    },
-    onError: function onError() {
-      ajaxActive = false;
-      progressOuter.style.display = 'none';
-      showMsg('Unable to upload file', 'warning');
+    // console.log(filename,extension,filesize)
+    if (!/jpe?g$/i.test(extension) || filesize > 2047) {
+      this.removeCurrent();
+      // this.clearQueue();
+      showMsg('Files must be a JPEG and smaller than 2MB', 'error');
+      return false;
     }
-  });
+
+    selectFileBtn.innerHTML = filename;
+    validateInputs(true, 'file_check');
+
+    // return false; // stops file auto uploading with change event
+  }), _defineProperty(_ref, 'onSubmit', function onSubmit() {
+
+    var self = this;
+    $('#msgBox').hide(); // empty the message box
+
+
+    selectFileBtn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
+    self.setData({
+      title: photoTitle.value,
+      section_id: getSectionId(),
+      category_id: getCategoryId()
+    });
+  }), _defineProperty(_ref, 'onComplete', function onComplete(filename, response) {
+    selectFileBtn.innerHTML = $btnText; //'Choose Another File';
+    progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+    ajaxActive = false;
+    if (!response) {
+      //console.log('onComplete respones:',response);
+      showMsg('Unable to upload file', 'error');
+      return;
+    }
+    //console.log(response)
+
+    if (response.status == 'success') {
+      //console.log(response);
+      // display entries
+      list_entries(response.data);
+
+      showMsg('<strong>' + escapeTags(filename) + '</strong>' + ' successfully uploaded.', 'success');
+      // TODO clear the form
+      clear_upload_form();
+    } else {
+      if (response.status == 'fail') {
+        clear_upload_form();
+        showMsg(escapeTags(response.message), 'error');
+      } else {
+        showMsg('An error occurred and the upload failed.', 'error');
+      }
+    }
+  }), _defineProperty(_ref, 'onError', function onError() {
+    selectFileBtn.innerHTML = $btnText; //'Choose Another File';
+    ajaxActive = false;
+    progressOuter.style.display = 'none';
+
+    showMsg('Unable to upload file', 'warning');
+    $(uploadEntryBtn).prop('disabled', true); // disable upload btn
+    clear_upload_form();
+  }), _ref));
 
   $returnPostageCost = application_return_postage; // initial value on page load
 

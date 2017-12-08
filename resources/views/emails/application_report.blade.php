@@ -1,36 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Your Competition Entry Details</title>
+</head>
+<body style="font-family:arial">
+
+<p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
+<p>Payment status: Pending payment</p>
+	<p style="font-size:120%">Summary of your entry details</p>
+	{{-- dump($settings) --}}
+	{{-- dump($categories) --}}
+	{{-- dump($user) --}}
+	{{-- dump($user->application) --}}
+	{{-- dump($user->photos->count()) --}}
 @php
-$user = Auth::user();
 $application  = $user->application;
 @endphp
-{{-- dump($settings) --}}
-{{-- dump($categories) --}}
-{{-- dump($user) --}}
-{{-- dump($user->application) --}}
-{{-- dump($user->photos->count()) --}}
-<p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
-<p>{{ date('j-m-Y')}}</p>
-
-@if($application->paid)
-<p>Payment status: Paid</p>
-<p>Payment method: {{ $application->payment_method }}</p>
-<p>Paid amount ($): {{ number_format($application->mc_gross,2) }}</p>
-<p>Payment reveived: {{ $application->payment_date }}</p>
-@else
-<p>Payment status: Pending payment</p>
-<p>
-  @if($application->submitted && !$application->payment_method )
-    <a href="{{ route('checkout') }}">Pay entry fee</a>
-  @else
-  Payment method chosen: {{ $application->payment_method }}
-  @endif
-</p>
-
-
-@endif
-<hr>
-
-<p style="font-size:120%;font-weight:bold">Summary of your entry details</p>
-
 
 
 <p>Date submitted: {{ $application->updated_at->toFormattedDateString() }}</p>
@@ -71,11 +57,11 @@ Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.</p>
 		@endphp
 			@if(count($photos))
 			<p style="text-decoration: underline">{{ $category->name }} - {{ $section->name }}</p>
-			<table class="table table-striped">
+			<table>
 
 				@foreach($photos as $photo)
 				<tr>
-					<td width="120"><img src="storage/photos/{{ $photo->filepath  }}"></td><td>{{ $photo->title }}</td>
+					<td><img src="{{ $message->embed(storage_path('app/public/photos/').$photo->filepath)  }}"></td><td>{{ $photo->title }}</td>
 				</tr>
 				@endforeach
 			</table>
@@ -88,3 +74,6 @@ Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.</p>
 @endif
 
 <p>
+
+</body>
+</html>

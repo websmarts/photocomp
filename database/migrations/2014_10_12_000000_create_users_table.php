@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->enum('is_admin', ['yes', 'no'])->default('no');
             $table->boolean('verified')->default(0);
+            $table->string('api_token', 60)->unique();
             $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamps();

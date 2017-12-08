@@ -10,10 +10,12 @@ use Intervention\Image\Facades\Image;
 class PhotosHandler
 {
     private $maxEntriesPerSection;
+    private $user;
 
-    public function __construct($settings)
+    public function __construct($settings, $user)
     {
         $this->maxEntriesPerSection = $settings->max_entries_per_section;
+        $this->user = $user;
     }
 
     private function entryCount($userId, $sectionId)
@@ -26,11 +28,10 @@ class PhotosHandler
 
     public function upload($request, $max_entries_per_section)
     {
-        $user = $request->user();
         $sectionId = (int) $request->input('section_id');
         $categoryId = (int) $request->input('category_id');
 
-        $count = $this->entryCount($user->id, $sectionId);
+        $count = $this->entryCount($this->user->id, $sectionId);
 
         if ($count >= $this->maxEntriesPerSection) {
             $jsend = new Jsend('fail', null, 'Maximum number of entries for section reached');
@@ -68,7 +69,7 @@ class PhotosHandler
             'section_entry_number' => $count++,
         ];
 
-        $user->photos()->create($data);
+        $this->user->photos()->create($data);
 
         return true;
 

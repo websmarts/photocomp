@@ -37,3 +37,10 @@ function clean_string($s)
 {
     return preg_replace(CLEAN_STRING, "", $s);
 }
+
+function user_section_photos($user, $section)
+{
+    return $user->photos->filter(function ($photo) use ($section) {
+        return $photo->section_id == $section->id;
+    })->sortBy('section_entry_number');
+}

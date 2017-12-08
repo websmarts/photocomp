@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +12,12 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+// preview mailable
+Route::get('/mailable', function () {
+
+    return new App\Mail\ApplicationReport(Auth::user());
+});
 
 Route::get('/', 'WelcomeController@index');
 
@@ -53,9 +61,11 @@ Route::middleware(['auth', 'can:enter'])->group(function () {
 
 // Show image entry upload form - ajax uplaod handler
     Route::get('/entries', 'EntriesController@index')->name('entries_upload_form');
-    Route::post('/process', 'EntriesController@process')->name('process');
-    Route::post('/upload', 'EntriesController@uploader')->name('uploader');
-    Route::post('/submit', 'EntriesController@submit');
+
+    // The following were added to the api routes file api.php
+    // Route::post('/process', 'EntriesController@process')->name('process');
+    // Route::post('/upload', 'EntriesController@uploader')->name('uploader');
+    // Route::post('/submit', 'EntriesController@submit');
 
 // Checkout
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');

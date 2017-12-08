@@ -109,7 +109,7 @@ $('#photoTitle').on('keyup', function(e){
     if(! valid ){
       $(uploadEntryBtn).prop('disabled', true); // disable upload btn
     } else {
-      $(uploadEntryBtn).prop('disabled', false); // disable upload btn
+      $(uploadEntryBtn).prop('disabled', false); // enable upload btn
     }
 
     return valid; 
@@ -252,8 +252,9 @@ var remoteCall = function (action, data) {
   return $.ajax({
       method: "POST",
       dataType: "json",
-      url: "/process",
+      url: "api/process",
       data: { 
+        api_token: $apiToken,
         action: action,
         data: data
        }
@@ -262,9 +263,7 @@ var remoteCall = function (action, data) {
       // var response = $.parseJSON(data)
       // $entries = response.entries;
       // $user = response.user;
-      //console.log(response.status)
-
-      
+      //console.log(response.status   
       
     });
 }
@@ -357,13 +356,14 @@ var remoteCall = function (action, data) {
     // make a POST call
     $.ajax({
       method: "POST",
-      url: "/submit",
+      url: "api/submit",
       data: { 
         number_of_entries: $entryCount,
         number_of_sections:$sectionCount,
         entries_cost: $entriesCost,
         return_postage: $returnPostageCost,
-        return_post_option: $('#return_instructions').val()
+        return_post_option: $('#return_instructions').val(),
+        api_token: $apiToken,
        }
     })
     .done(function( response ) {
@@ -391,7 +391,7 @@ var remoteCall = function (action, data) {
   var uploader = new ss.SimpleUpload({
         debug: false,
         button: selectFileBtn,
-        url: '/upload',
+        url: 'api/upload',
         autoSubmit: false,
         allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
         name: 'image',
@@ -400,6 +400,7 @@ var remoteCall = function (action, data) {
         focusClass: 'focus',
         responseType: 'json',
         customHeaders: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        customHeaders: {'Authorization': 'Bearer ' + $apiToken},
         startXHR: function() {
             ajaxActive = true;
             progressOuter.style.display = 'block'; // make progress bar visible
@@ -466,9 +467,13 @@ var remoteCall = function (action, data) {
             }
           },
         onError: function() {
+            selectFileBtn.innerHTML = $btnText; //'Choose Another File';
             ajaxActive = false;
             progressOuter.style.display = 'none';
+
             showMsg('Unable to upload file','warning');
+            $(uploadEntryBtn).prop('disabled', true); // disable upload btn
+            clear_upload_form();
           }
   });
 

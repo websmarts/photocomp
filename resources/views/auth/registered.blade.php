@@ -8,7 +8,11 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                   <h3>Thank you for registering an account. We have sent an email to you with instructions on how to verify and activate your new account.</h3>
+                   <h3>Thank you for registering an account. </h3>
+
+                   <p>You have been sent an email with instructions on how to verify and activate your new account.</p>
+
+                   <p style="background:#f00; color: #eee;padding:15px">If you do not see the confirmation email in your inbox in the next few minutes then be sure to check your SPAM folder. <br />If you have the option, you could instruct your email system that emails being sent from admin@warragulnational.org are NOT spam.</p>
 
                 </div>
             </div>
