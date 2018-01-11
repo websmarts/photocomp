@@ -21,7 +21,7 @@
 
             <li> You then enter your personal details including address (necessary for return of catalogues and your print, etc.) and club membership (if any). (Entrant details are not carried forward from the previous year.)</li>
 
-            <li> The next screen allows you to upload images including digital versions of print entries. (The digital copies of print entries are needed for the catalogue.) Use unembellished titles (e.g. My Winning Image ).</li>
+            <li> The next screen allows you to upload images including digital versions of print entries. (The digital copies of print entries are needed for the catalogue.) Use unembellished titles (e.g. <strong>My Winning Image</strong> ).</li>
 
             <li> Image uploads and their titles are saved automatically. You can leave the entry form at any time and come back to it as many times as you like. You can delete images and replace them with others. (To move an image from one section to another, delete from the original section and upload it again to the other section.)</li>
 
