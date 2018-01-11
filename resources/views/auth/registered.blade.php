@@ -12,7 +12,7 @@
 
                    <p>You have been sent an email with instructions on how to verify and activate your new account.</p>
 
-                   <p style="background:#f00; color: #eee;padding:15px">If you do not see the confirmation email in your inbox in the next few minutes then be sure to check your SPAM folder. <br />If you have the option, you could instruct your email system that emails being sent from admin@warragulnational.org are NOT spam.</p>
+                   <p style="background:#f00; color: #eee;padding:15px">If you do not see the confirmation email in your inbox in the next few minutes then be sure to check your SPAM folder. <br />If you have the option, you could instruct your email system that emails being sent from {{ config('mail.from.address') }} are NOT spam.</p>
 
                 </div>
             </div>

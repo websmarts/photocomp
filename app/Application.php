@@ -63,6 +63,10 @@ class Application extends Model
     {
         return "{$this->salutation} {$this->firstname} {$this->lastname}";
     }
+    public function getShortnameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 
     public function getCompletedAttribute()
     {

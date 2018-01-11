@@ -33,7 +33,7 @@ class Photo extends Model
             . '_' . ($photo->section_entry_number + 1)
             . '_' . ($photo->user_id + 1000)
             . '_' . $photo->title
-            . '_' . clean_string($photo->user->application->fullname) . '.jpg';;
+            . '_' . clean_string($photo->user->application->shortname) . '.jpg';
         });
 
     }
