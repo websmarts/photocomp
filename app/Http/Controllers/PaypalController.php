@@ -65,7 +65,7 @@ class PaypalController extends Controller
                 $to = [
                     'email' => $user->email,
                 ];
-                Mail::to($to)->queue(new ApplicationReport($this->user));
+                Mail::to($to)->queue(new ApplicationReport($user));
             }
 
         } else {
