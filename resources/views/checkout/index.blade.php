@@ -11,8 +11,8 @@
 
 			<h3 style="margin-top:20px">Using PayPal</h3>
 
-			<h4>Pay online via PayPal where you will have the option to either pay with a credit card or directly from your PayPal account if you have one.</h4>
-			<div style="margin-bottom: 80px"> <a class="btn btn-primary" href="{{ route('checkout.using',['method'=>'paypal']) }}">Click to make payment via PayPal</a></div>
+			<h4>Click the button below to make your payment using the secure PayPal payment gateway. You will be offered options to pay via major credit or debit cards or from your PayPal account if you have one.</h4>
+			<div style="margin-bottom: 80px"> <a class="btn btn-primary" href="{{ route('checkout.using',['method'=>'paypal']) }}">Secure PayPal payment gateway</a></div>
 
 
 
