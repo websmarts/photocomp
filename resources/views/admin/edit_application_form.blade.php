@@ -61,7 +61,13 @@
 
 
 
-
+			<div class="form-group">
+			    <div class="row">
+			        <div class="col-xs-12">
+			            <label for="notes" class="control-label">Enter DELETE in the field below to remove the application<br></label>
+			            <input type="text" class="form-control" id="payment_method" name="delete_application" value="" />
+			    </div>
+			</div>
 
 
 			<button class="btn btn-primary">Update Application</button>
