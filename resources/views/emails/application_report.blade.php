@@ -7,7 +7,14 @@
 <body style="font-family:arial">
 
 <p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
-<p>Payment status: Pending payment</p>
+<p>Payment status:
+@if($user->application->txn_id > 0 )
+Received: ${{ number_format($user->application->mc_gross,2) }}
+@else
+Payment pending
+@endif
+
+</p>
 	<p style="font-size:120%">Summary of your entry details</p>
 	{{-- dump($settings) --}}
 	{{-- dump($categories) --}}
@@ -37,7 +44,9 @@ Return option selected: {{ $application->return_post_option or ' - '}} </p>
 
 <p>You may log back into your account at any stage during the competition to review you entry details. </p>
 
+@if(!$user->application->txn_id )
 <p>You can pay for your entry fee using one of the options provided on the on the competition web site - http://photocomp.warragulnational.org </p>
+@endif
 
 <p>PLEASE ADDRESS ENTRIES TO</p>
 <p>{{ $settings->title }}<br />
