@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Mail\ApplicationReport;
+use App\User;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -57,9 +58,12 @@ class PaypalController extends Controller
             if (!$txn && $userId > 0) {
                 Application::where('user_id', $userId)->update($data);
 
+                $user = User::find($userId);
+
                 // Send Email with Application confirmation
+
                 $to = [
-                    'email' => $this->user->email,
+                    'email' => $user->email,
                 ];
                 Mail::to($to)->queue(new ApplicationReport($this->user));
             }
