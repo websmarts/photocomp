@@ -59,7 +59,7 @@
 		<!--<input type="hidden" name="image_url" value="150px">-->
 
 			<p>The cost for your competition entry is ${{ number_format($application->entries_cost + $application->return_postage,2) }}</p>
-			<p>Click the button below to make you payment via PayPal. Note you will be offered options to pay by credit cards or from your PayPal ccount if you have one.</p><br />
+			<p>Click the button below to make your payment using the secure PayPal payment gateway. You will be offered options to pay via major credit or debit cards or from your PayPal account if you have one.</p><br />
 
 
 			<input type="submit" name="Pay now" value="Make payment via PayPal">
