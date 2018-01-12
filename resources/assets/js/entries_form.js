@@ -17,6 +17,7 @@ window.$user; // User data
 window.$entryCount =0;
 var $entriesCost = 0;
 var $returnPostageCost = 0;
+var $catalogFee = 0;
 var $sectionCost = 0;
 var $categoryCounters =[];
 var $categoryCounterIndex =[];
@@ -226,7 +227,7 @@ $('#photoTitle').on('keyup', function(e){
           //parts.push('<div>no section entries</div>');
         } else if (section_item_count > 0 ) {
           if( cost == 0 ){
-            cost += first_section_cost; // First section $12
+            cost += first_section_cost; // First section $14
           } else { 
             cost += additional_section_cost; // each extra section $10
           }
@@ -303,8 +304,11 @@ var remoteCall = function (action, data) {
     var total = parseFloat($entriesCost) + parseFloat($returnPostageCost);
     // Add $2 if enrty is Digital Only if only $categoryCounter[1] ==1
     if( isDigitalOnlyEntry() ){
-      // Add the $2 cataglog postage fee
+      // Add the $2 catalog postage fee
       total += digital_only_entry_surcharge;
+      $catalogFee = digital_only_entry_surcharge;
+    } else {
+      $catalogFee = 0;
     }
 
 
@@ -360,7 +364,7 @@ var remoteCall = function (action, data) {
       data: { 
         number_of_entries: $entryCount,
         number_of_sections:$sectionCount,
-        entries_cost: $entriesCost,
+        entries_cost: $entriesCost + $catalogFee,
         return_postage: $returnPostageCost,
         return_post_option: $('#return_instructions').val(),
         api_token: $apiToken,

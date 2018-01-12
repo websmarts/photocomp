@@ -34,7 +34,7 @@
 
 
 
-            <p>The competition terms and conditions can be <a href="{{ $settings->terms_and_conditions_url }}">viewed here</a></p>
+
 
             @endif
 

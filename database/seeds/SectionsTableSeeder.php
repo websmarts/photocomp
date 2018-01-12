@@ -15,16 +15,16 @@ class SectionsTableSeeder extends Seeder
         // Create entry Categories
         //
         $categoryIds = [1, 2];
-        $sections[1] = ['Still Life', 'Open Digital', 'Creative Digital', 'Seascape', 'Animals & Wildlife'];
+        $sections[1] = ['Still Life', 'Photo Journalism', 'Open', 'Seascape', 'Nature'];
         $sections[2] = [
             'Open Prints Monochrome',
             'Open Prints Colour',
-            'Nature Prints Mono or Colour',
-            'Photo Journalism/Social Doc Prints Mono or Colour',
+            'Animal Prints Mono or Colour',
             'Architecture Prints Mono or Colour',
+            'Creative Prints Mono or Colour',
             'Landscape Prints',
             'Portrait/People Prints Mono or Colour',
-            'Train Prints Mono or Color',
+
         ];
         foreach ($categoryIds as $categoryId) {
             $displayOrder = 1;

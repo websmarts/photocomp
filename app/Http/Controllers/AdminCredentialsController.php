@@ -25,7 +25,7 @@ class AdminCredentialsController extends Controller
 
         flash('Administrator Credentials have been updated');
 
-        return redirect()->rouite('admin.dashboard');
+        return redirect()->route('admin.dashboard');
 
     }
 

@@ -10,6 +10,7 @@
 
 			<h1>List of Applications</h1>
 			{{-- dump($applications->toArray()) --}}
+			<p><a href="{{ route('admin.application.exportcsv') }}">Export Application (csv file)</a></p>
 
 			@if($applications->count())
 			<table class="table table-stiped">

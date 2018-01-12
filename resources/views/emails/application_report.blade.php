@@ -35,15 +35,18 @@ $application  = $user->application;
 Return option selected: {{ $application->return_post_option or ' - '}} </p>
 <p>Cost of enrties ($): {{ number_format($application->entries_cost,2) }}</p>
 
-<p>You may log back into your account at any stage during the competition to review you entriy details. </p>
+<p>You may log back into your account at any stage during the competition to review you entry details. </p>
 
 <p>You can pay for your entry fee using one of the options provided on the on the competion web site - http://potocomp.warragulnational.org </p>
 
 <p>PLEASE ADDRESS ENTRIES TO</p>
-<p>Warragul Camera Club 42nd National Photographic Exhibition<br />
+<p>{{ $settings->title }}<br />
 P.O. Box 436, Warragul. Vic.  3820<br />
-<p>OR DELIVERED TO<br />
-Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.</p>
+<p>OR DELIVER TO<br />
+Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.<br />
+or<br />
+	Roylaines P/L 148 Main Street,<br />Pakenham. Vic. 3810.
+</p>
 
 @if($user->photos->count())
 <hr>

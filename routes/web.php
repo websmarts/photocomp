@@ -39,12 +39,17 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('credentials', 'AdminCredentialsController@index')->name('admin.credentials.form');
     Route::post('credentials', 'AdminCredentialsController@update')->name('admin.credentials.update');
 
+    Route::get('sections', 'AdminCategoryController@index')->name('admin.category.form');
+    Route::post('sections', 'AdminCategoryController@update')->name('admin.category.update');
+
     Route::get('clubs', 'ClubsController@index')->name('admin.clubs');
     Route::post('clubs', 'ClubsController@update')->name('admin.clubs.update');
 // List, Edit, Update applications
     Route::get('applications', 'AdminApplicationController@index')->name('admin.applications');
     Route::get('application/{application}/edit', 'AdminApplicationController@edit')->name('admin.application.edit');
     Route::post('application/{application}', 'AdminApplicationController@update')->name('admin.application.update');
+
+    Route::get('application/exportcsv', 'AdminExportController@exportcsv')->name('admin.application.exportcsv');
 
     Route::get('export/photos', 'ExportPhotosController@export')->name('admin.export.photos');
 
