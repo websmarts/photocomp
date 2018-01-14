@@ -2349,6 +2349,23 @@ window.onload = function () {
   var $btnText = selectFileBtn.innerHTML; // initial text in the btn, gets restored after upload
 
   var jpegRegex = /\.jpe?g$/i;
+  var returnPostageRegex = /Return by Post/i;
+
+  $('#return_instructions').on('change', function () {
+    // unless option == Return by Post - force return_postage to zero and disable 
+    // return_postage input field
+    checkReturnPostage();
+  });
+
+  var checkReturnPostage = function checkReturnPostage() {
+    var selectedOption = $('#return_instructions').val();
+    if (!returnPostageRegex.test(selectedOption)) {
+      $('#return_postage').prop('disabled', true);
+      $('#return_postage').val(0);
+    } else {
+      $('#return_postage').prop('disabled', false);
+    }
+  };
 
   $('#photoTitle').on('keyup', function (e) {
     //console.log('title changed - validate silently with title_check')
@@ -2771,6 +2788,9 @@ window.onload = function () {
 
   // disable the upload button
   validateInputs(true);
+
+  // Disable the return postage field if return postage option not set
+  checkReturnPostage();
 
   ajaxActive = true;
   $(loadingDiv).removeClass('display-none');
