@@ -2362,6 +2362,7 @@ window.onload = function () {
     if (!returnPostageRegex.test(selectedOption)) {
       $('#return_postage').prop('disabled', true);
       $('#return_postage').val(0);
+      $returnPostageCost = 0;
     } else {
       $('#return_postage').prop('disabled', false);
     }
