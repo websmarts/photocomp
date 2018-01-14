@@ -39,7 +39,7 @@ class ApplicationController extends Controller
             'address1' => 'required|string|max:255',
             'address2' => 'nullable|string|nullable|max:255',
             'city' => 'required|string|max:255',
-            'postcode' => 'required|string|max:255',
+            'postcode' => 'required|integer|digits:4',
             'state' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'vaps_affiliated' => 'required|string|max:255',

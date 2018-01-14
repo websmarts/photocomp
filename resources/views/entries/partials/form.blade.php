@@ -74,16 +74,16 @@
 	<p>PLEASE ADDRESS ENTRIES TO</p>
 	<p>{{ $settings->title }}<br />
 	P.O. Box 436, Warragul. Vic.  3820<br />
-	<p>OR DELIVER TO<br />
+	OR DELIVER TO<br />
 	Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.<br />
 	or<br />
 	Roylaines P/L 148 Main Street,<br />Pakenham. Vic. 3810.
-</p>
+    </p>
 	<hr>
 
 	<p>ENTRY FEES<br />
 	First section: ${{ number_format($settings->first_section_cost,2)  }}<br />
-	Please note - an additional fee of ${{ number_format($settings->digital_only_entry_surcharge,2) }} for catlog postage will apply for digital-only entries.<br>
+	Please note - an additional fee of ${{ number_format($settings->digital_only_entry_surcharge,2) }} for catalog postage will apply for digital-only entries.<br>
 	Additional sections: ${{ number_format($settings->additional_section_cost,2) }} each<br />
 	</p>
 	<hr>

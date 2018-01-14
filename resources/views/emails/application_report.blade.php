@@ -51,7 +51,7 @@ Return option selected: {{ $application->return_post_option or ' - '}} </p>
 <p>PLEASE ADDRESS ENTRIES TO</p>
 <p>{{ $settings->title }}<br />
 P.O. Box 436, Warragul. Vic.  3820<br />
-<p>OR DELIVER TO<br />
+OR DELIVER TO<br />
 Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.<br />
 or<br />
 	Roylaines P/L 148 Main Street,<br />Pakenham. Vic. 3810.
