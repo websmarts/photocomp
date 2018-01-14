@@ -103,7 +103,8 @@
 	<hr>
 
 	<p>RETURN POSTAGE</p>
-	Return postage for prints only - enter an amount sufficient to cover return:
+	Return postage for prints only - enter an amount sufficient to cover return:<br />
+	(Note: Only enter an amount here if you have selecetd the <strong>Return By Post</strong> option above)
 	<div class="input-group">
 	<div class="input-group-addon">$</div><input type=text id="return_postage" class="form-control" style="width:5em" value="{{ $application->return_postage }}" /></div>
 	<hr>
