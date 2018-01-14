@@ -61,6 +61,8 @@ var checkReturnPostage = function() {
       $('#return_postage').prop('disabled',false);
     }
 
+    updateTotalCost();
+
 }
 
 $('#photoTitle').on('keyup', function(e){

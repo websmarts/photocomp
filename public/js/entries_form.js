@@ -2365,6 +2365,8 @@ window.onload = function () {
     } else {
       $('#return_postage').prop('disabled', false);
     }
+
+    updateTotalCost();
   };
 
   $('#photoTitle').on('keyup', function (e) {
