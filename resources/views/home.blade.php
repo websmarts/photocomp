@@ -83,7 +83,7 @@
 
                     <div class="row">
                         <div class="col-sm-4">Step 3<br />
-                            @if($application->submitted && $application->payment_method )
+                            @if($application->submitted && $!application->paid )
                                 <a href="{{ route('checkout') }}">Pay entry fee</a>
                             @elseif($application->paid)
                                 Pay entry fee (Entry fee has been paid)
