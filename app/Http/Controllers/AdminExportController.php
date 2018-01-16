@@ -19,9 +19,10 @@ class AdminExportController extends Controller
             s.name AS section_name,
             c.name AS category_name
 
-            FROM photos p
-            JOIN applications a ON p.user_id = a.id
+            FROM applications a
+
             JOIN users u ON u.id = a.user_id
+            JOIN photos p ON p.user_id = a.user_id
             JOIN sections s ON p.section_id = s.`id`
             JOIN categories c ON p.category_id = c.`id`
             ORDER BY a.id ASC
