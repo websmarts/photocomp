@@ -12,7 +12,14 @@
 
                    <p>You have been sent an email with instructions on how to verify and activate your new account.</p>
 
-                   <p style="background:#00c; color: #eee;padding:15px">If you do not see the confirmation email in your inbox in the next few minutes then be sure to check your SPAM folder. <br />If you have the option, you could instruct your email system that emails being sent from {{ config('mail.from.address') }} are NOT spam.</p>
+                   <p style="background:#ccf; color: #333;padding:15px">If you do not see the confirmation email in your inbox in the next few minutes then be sure to check your SPAM folder. <br />If you have the option, you could instruct your email system that emails being sent to you from {{ config('mail.from.address') }} are NOT spam.<br />
+                   <br />
+
+                   If, after two hours, you fail to receive your confirmation email you can <a href="mailto:warr.nat.entries@outlook.com">contact the competition administrator</a> to request a manual confirmation of your email.
+
+                   </p>
+
+
 
                 </div>
             </div>

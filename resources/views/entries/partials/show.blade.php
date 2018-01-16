@@ -49,9 +49,9 @@ $application  = $user->application;
 Return option selected: {{ $application->return_post_option or ' - '}} </p>
 <p>Cost of enrties ($): {{ number_format($application->entries_cost,2) }}</p>
 
-<p>You may log back into your account at any stage during the competition to review you entriy details. </p>
+<p>You may log back into your account at any stage during the competition to review you entry details. </p>
 
-<p>You can pay for your entry fee using one of the options provided on the on the competion web site - http://potocomp.warragulnational.org </p>
+<p>You can pay for your entry fee by selecting the payment option on the dashboard of the competion web site - http://potocomp.warragulnational.org </p>
 
 <p>PLEASE ADDRESS ENTRIES TO</p>
 <p>{{ $settings->title }}<br />

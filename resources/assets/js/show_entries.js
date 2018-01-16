@@ -121,6 +121,6 @@ var remoteCall = function (action, data) {
     
   });;
 
-  $returnPostageCost = application_return_postage; // initial value on page load
+  //$returnPostageCost = application_return_postage; // initial value on page load
   
 };

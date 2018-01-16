@@ -37,6 +37,7 @@
     var additional_section_cost = parseFloat({{ $settings->additional_section_cost }});
     var digital_only_entry_surcharge = parseFloat({{ $settings->digital_only_entry_surcharge }});
     var application_return_postage = parseInt({{ $application->return_postage or 0 }});
+    var return_instructions = "{{ $application->return_post_option }}";
     var $apiToken = "{{ Auth::user()->api_token }}"
 </script>
 

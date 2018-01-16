@@ -12,7 +12,14 @@
 			<div clsss="row">
 			<div class="col-sm-3">Entrant:</div><div class="col-sm-9">{{ $application->fullname }}</div>
 			<div class="col-sm-3">Phone:</div><div class="col-sm-9">{{ $application->phone }}</div>
-			<div class="col-sm-3">Email:</div><div class="col-sm-9">{{ $application->user->email }}</div>
+			<div class="col-sm-3">Email:</div><div class="col-sm-9">{{ $application->user->email }}
+				@if($application->user->verified)
+				 (verified)
+				 @else
+				 (email NOT verified - <a href="{{ route('admin.application.verifyemail',['application'=>$application->id]) }}">click here to verify user email now</a>)
+				 @endif
+
+			</div>
 			</div>
 			<form method="post" action="{{ route('admin.application.update',['application'=>$application->id]) }}">
 			{{ csrf_field() }}

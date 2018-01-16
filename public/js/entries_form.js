@@ -2350,16 +2350,19 @@ window.onload = function () {
 
   var jpegRegex = /\.jpe?g$/i;
   var returnPostageRegex = /Return by Post/i;
+  var $returnInstructions = '';
 
   $('#return_instructions').on('change', function () {
     // unless option == Return by Post - force return_postage to zero and disable 
     // return_postage input field
+
+    $returnInstructions = $('#return_instructions').val();
     checkReturnPostage();
   });
 
   var checkReturnPostage = function checkReturnPostage() {
-    var selectedOption = $('#return_instructions').val();
-    if (!returnPostageRegex.test(selectedOption)) {
+
+    if (!returnPostageRegex.test($returnInstructions)) {
       $('#return_postage').prop('disabled', true);
       $('#return_postage').val(0);
       $returnPostageCost = 0;
@@ -2648,11 +2651,11 @@ window.onload = function () {
     var postage = $('#return_postage').val();
     postage = postage.replace('$', '');
     postage = postage.replace(' ', '');
-    // TODO Should replace anything that is not a number type char with ''
+
     if (postage == '') {
       postage = 0;
     }
-    // remove $ sign if present TODO
+
     if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(postage)) {
       if (!isNaN(postage)) {
         $returnPostageCost = parseFloat(postage);
@@ -2669,12 +2672,26 @@ window.onload = function () {
   // FINAL FORM SUBMISSSION
   $('#final_submit_button').on('click', function (e) {
     //console.log('LOAD FINAL PAGE');
-    // Disable button
 
-    $('#final_submit_button').attr('disabled', 'disabled');
+
     if ($entryCount < 1) {
-      return alert('No entries have been added yet!');
+      alert('No entries have been added yet!');
+      return;
     }
+    // Check that return_instructions is set and if
+    // set to return by post that a return postage amount has been added
+
+    // console.log('Return instructions',$returnInstructions);
+    // console.log('Return PostageCost',$returnPostageCost);
+
+    if ($returnPostageCost == 0 && returnPostageRegex.test($returnInstructions)) {
+      alert('You have selected to have your print entries returned by post but you have not included any amount for postage. You need to enter an amount that will be sufficient to cover the return postage of your entries');
+      $('#return_postage').focus();
+      return;
+    }
+
+    // Disable button while we do the ajax call
+    $('#final_submit_button').attr('disabled', 'disabled');
 
     // make a POST call
     $.ajax({
@@ -2785,6 +2802,7 @@ window.onload = function () {
   }), _ref));
 
   $returnPostageCost = application_return_postage; // initial value on page load
+  $returnInstructions = return_instructions;
 
   $('#msgBox').hide().html(''); // empty the message box
   $('#return_postage').val($returnPostageCost);

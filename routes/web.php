@@ -48,6 +48,7 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('applications', 'AdminApplicationController@index')->name('admin.applications');
     Route::get('application/{application}/edit', 'AdminApplicationController@edit')->name('admin.application.edit');
     Route::post('application/{application}', 'AdminApplicationController@update')->name('admin.application.update');
+    Route::get('application/{application}/verifyemail', 'AdminApplicationController@verifyEmail')->name('admin.application.verifyemail');
 
     Route::get('application/exportcsv', 'AdminExportController@exportcsv')->name('admin.application.exportcsv');
 

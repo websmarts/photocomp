@@ -179,7 +179,7 @@ window.onload = function () {
     $(loadingDiv).addClass('display-none');
   });;
 
-  $returnPostageCost = application_return_postage; // initial value on page load
+  //$returnPostageCost = application_return_postage; // initial value on page load
 };
 
 /***/ }),

@@ -33,9 +33,10 @@
 @section('scripts')
 <!-- Cost of entering competition sections -->
 <script>
-    var first_section_cost = {{ $settings->first_section_cost }};
-    var additional_section_cost = {{ $settings->additional_section_cost }};
+    //var first_section_cost = {{ $settings->first_section_cost }};
+   // var additional_section_cost = {{ $settings->additional_section_cost }};
 </script>
+
 
 <script type="text/javascript" src="{{ mix('js/show_entries.js') }}>"></script>
 

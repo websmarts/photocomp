@@ -57,4 +57,13 @@ class AdminApplicationController extends Controller
         return redirect()->route('admin.applications');
 
     }
+
+    public function verifyEmail(Application $application)
+    {
+        $application->user->confirmEmail();
+
+        flash('Success - application has been updated');
+        return redirect()->route('admin.application.edit', ['application' => $application->id]);
+
+    }
 }
