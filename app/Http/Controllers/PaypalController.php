@@ -60,12 +60,18 @@ class PaypalController extends Controller
 
                 $user = User::find($userId);
 
-                // Send Email with Application confirmation
+                // Send Email with Application confirmation to user and cc admin
+                $admin = User::find(1);
+                $cc = [
+                    'email' => $admin->email,
+                ];
 
                 $to = [
                     'email' => $user->email,
                 ];
-                Mail::to($to)->queue(new ApplicationReport($user));
+                Mail::to($to)
+                    ->cc($cc)
+                    ->queue(new ApplicationReport($user));
             }
 
         } else {

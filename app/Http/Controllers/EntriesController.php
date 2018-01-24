@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Mail\ApplicationReport;
+use App\User;
 use App\Utility\PhotosHandler;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -78,8 +79,16 @@ class EntriesController extends Controller
             'email' => $this->user->email,
         ];
 
+        $admin = User::find(1);
+
+        $cc = [
+            'email' => $admin->email,
+        ];
+
         // Send Email with Application confirmation
-        Mail::to($to)->queue(new ApplicationReport($this->user));
+        Mail::to($to)
+            ->cc($cc)
+            ->queue(new ApplicationReport($this->user));
 
         return $this->Jsend('success', null, null, false);
     }
