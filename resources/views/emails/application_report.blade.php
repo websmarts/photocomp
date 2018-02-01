@@ -7,6 +7,13 @@
 <body style="font-family:arial">
 
 <p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
+
+@if($user->application->txn_id > 0 )
+<p>&nbsp;</p>
+<p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p>
+<p>&nbsp;</p>
+@endif
+
 <p>Payment status:
 @if($user->application->txn_id > 0 )
 Received: ${{ number_format($user->application->mc_gross,2) }}
