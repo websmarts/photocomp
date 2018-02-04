@@ -83,7 +83,7 @@ class AdminExportController extends Controller
             $item = [];
             foreach ($columns as $c) {
                 if ($c == 'entrant_id') {
-                    $r->$c + $c->user_id + 1000;
+                    $item[$c] = $r->user_id + 1000;
                 } else {
                     $item[$c] = $r->$c;
                 }
