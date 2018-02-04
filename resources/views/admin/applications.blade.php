@@ -15,7 +15,7 @@
 			@if($applications->count())
 			<table class="table table-stiped">
 				<tr>
-					<th>#id</th>
+					<th>Entrant #</th>
 					<th>Name</th>
 					<th>Pay via</th>
 					<th>Cost</th>
@@ -26,7 +26,7 @@
 				</tr>
 				@foreach($applications as $a)
 				<tr>
-					<td>{{ $a->id }}</td>
+					<td>{{ 1000 + $a->user->id }}</td>
 					<td>{{ $a->fullname }}</td>
 					<td>{{ $a->payment_method or '-' }}</td>
 					<td>${{ number_format($a->entries_cost + $a->return_postage,2) }}</td>

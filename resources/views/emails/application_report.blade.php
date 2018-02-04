@@ -8,14 +8,15 @@
 
 <p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
 
-@if($user->application->txn_id > 0 )
+@if($user->application->txn_id > ' ' )
 <p>&nbsp;</p>
 <p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p>
 <p>&nbsp;</p>
+<p style="font-size:120%; font-weight: bold">Entrant number: {{ $user->id +1000 }} </p>
 @endif
 
 <p>Payment status:
-@if($user->application->txn_id > 0 )
+@if($user->application->txn_id > ' ' )
 Received: ${{ number_format($user->application->mc_gross,2) }}
 @else
 Payment pending

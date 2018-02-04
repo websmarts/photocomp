@@ -31,8 +31,8 @@ class AdminExportController extends Controller
         $results = DB::select($sql);
 
         $columns = [
-            'id',
-            'user_id',
+
+            'entrant_id',
             'salutation',
             'firstname',
             'lastname',
@@ -82,7 +82,12 @@ class AdminExportController extends Controller
         foreach ($results as $r) {
             $item = [];
             foreach ($columns as $c) {
-                $item[$c] = $r->$c;
+                if ($c == 'entrant_id') {
+                    $r->$c + $c->user_id + 1000;
+                } else {
+                    $item[$c] = $r->$c;
+                }
+
             }
             $items[] = $item;
         }

@@ -31,7 +31,7 @@ class PaypalController extends Controller
     public function ipn(Request $request)
     {
         $ipn = new PaypalIPNListener();
-        $ipn->use_sandbox = true;
+        $ipn->use_sandbox = false;
 
         $verified = $ipn->processIpn();
 
@@ -75,7 +75,10 @@ class PaypalController extends Controller
             }
 
         } else {
-            // Log::info("Some thing went wrong in the payment !");
+
+            $msg = "IPN was not verified \n";
+            $msg .= "Verified=" . $verified . "\n";
+            Log::info($msg);
         }
     }
 
