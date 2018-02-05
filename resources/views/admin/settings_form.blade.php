@@ -114,7 +114,7 @@
 				        <div class="col-xs-12">
 				            <label class="control-label">Paypal mode (Sandbox or Live) </label>
 				            <select  class="form-control" name="paypal_mode" >
-				            <option  value="">Select status</option>
+				            <option  value="Sandbox">Select status</option>
 				           	@foreach(['Sandbox','Live'] as $v)
 								<option {{ old('paypal_mode',$settings->paypal_mode) == $v ? 'selected' : '' }} value="{{$v}}">{{ $v }}</option>
 							@endforeach

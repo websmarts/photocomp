@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Mail\ApplicationReport;
+use App\Setting;
 use App\User;
 use Fahim\PaypalIPN\PaypalIPNListener;
 use Illuminate\Http\Request;
@@ -30,8 +31,12 @@ class PaypalController extends Controller
 
     public function ipn(Request $request)
     {
+
         $ipn = new PaypalIPNListener();
-        $ipn->use_sandbox = false;
+
+        // Live or Sandbox mode?
+        $paypalMode = Setting::first()->paypal_mode;
+        $ipn->use_sandbox = $paypalMode == 'Sandbox';
 
         $verified = $ipn->processIpn();
 
