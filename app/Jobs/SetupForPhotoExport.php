@@ -26,7 +26,7 @@ class SetupForPhotoExport implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 900;
 
     /**
      * Create a new job instance.
@@ -48,10 +48,13 @@ class SetupForPhotoExport implements ShouldQueue
 
         Photo::where('exported', 'yes')->update(['exported' => 'no']);
 
-        Storage::disk('s3')->deleteDirectory(env('AWS_EXPORT_FOLDER'));
-        //DeleteMultipleObjectsException gets throw
-
+        // Make directory if it doesnt exit
         Storage::disk('s3')->makeDirectory(env('AWS_EXPORT_FOLDER'));
+
+        // Delete all the files in the directory
+        $files = Storage::disk('s3')->files(env('AWS_EXPORT_FOLDER'));
+        Storage::disk('s3')->delete($files);
+
     }
 
 }
