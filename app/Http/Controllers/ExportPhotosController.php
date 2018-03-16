@@ -20,14 +20,12 @@ class ExportPhotosController extends Controller
 
         Storage::disk('local')->put('logs/export.log', 'Photo  export date: ' . Carbon::now()->toFormattedDateString());
 
-        // Create a Job to Handle these initial tasks
-        $this->dispatch((new SetupForPhotoExport)->onQueue('high'));
-
-        // Now dispach the phot export jobs
-        $photos->map(function ($photo) {
-
-            $this->dispatch((new ExportPhoto($photo))->onQueue('low'));
+        // Compile the list of photo export jobs
+        $photoExports = $photos->map(function ($photo) {
+            return new \App\Jobs\ExportPhoto($photo);
         });
+
+        SetupForPhotoExport::withChain($photoExports->toArray())->dispatch()->allOnConnection('database')->allOnQueue('export');
 
         // Display a view that displays the number  of
         // photos NOT exported. ie via ajax query

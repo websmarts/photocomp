@@ -2,29 +2,22 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmEmail extends Mailable
+class QueueFailure extends Mailable
 {
     use Queueable, SerializesModels;
-
-    // public $from;
-
-    // public $fromName;
-
-    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+
     }
 
     /**
@@ -34,8 +27,8 @@ class ConfirmEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Confirm your email address')
-            ->view('emails.confirm');
+        return $this->subject('Photocomp queue failure')
+            ->view('emails.queue_failure');
     }
 
     // Override the method in Mailable due to hicupp with PHP not liking

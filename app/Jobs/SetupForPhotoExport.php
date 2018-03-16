@@ -15,6 +15,20 @@ class SetupForPhotoExport implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 60;
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -31,10 +45,13 @@ class SetupForPhotoExport implements ShouldQueue
      */
     public function handle()
     {
+
         Photo::where('exported', 'yes')->update(['exported' => 'no']);
 
         Storage::disk('s3')->deleteDirectory(env('AWS_EXPORT_FOLDER'));
+        //DeleteMultipleObjectsException gets throw
 
         Storage::disk('s3')->makeDirectory(env('AWS_EXPORT_FOLDER'));
     }
+
 }

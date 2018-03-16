@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Mail\QueueFailure;
 use App\Setting;
+use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,6 +41,13 @@ class AppServiceProvider extends ServiceProvider
             $settings = Setting::firstOrFail();
             View::share('settings', $settings);
         } catch (\Exception $e) {}
+
+        /**
+         * Use to report whenever the queue fails
+         */
+        Queue::failing(function (JobFailed $event) {
+            Mail::to('iwmaclagan@gmail.com')->send(new QueueFailure());
+        });
 
     }
 
