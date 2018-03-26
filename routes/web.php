@@ -50,6 +50,11 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::post('application/{application}', 'AdminApplicationController@update')->name('admin.application.update');
     Route::get('application/{application}/verifyemail', 'AdminApplicationController@verifyEmail')->name('admin.application.verifyemail');
 
+// Messaging routs
+    Route::get('messaging', 'AdminMessagingController@index')->name('admin.messaging');
+    Route::post('messaging/message_all', 'AdminMessagingController@messageAll')->name('admin.message_all');
+    Route::post('messaging/message_results', 'AdminMessagingController@messageResults')->name('admin.message_results');
+
     Route::get('application/exportcsv', 'AdminExportController@exportcsv')->name('admin.application.exportcsv');
 
     Route::get('export/photos', 'ExportPhotosController@export')->name('admin.export.photos');

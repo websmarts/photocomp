@@ -17,6 +17,7 @@
 
 			<h3>Applications ({{ $applicationCount }})</h3>
 			<p><a href="{{ route('admin.applications') }}">List Entrant Applications</a></p>
+			<p><a href="{{ route('admin.messaging') }}">Message (email) Applicants</a></p>
 			<hr>
 			<h3>Export Photos ({{ $photoCount }})</h3>
 			<p>The export photos option will save a copy of all uploaded photos to the S3 Bucket. They will be exported with a customised filename in the form of:<br />
