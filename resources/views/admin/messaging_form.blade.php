@@ -13,6 +13,8 @@
 			<h3>Send a message to all applicants</h3>
 			<p> Send a simple message to be sent all applicants email addreses. Enter the email subject and the message below.</p>
 
+			<p>To send a test message to your Admin user email address - ensure the SUBJECT entry starts with the word TEST. To send message to all applicants make sure the subject DOES NOT start with TEST</p>
+
 			<form method="post" action="{{route('admin.message_all')}}" id="message_form">
 			    {{ csrf_field() }}
 				<div class="form-group">
@@ -53,6 +55,7 @@
 			<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
 
 			<h3>Send Final Reports</h3>
+			<p>NOTE: The spreadsheet file must be in an EXCEL 2003 (xls) format. It must only contain one worksheet - delete any additional worksheets otherwise the report will not function correctly.
 			<p>
 				<form method="post" action="{{route('admin.message_results')}}"  enctype="multipart/form-data" id="message_results_form">
 					{{ csrf_field() }}
@@ -77,6 +80,9 @@
 					</div>
 
 				</form>
+
+				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
+
 		</div>
 	</div>
 </div>

@@ -6,7 +6,7 @@
 </head>
 <body>
 	<p>{{ $subject }}</p>
-	<p>{{ $content }}</p>
+	<p>{!! nl2br($content) !!}</p>
 
 
 </body>

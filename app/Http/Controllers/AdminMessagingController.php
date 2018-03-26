@@ -6,6 +6,7 @@ use App\Application;
 use App\Mail\EntryReport;
 use App\Mail\SimpleMessage;
 use App\Section;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -24,6 +25,18 @@ class AdminMessagingController extends Controller
             'subject' => 'required|max:255',
             'content' => 'required',
         ]);
+
+        if (starts_with(strtolower($email['subject']), 'test')) {
+            $admin = User::find(1);
+            $to = $admin->email;
+
+            //return new SimpleMessage($email);
+
+            Mail::to($to)->queue(new SimpleMessage($email));
+
+            flash('A TEST messages has now been queued for sending to ' . $to);
+            return redirect()->back();
+        }
 
         $applicants = Application::with('user')->get();
 
@@ -56,7 +69,6 @@ class AdminMessagingController extends Controller
         if (Input::hasFile('spreadsheet')) {
 
             $path = Input::file('spreadsheet')->getRealPath();
-
             $data = Excel::load($path, function ($reader) {
             })->get();
 
