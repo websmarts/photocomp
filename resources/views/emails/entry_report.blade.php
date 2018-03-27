@@ -11,13 +11,15 @@
 	<tr>
 		<td width="400"><img src="{{ $message->embed(public_path('images/email_image.jpg')) }}"></td>
 		<td>
-			<p style="font-size:140%; font-weight: bold;">{{ $settings->title }}</p>
-			Warragul Downtowner<br />
-			55-57 Victoria Street, Warragul<br />
-			Friday 18th May 10:00am-5:00pm<br />
-			Sat 19th May &amp; Sun 20th May 10:00am 4:00pm<br />
-			Monday 21st May 10:00am-5:00pm<br />
-			Official Opening 2:00pm Sunday May 20th
+			<p style="font-size:140%; font-weight: bold;text-align: center">{{ $settings->title }}</p>
+			<div style="text-align: center">
+				Warragul Downtowner<br />
+				55-57 Victoria Street, Warragul<br />
+				Friday 18th May 10:00am-5:00pm<br />
+				Sat 19th May &amp; Sun 20th May 10:00am 4:00pm<br />
+				Monday 21st May 10:00am-5:00pm<br />
+				Official Opening 2:00pm Sunday May 20th
+			</div>
 		</td>
 	</tr>
 </table>
@@ -76,7 +78,10 @@ Your score is derived by three judges each giving points out of five, therefore 
 			<td width="40">{{ $row['scorejudge2']}}</td>
 			<td width="40">{{ $row['scorejudge3']}}</td>
 			<td width="70">{{ $row['scoretotal']}}</td>
-			<td width="120">{{ $row['acceptance'] ? '** Acceptance **':'Unsuccessful Entry'}}</td>
+			<td width="120">
+			{{ $row['acceptance'] ? '** Acceptance **':'Unsuccessful Entry'}}
+			{!! $row['specialawardname'] ? '<br />'.$row['specialawardname'] : '' !!}
+			</td>
 
 		</tr>
 		@if ($loop->last)
