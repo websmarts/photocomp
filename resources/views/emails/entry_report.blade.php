@@ -9,7 +9,7 @@
 
 <table width="98%">
 	<tr>
-		<td width="400"><img src="{{ $message->embed(storage_path('app/public/email_image.jpg')) }}"></td>
+		<td width="400"><img src="{{ $message->embed(public_path('images/email_image.jpg')) }}"></td>
 		<td>
 			<p style="font-size:140%; font-weight: bold;">{{ $settings->title }}</p>
 			Warragul Downtowner<br />
