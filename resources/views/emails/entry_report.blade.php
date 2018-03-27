@@ -6,14 +6,23 @@
 </head>
 <body style="font-family:arial">
 
-<p style="font-size:140%; font-weight: bold;text-align: center">{{ $settings->title }}</p>
-<p style="text-align: center">
-	Warragul Downtowner<br />
-	55-57 Victoria Street, Warragul<br />
-	Friday 18th May 10:00am-5:00pm<br />
-	Sat 19th May &amp; Sun 20th May 10:00am 4:00pm<br />
-	Monday 21st May 10:00am-5:00pm<br />
-Official Opening 2:00pm Sunday May 20th</p>
+
+<table width="98%">
+	<tr>
+		<td width="400"><img src="{{ $message->embed(storage_path('app/public/email_image.jpg')) }}"></td>
+		<td>
+			<p style="font-size:140%; font-weight: bold;">{{ $settings->title }}</p>
+			Warragul Downtowner<br />
+			55-57 Victoria Street, Warragul<br />
+			Friday 18th May 10:00am-5:00pm<br />
+			Sat 19th May &amp; Sun 20th May 10:00am 4:00pm<br />
+			Monday 21st May 10:00am-5:00pm<br />
+			Official Opening 2:00pm Sunday May 20th
+		</td>
+	</tr>
+</table>
+<div style="margin-top:20px; margin-bottom: 20px">&nbsp;</div>
+
 <table>
 	<tr><td width="100" valign="top">Number<br />{{ $results->first()[1]['competitorno'] }}</td>
 		<td>{{ $results->first()[1]['salutation'] }} {{ $results->first()[1]['givennames'] }} {{ $results->first()[1]['surname'] }}<br />
@@ -59,11 +68,7 @@ Your score is derived by three judges each giving points out of five, therefore 
 			</tr>
 		@endif
 
-		@php
-		if ($row['acceptance']) {
-			$contratulations = true;
-		}
-		@endphp
+
 		<tr>
 			<td width="20">{{ $row['entryno']}}</td>
 			<td >{{ $row['title']}}</td>
@@ -86,9 +91,6 @@ Your score is derived by three judges each giving points out of five, therefore 
 @endforeach
 </table>
 
-@if($contratulations)
-<p>Congratulations on your results!</p>
-@endif
 
 <p>We are very pleased with the high standard of entries and we would like to thank you for your support of this Exhibition.</p>
 
@@ -97,7 +99,7 @@ on Sunday 20th May, 2017, at The Warragul Downtowner, 55-57 Victoria Street, War
 <p>Our exhibition is open Friday 18th May to Monday 21st May from 10am to 5pm weekdays and 10am to 4pm on the weekend. We would love to see you and your family and friends at anytime during the weekend.</p>
 <p>And don't forget to keep taking lots of photos so you are ready for next year's National as it will come around fast. </p>
 <p>Keep an eye on our website www.warragulnational.org for more details.</p>
-<p>We very much look forward to receiving your entries in 2019. Happy snapping!</p>
+<p>We very much look forward to receiving your entries in 2019.</p>
 <p>&nbsp;</p>
 <p>Yours in Photography,</p>
 <p>Jane Woodcock<br />
