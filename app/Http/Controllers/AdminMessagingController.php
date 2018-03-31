@@ -63,8 +63,6 @@ class AdminMessagingController extends Controller
     public function messageResults(Request $request)
     {
         // dd($request);
-        $_sections = Section::with('category')->get();
-        // dd($_sections);
 
         if (Input::hasFile('spreadsheet')) {
 
@@ -104,14 +102,15 @@ class AdminMessagingController extends Controller
 
                 }
 
-                //dd(collect($results[133]));
+                //dd(collect($results[222]));
 
-                // return new EntryReport(collect($results[222]));
+                //return new EntryReport(collect($results[222]));
 
                 $n = 0;
                 foreach ($results as $competionNo => $sections) {
                     //return new EntryReport(collect($sections));
                     $sections = collect($sections);
+                    //dd($sections);
 
                     // Skip if no email
                     if (!isset($sections->first()[1]['email'])) {
@@ -124,8 +123,10 @@ class AdminMessagingController extends Controller
                     }
 
                     $to = $sections->first()[1]['email'];
+                    //dd($sections);
 
-                    Mail::to($to)->queue(new EntryReport(collect($sections)));
+                    Mail::to($to)->queue(new EntryReport($sections));
+                    //return new EntryReport($sections);
                     $n++;
                 }
 

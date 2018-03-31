@@ -42,6 +42,9 @@ Your score is derived by three judges each giving points out of five, therefore 
 
 {{-- dump($results) --}}
 {{-- dump($settings) --}}
+{{-- dump($sections) --}}
+
+
 <table width="95%">
 	<tr>
 			<th width="40">&nbsp;</th>
@@ -62,7 +65,8 @@ Your score is derived by three judges each giving points out of five, therefore 
 				<td colspan="7"><div style="padding-bottom:8px; font-weight: bold; border-bottom: 1px solid #000000">Section {{ $row['section'] }}
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					@if(isSet($sections[$row['section']]) )
-						{{ $sections[$row['section']]->name }} - {{ $sections[$row['section']]->category->name }}
+						{{$row['section']}}::{{ $sections->where('id',$row['section'])->first()->name }} -
+						{{ $sections->where('id',$row['section'])->first()->category->name }}
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						Acceptance Level: {{ $row['acceptancelevel'] }}
 					@endif
