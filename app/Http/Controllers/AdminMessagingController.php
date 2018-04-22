@@ -102,9 +102,9 @@ class AdminMessagingController extends Controller
 
                 }
 
-                //dd(collect($results[222]));
+                // dd(collect($results[1022]));
 
-                //return new EntryReport(collect($results[222]));
+                // return new EntryReport(collect($results[1022]));
 
                 $n = 0;
                 foreach ($results as $competionNo => $sections) {

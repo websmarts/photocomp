@@ -35,7 +35,7 @@
 
 <p> Dear {{ $results->first()[1]['givennames'] }},</p>
 <p> {{ str_repeat('&nbsp;',strlen($results->first()[1]['givennames']) + 6) }} Hello and thank you for your hard work, dedication and effort in entering or {{ $settings->title }}.</p>
-<p>Your images were among {{ $photoCount}} images in total submitted by {{ $applicationCount }} entrants for judging this year.
+<p>Your images were among 1636 images in total submitted by 140 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, therefore making the lowest score achievable being 3 and the highest score achievable being 15. Acceptance levels are determined by approximately the top 33% of the scores in each section.</p>
 
 <p>Please find your results below</p>
@@ -104,7 +104,7 @@ Your score is derived by three judges each giving points out of five, therefore 
 <p>We are very pleased with the high standard of entries and we would like to thank you for your support of this Exhibition.</p>
 
 <p>We cordially invite you, your family and your friends to attend our Official Opening and awards presentation
-on Sunday 20th May, 2017, at The Warragul Downtowner, 55-57 Victoria Street, Warragul, Victoria at 2:00pm.</p>
+on Sunday 20th May, 2018, at The Warragul Downtowner, 55-57 Victoria Street, Warragul, Victoria at 2:00pm.</p>
 <p>Our exhibition is open Friday 18th May to Monday 21st May from 10am to 5pm weekdays and 10am to 4pm on the weekend. We would love to see you and your family and friends at anytime during the weekend.</p>
 <p>And don't forget to keep taking lots of photos so you are ready for next year's National as it will come around fast. </p>
 <p>Keep an eye on our website www.warragulnational.org for more details.</p>

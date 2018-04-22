@@ -1,0 +1,6 @@
+// TODO add a check to ensure a photo file actually exist when exporting - it should of course
+// Also add check to upload to check that file exists after user saves because of one instance
+// where a file was not actually saved -eg Nigel Beresford example
+//
+// Also look at cleaning up the export file name to remove nuisance characters like quotes and slashes
+// are not good candidates for filenames
