@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Photo;
 
 class EntriesController extends Controller
 {
@@ -112,9 +113,23 @@ class EntriesController extends Controller
             return $this->Jsend('fail', null, implode('<br />', $messages->all()), false);
         };
 
+        // Check the title is not a duplicate for this user in this section
+        $photo = Photo::where([
+            ['user_id','=',$this->user->id],
+            ['section_id','=',$request->section_id],
+            ['category_id','=',$request->category_id],
+            ['title','=',$request->title],
+
+        ])->get();
+        if($photo->count() > 0){
+            
+            return $this->Jsend('fail', null, 'Photo titles must be unique, ('.$request->title.') title has already been used ');
+            
+        }
+        
         $result = $this->photosHandler->upload($request, $this->setting('max_entries_per_section'));
 
-        if (is_array($result)) {
+        if ($result !== null) {
             return $result;
         }
 

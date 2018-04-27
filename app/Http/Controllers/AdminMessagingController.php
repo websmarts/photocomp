@@ -38,7 +38,9 @@ class AdminMessagingController extends Controller
             return redirect()->back();
         }
 
-        $applicants = Application::with('user')->get();
+        $applicants = Application::where('number_of_entries','>', 0)->with('user')->get();
+
+        dd($applicants);
 
         $n = 0;
         foreach ($applicants as $applicant) {

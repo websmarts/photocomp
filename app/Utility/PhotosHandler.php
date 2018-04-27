@@ -11,11 +11,14 @@ class PhotosHandler
 {
     private $maxEntriesPerSection;
     private $user;
+    private $height;
+    private $width;
 
     public function __construct($settings, $user)
     {
         $this->maxEntriesPerSection = $settings->max_entries_per_section;
         $this->user = $user;
+
     }
 
     private function entryCount($userId, $sectionId)
@@ -44,7 +47,10 @@ class PhotosHandler
 
         $image = Image::make($photo);
 
-        list($width, $height) = $this->checkImageDimensions($image);
+        $response = $this->checkImageDimensions($image);
+        if($response !== null){
+            return $response;
+        }
 
         $filename = time() . '.' . $photo->getClientOriginalExtension();
         $photo->storeAs('photos', $filename);
@@ -64,33 +70,34 @@ class PhotosHandler
             'title' => $request->input('title'),
             'filepath' => $filename,
             'filesize' => $photo->getClientSize(),
-            'width' => $width,
-            'height' => $height,
+            'width' => $this->width,
+            'height' => $this->height,
             'section_entry_number' => $count++,
         ];
 
         $this->user->photos()->create($data);
 
-        return true;
+        
 
     }
 
     private function checkImageDimensions($image)
     {
 
-        $width = $image->width();
-        $height = $image->height();
+        $this->width = $image->width();
+        $this->height = $image->height();
 
-        if ($height > 1080) {
-            $jsend = new Jsend('fail', null, 'Image height dimensions exceed maximum allowed');
-            $jsend->response();
+
+        if ($this->height > 1080) {
+            $jsend = new Jsend('fail', null, 'Image height ('.$this->height.'px) is greater than the allowed 1080 pixels');
+            return $jsend->response();
         }
-        if ($width > 1920) {
-            $jsend = new Jsend('fail', null, 'Image width dimensions exceed maximum allowed');
-            $jsend->response();
+        if ($this->width > 1920) {
+            $jsend = new Jsend('fail', null, 'Image width ('.$this->width.'px) is greater than the allowed 1920 pixels');
+            return $jsend->response();
         }
 
-        return [$width, $height];
+        
     }
 
     public function delete($id)
@@ -115,18 +122,6 @@ class PhotosHandler
         Storage::disk('local')->delete('photos/' . $photo->filepath);
     }
 
-    // private function resequenceEntriesWithout($photo)
-    // {
-    //     $sectionEntries = $this->sectionEntries($photo->user_id, $photo->section_id);
-
-    //     $sectionEntryNumber = 0;
-    //     $sectionEntries->filter(function ($model) use (&$photo) {
-    //         return $model->id != $photo->id;
-    //     })->map(function ($model) use (&$sectionEntryNumber) {
-    //         $model->section_entry_number = ++$sectionEntryNumber;
-    //         $model->save();
-    //     });
-    // }
 
     private function getSwapPhoto($photo)
     {
