@@ -52,7 +52,7 @@ class PhotosHandler
             return $response;
         }
 
-        $filename = time() . '.' . $photo->getClientOriginalExtension();
+        $filename = time() . '.' . strtolower($photo->getClientOriginalExtension());
         $photo->storeAs('photos', $filename);
 
         // resize the image to a width of 300 and constrain aspect ratio (auto height)

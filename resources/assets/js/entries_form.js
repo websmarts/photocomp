@@ -145,6 +145,7 @@ $('#photoTitle').on('keyup', function(e){
   // Upload the photo button clicked
   $(uploadEntryBtn).on('click', function( e ) {
     //console.log('uploadBtn clicked');
+    hideMessage();
     var valid = validateInputs(false,'all');
     if(! valid ){ 
       if($uploaderExtError){
@@ -310,7 +311,11 @@ var remoteCall = function (action, data) {
       var res =  photoCategory_Section.value.split('_');
       // console.log(res[1]);
       return res[1];
-   }    
+   }  
+   
+   function hideMessage() {
+    $('#msgBox').fadeOut(100);
+   }
 
 
   function showMsg(message, msgType) {
@@ -319,7 +324,7 @@ var remoteCall = function (action, data) {
     $('#msgBox').removeClass('success error warning').addClass(msgType).show();
     setTimeout(function(){
       $('#msgBox').fadeOut(100);
-    }, 3000);
+    }, 12000);
   }
 
   function isDigitalOnlyEntry() {
@@ -372,6 +377,10 @@ var remoteCall = function (action, data) {
     }  
     updateTotalCost();
   });
+
+  $('#upload_form').on('click',function(e){
+    $('#msgBox').fadeOut(100).html('');
+  })
 
   // FINAL FORM SUBMISSSION
   $('#final_submit_button').on('click', function(e){
@@ -471,6 +480,8 @@ var remoteCall = function (action, data) {
     
             var self = this;
             $('#msgBox').hide(); // empty the message box
+
+            $(uploadEntryBtn).prop('disabled', true); // disable upload btn
 
 
             selectFileBtn.innerHTML = 'Uploading...'; // change button text to "Uploading..."

@@ -32,7 +32,7 @@ class Photo extends Model
             $photo->export_filename = $photo->section_id
             . '_' . ($photo->section_entry_number + 1)
             . '_' . ($photo->user_id + 1000)
-            . '_' . $photo->title
+            . '_' . clean_string($photo->title)
             . '_' . clean_string($photo->user->application->shortname) . '.jpg';
         });
 

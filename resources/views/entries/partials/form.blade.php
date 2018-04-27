@@ -1,7 +1,7 @@
 
 
 
-<div class="no-print">
+<div class="no-print" id="upload_form">
 
 
 	<div style="background: #eee; padding: 5px;" >
