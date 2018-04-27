@@ -38,7 +38,7 @@ class AdminMessagingController extends Controller
             return redirect()->back();
         }
 
-        $applicants = Application::where('number_of_entries','>', 0)->with('user')->get();
+        $applicants = Application::whereNotNull('payment_method')->with('user')->get();
 
         dd($applicants);
 
