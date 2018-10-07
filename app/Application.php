@@ -27,6 +27,7 @@ class Application extends Model
         'aps_member',
         'club_nomination',
         'confirm_terms',
+        'where_hear',
 
         // Entry form
         'number_of_entries',

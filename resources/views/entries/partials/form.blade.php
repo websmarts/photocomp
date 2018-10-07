@@ -1,21 +1,32 @@
 
-
+<p class="alert alert-warning"><strong>IMPORTANT NOTICE </strong>- 
+Category definitions are clearly defined <a href="http://www.warragulnational.org/category-definitions/" target="_blank" title="Category definitions for entries"><strong>here</strong></a> and it is IMPORTANT all entries comply with
+the category requirements to avoid being rejected. Please review the definitions before submitting your entries in any category.
+</p>
 
 <div class="no-print" id="upload_form">
 
 
 	<div style="background: #eee; padding: 5px;" >
-		<h3>Upload images</h3>
+		<h3>Image upload form</h3>
 		<div class="row" style="padding-top:10px;">
 			<div class="col-xs-2" style="padding-top:30px; text-align: right;">
-				<div>Title:</div>
+				<div>Image file:</div>
 			</div>
 
-			<div class="col-xs-4" >
-			  <button id="select_file_btn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click to<br />select image to upload</button>
-			</div>
 			<div class="col-xs-4">
-			  <div class="notice">IMPORTANT: Files must be JPEG and no more than 1920 pixels wide or 1080 pixels high. Maximum file size that can be uploaded is 2MB.</div>
+			  <button id="select_file_btn" class="btn btn-large btn-primary btn-block" style="padding:10px" >Click here to<br />select image to upload</button>
+			</div>
+			<div class="col-xs-6">
+			  <div>IMPORTANT: Image files must be:
+					<ul> 
+						<li>JPEG format.</li>
+						<li>No more than 1920 pixels wide.</li>
+						<li>No more than 1080 pixels high.</li>
+						<li>No more than a 2MB filesize.</li>
+					</ul>
+				
+				</div>
 			</div>
 
 		</div>
@@ -59,11 +70,15 @@
 			</div>
 		</div><!-- row end -->
 	</div>
-<div id="msgBox"></div>
 </div>
 
+<div id="messageContainer" class="alert alert-warning alert-dismissible" >
+	<button type="button" id="closeMessageButton" class="close"  aria-label="Close"><span id="close_icon" aria-hidden="true"></span></button>
+	<p>&nbsp;</p>
+	<div id="msgBox"></div>
+</div>
 
-<h3>Photo entries</h3>
+<h3>Submitted images</h3>
 
 
 
@@ -77,23 +92,29 @@
 	OR DELIVER TO<br />
 	Roylaines P/L 16 Smith Street,<br />Warragul. Vic. 3820.<br />
 	or<br />
-	Roylaines P/L 148 Main Street,<br />Pakenham. Vic. 3810.
-    </p>
+	Roylaines P/L 148 Main Street,<br />Pakenham. Vic. 3810.<br />
+	or<br />
+	Digital Works,<br />Unit 2/34-36 Melverton Drive,<br />Hallam. Vic. 3803.
+  </p>
 	<hr>
 
 	<p>ENTRY FEES<br />
 	First section: ${{ number_format($settings->first_section_cost,2)  }}<br />
+
+	@if($application->club_nomination !== "Warragul Camera Club")
 	Please note - an additional fee of ${{ number_format($settings->digital_only_entry_surcharge,2) }} for catalog postage will apply for digital-only entries.<br>
+	@endif
+
 	Additional sections: ${{ number_format($settings->additional_section_cost,2) }} each<br />
 	</p>
 	<hr>
 
 
 	<div class="row">
-		<div class="col-xs-12">RETURN INSTRUCTIONS</div>
+		<div class="col-xs-12">RETURN INSTRUCTIONS - FOR PRINT ENTRIES</div>
 		<div class="col-xs-12">
 			<select class="form-control" name="return_instructions" id="return_instructions">
-			<option value="">Select option ...</option>
+			<!--<option value="">Select option ...</option>-->
 			@foreach( $returnOptions as $opt)
 				<option {{ $application->return_post_option == $opt ? 'selected' : '' }} value="{{$opt}}">{{ $opt }}</option>
 			@endforeach

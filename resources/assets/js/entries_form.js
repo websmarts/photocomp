@@ -45,6 +45,16 @@ var jpegRegex = /\.jpe?g$/i;
 var returnPostageRegex = /Return by Post/i;
 var $returnInstructions ='';
 
+
+
+$('#closeMessageButton').on('click', function(){
+  hideMessage('close message button click');
+});
+
+
+
+
+
 $('#return_instructions').on('change', function(){
   // unless option == Return by Post - force return_postage to zero and disable 
   // return_postage input field
@@ -71,38 +81,25 @@ var checkReturnPostage = function() {
 
 $('#photoTitle').on('keyup', function(e){
   //console.log('title changed - validate silently with title_check')
-  validateInputs(true,'title_check'); 
+  validateInputs(false,'title_check'); 
 
 })
  
   // category selector change event handler
   $('#category_section').on('change', function(e){
-  //   // console.log(e.target.value);
-  //   $('#msgBox').hide(); // empty the message box
-  //   var sectionId = getSectionId(e.target.value);
-  //   if ($sectionCounter[sectionId] >= $maxSectionEntries){
-  //     showMsg('Max entries reached for selected section','warning');
-    // }
-    // 
-    validateInputs(true,'section_check'); // 
+    validateInputs(false,'section_check'); // 
   });
 
   var validateInputs = function (silent = false,report_on='') {
-    //console.log('validateInput');
+    // console.log('validateInput',silent,report_on);
+    hideMessage('validate inputs');
     var valid = true;
     var msgParts =[];
-    
-    // var filename = selectFileBtn.innerHTML;
-    // if(   ! jpegRegex.test(filename) ){
-    //   if(report_on == 'all'  || report_on == 'file_check'){
-    //      msgParts.push("Select an image (JPEG) file to upload");
-    //   }
-     
-    //   valid=false;
-    // }
 
-    // console.log('title', photoTitle.value);
-    // console.log('Title length', photoTitle.value.length);
+    report_on = 'all'
+   
+    
+    
     if (photoTitle.value.length < 3){
       if(report_on == 'all'  || report_on == 'title_check'){
         msgParts.push("Enter a title (must be more than 2 characters long) "); // invalid title
@@ -121,16 +118,23 @@ $('#photoTitle').on('keyup', function(e){
     } 
 
     if ($sectionCounter[cs] >= $maxSectionEntries){
-      //console.log('MaxSection Entries reached');
+      // console.log('MaxSection Entries reached');
       if(report_on == 'all'  || report_on == 'section_check'){
         msgParts.push("Maximum entries for selected section has been reached"); // invalid section
       }
       silent = false; // force report to be seen
       valid=false;
     }
+
+    // console.log('Valid',valid)
+    // console.log('msgParts',msgParts)
+    // console.log('Silent',silent)
+    // console.log('result',! valid && msgParts.length > 0 && ! silent)
+
+
     if(! valid && msgParts.length > 0 && ! silent){
       var msgCombined = 'Issues: ' + msgParts.join(',<br />')
-      showMsg(msgCombined,'error');
+      showMessage(msgCombined,'warning');
     }
     
     if(! valid ){
@@ -145,7 +149,10 @@ $('#photoTitle').on('keyup', function(e){
   // Upload the photo button clicked
   $(uploadEntryBtn).on('click', function( e ) {
     //console.log('uploadBtn clicked');
-    hideMessage();
+
+    e.preventDefault();
+
+    hideMessage('uploadBtnEntryClick');
     var valid = validateInputs(false,'all');
     if(! valid ){ 
       if($uploaderExtError){
@@ -160,7 +167,7 @@ $('#photoTitle').on('keyup', function(e){
       uploader.submit(); // Submit upload when #upload_entry_btn is clicked
     }
     
-    e.preventDefault();
+    
   });
 
   // click manager for photo list
@@ -273,6 +280,7 @@ $('#photoTitle').on('keyup', function(e){
     $entriesCost = cost; 
 
     updateTotalCost();
+    validateInputs('all')
   }
 
 // Function used to make ajax call init, delete and promote items 
@@ -299,6 +307,7 @@ var remoteCall = function (action, data) {
   var  clear_upload_form = function() {
     photoTitle.value = '';
     photoCategory_Section.value = 0;
+    
   }
 
 
@@ -313,19 +322,33 @@ var remoteCall = function (action, data) {
       return res[1];
    }  
    
-   function hideMessage() {
-    $('#msgBox').fadeOut(100);
+   function hideMessage(from='unknown') {
+    // console.log('hide message called from: ',from)
+    $('#messageContainer').hide();
    }
 
 
-  function showMsg(message, msgType) {
+  function showMessage(message, msgType,timeout=false, closer=false) {
     // console.log(message,msgType);
+    //$('#messageContainer').show();
+    $('#messageContainer').fadeIn(100);
+    $('#messageContainer').removeClass('alert-success alert-info alert-warning alert-danger').addClass("alert-"+msgType);
     $('#msgBox').html(message);
-    $('#msgBox').removeClass('success error warning').addClass(msgType).show();
-    setTimeout(function(){
-      $('#msgBox').fadeOut(100);
-    }, 12000);
+    if(closer){
+      $('#close_icon').html("&times;")
+    }
+    
+
+    // Upload success messages are the only ones that time out
+    if(timeout){
+      setTimeout(function(){
+        $('#messageContainer').fadeOut(100);
+      }, 6000);
+    }
+    
   }
+
+  
 
   function isDigitalOnlyEntry() {
    return $categoryCounters[1] > $categoryCounters[2]; // true if only Digital category used
@@ -334,7 +357,7 @@ var remoteCall = function (action, data) {
   function updateTotalCost() {
     var total = parseFloat($entriesCost) + parseFloat($returnPostageCost);
     // Add $2 if enrty is Digital Only if only $categoryCounter[1] ==1
-    if( isDigitalOnlyEntry() ){
+    if( isDigitalOnlyEntry() && user_application.club_nomination !== 'Warragul Camera Club'){
       // Add the $2 catalog postage fee
       total += digital_only_entry_surcharge;
       $catalogFee = digital_only_entry_surcharge;
@@ -379,7 +402,9 @@ var remoteCall = function (action, data) {
   });
 
   $('#upload_form').on('click',function(e){
-    $('#msgBox').fadeOut(100).html('');
+    // $('#msgBox').fadeOut(100).html('');
+    // $('#messageContainer').fadeOut(100);
+    // hideMessage('#upload form click');
   })
 
   // FINAL FORM SUBMISSSION
@@ -464,10 +489,11 @@ var remoteCall = function (action, data) {
         onChange: function(filename,extension,selectFileBtn,filesize, file){
 
          // console.log(filename,extension,filesize)
+         
           if (  ! /jpe?g$/i.test(extension) || filesize > 2047) {
             this.removeCurrent();
             // this.clearQueue();
-            showMsg('Files must be a JPEG and smaller than 2MB','error');
+            showMessage('Files must be a JPEG and smaller than 2MB','warning');
             return false;
           }
 
@@ -479,7 +505,7 @@ var remoteCall = function (action, data) {
         onSubmit: function() {
     
             var self = this;
-            $('#msgBox').hide(); // empty the message box
+            hideMessage('xhr upload line 485');
 
             $(uploadEntryBtn).prop('disabled', true); // disable upload btn
 
@@ -499,7 +525,7 @@ var remoteCall = function (action, data) {
             ajaxActive = false;
             if ( !response ) {
               //console.log('onComplete respones:',response);
-                showMsg('Unable to upload file', 'error');
+                showMessage('Unable to upload file', 'warning', true);
                 return;
             }
             //console.log(response)
@@ -509,17 +535,17 @@ var remoteCall = function (action, data) {
                 // display entries
                 list_entries(response.data);
 
-                showMsg('<strong>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.', 'success');
+                showMessage('<strong>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.', 'success',true);
                 // TODO clear the form
                 clear_upload_form();
 
             } else {
                 if ( response.status == 'fail' )  {
                     clear_upload_form();
-                    showMsg(escapeTags( response.message ), 'error');
+                    showMessage(escapeTags( response.message ), 'warning',true);
 
                 } else {
-                    showMsg('An error occurred and the upload failed.','error') ;
+                    showMessage('An error occurred and the upload failed.','danger',true) ;
                 }
             }
           },
@@ -528,17 +554,22 @@ var remoteCall = function (action, data) {
             ajaxActive = false;
             progressOuter.style.display = 'none';
 
-            showMsg('Unable to upload file','warning');
+            showMessage('Unable to upload file','warning',true);
             $(uploadEntryBtn).prop('disabled', true); // disable upload btn
             clear_upload_form();
           }
   });
 
+  
+
   $returnPostageCost = application_return_postage; // initial value on page load
   $returnInstructions = return_instructions;
   
-  $('#msgBox').hide().html(''); // empty the message box
+  //$('#msgBox').hide().html(''); // empty the message box
+  $('#messageContainer').hide(); // hide the message box container
   $('#return_postage').val($returnPostageCost);
+
+
 
   // disable the upload button
   validateInputs(true);
@@ -555,6 +586,10 @@ var remoteCall = function (action, data) {
     list_entries(response.data);
     $(loadingDiv).addClass('display-none');
     ajaxActive = false;
-  });;
+  });
+
+  
+
+ 
   
 };

@@ -21,6 +21,14 @@ class ApplicationController extends Controller
             'yesno' => ['Yes', 'No'],
             'vapsclubs' => Club::all()->pluck('name', 'id'),
             'states' => ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'],
+            'wherehear' =>[
+                'Flyer',
+                'Facebook',
+                'Entered Last Year',
+                'From my camera club',
+                'VAPS',
+                'Other'
+            ]
 
         ];
 

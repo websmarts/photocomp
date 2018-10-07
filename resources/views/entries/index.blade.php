@@ -38,7 +38,8 @@
     var digital_only_entry_surcharge = parseFloat({{ $settings->digital_only_entry_surcharge }});
     var application_return_postage = parseInt({{ $application->return_postage or 0 }});
     var return_instructions = "{{ $application->return_post_option }}";
-    var $apiToken = "{{ Auth::user()->api_token }}"
+    var $apiToken = "{{ Auth::user()->api_token }}";
+    var user_application = @json(Auth::user()->application);
 </script>
 
 <script type="text/javascript" src="{{ mix('js/entries_form.js') }}>"></script>

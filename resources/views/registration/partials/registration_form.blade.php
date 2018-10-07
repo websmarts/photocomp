@@ -172,9 +172,28 @@
             <option  value="">Select club</option>
             @include('registration.partials.form_select_options',['options_key'=>'vapsclubs','input_name'=>'club_nomination'])
             </select>
+
             @if ($errors->has('club_nomination'))
                 <span class="help-block">
                     <strong>{{ $errors->first('club_nomination') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="control-label">Where did you hear about the Competition?</label>
+            <select  class="form-control" name="club_nomination" >
+            <option  value="">Select option</option>
+            @include('registration.partials.form_select_options',['options_key'=>'wherehear','input_name'=>'where_hear'])
+            </select>
+            <input type="text" class="form-control" name="where_hear_other" value="{{ old('where_hear+other', $application->where_hear) }}" />
+            @if ($errors->has('where_hear'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('where_hear') }}</strong>
                 </span>
             @endif
         </div>
