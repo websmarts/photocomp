@@ -96,7 +96,7 @@ $('#photoTitle').on('keyup', function(e){
     var valid = true;
     var msgParts =[];
 
-    report_on = 'all'
+    report_on = 'all';
    
     
     
@@ -331,6 +331,7 @@ var remoteCall = function (action, data) {
   function showMessage(message, msgType,timeout=false, closer=false) {
     // console.log(message,msgType);
     //$('#messageContainer').show();
+    
     $('#messageContainer').fadeIn(100);
     $('#messageContainer').removeClass('alert-success alert-info alert-warning alert-danger').addClass("alert-"+msgType);
     $('#msgBox').html(message);
@@ -473,7 +474,7 @@ var remoteCall = function (action, data) {
         button: selectFileBtn,
         url: 'api/upload',
         autoSubmit: false,
-        allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
+        //allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
         name: 'image',
         multipart: true,
         hoverClass: 'hover',
@@ -488,14 +489,18 @@ var remoteCall = function (action, data) {
         },
         onChange: function(filename,extension,selectFileBtn,filesize, file){
 
-         // console.log(filename,extension,filesize)
+         //console.log(filename,extension,filesize)
+         hideMessage('xhr upload line 492');
          
           if (  ! /jpe?g$/i.test(extension) || filesize > 2047) {
-            this.removeCurrent();
-            // this.clearQueue();
-            showMessage('Files must be a JPEG and smaller than 2MB','warning');
+            //this.removeCurrent();
+            //this.clearQueue();
+            //alert('Warning invalid file selected');
+            showMessage('Files must be a JPEG and smaller than 2MB','danger');
+            selectFileBtn.innerHTML ='Click here to <br>select image to upload';
             return false;
           }
+          
 
           selectFileBtn.innerHTML = filename;
           validateInputs(true,'file_check');
@@ -542,7 +547,7 @@ var remoteCall = function (action, data) {
             } else {
                 if ( response.status == 'fail' )  {
                     clear_upload_form();
-                    showMessage(escapeTags( response.message ), 'warning',true);
+                    showMessage( response.message , 'danger',true);
 
                 } else {
                     showMessage('An error occurred and the upload failed.','danger',true) ;
@@ -554,7 +559,7 @@ var remoteCall = function (action, data) {
             ajaxActive = false;
             progressOuter.style.display = 'none';
 
-            showMessage('Unable to upload file','warning',true);
+            showMessage('Unable to upload file','danger',false);
             $(uploadEntryBtn).prop('disabled', true); // disable upload btn
             clear_upload_form();
           }

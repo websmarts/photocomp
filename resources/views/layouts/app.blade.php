@@ -44,28 +44,28 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @guest
-                    <li><a href="{{ route('login') }}">Login</a></li>
+                    <li><a class="btn btn-default" href="{{ route('login') }}">Login</a></li>
 
                     @if($settings->competition_status == 'Open')
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a class="btn btn-default" href="{{ route('register') }}">Register</a></li>
                     @endif
 
                 @else
                             @can('enter')
                             <li>
-                                <a href="{{ route('home') }}">Dashboard</a>
+                                <a class="btn btn-default" href="{{ route('home') }}">Dashboard</a>
 
                             </li>
                             @endcan
 
                             @can('admin')
                                 <li>
-                                    <a href="{{ route('admin.dashboard') }}">Admin dashboard</a>
+                                    <a class="btn btn-default" href="{{ route('admin.dashboard') }}">Admin dashboard</a>
                                 </li>
                             @endcan
 
                             <li>
-                                <a href="{{ route('logout') }}"
+                                <a class="btn btn-default" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
                                     Logout
