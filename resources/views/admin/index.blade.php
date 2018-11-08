@@ -39,7 +39,7 @@
 					<li>All photos and application details</li>
 				</ul>
 			</div>
-			<p>The MASTER RESET is intended to be run well after the competition has finished and no one will need access to any competition data or phots anymore.</p>
+			<p>The MASTER RESET is intended to be run well after the competition has finished and no one will need access to any competition data or photos anymore.</p>
 			<p><a href="{{ route('admin.master.reset') }}">Master Reset Button!!!</a></p>
 			@endif
 
