@@ -16,6 +16,7 @@ class AddWhereHearToApplicationsTable extends Migration
         Schema::table('applications', function (Blueprint $table) {
 
             $table->string('where_hear')->nullable();
+            
 
         });
     }
@@ -30,6 +31,7 @@ class AddWhereHearToApplicationsTable extends Migration
         Schema::table('applications', function (Blueprint $table) {
             
             $table->dropColumn('where_hear');
+            
             
         });
     }

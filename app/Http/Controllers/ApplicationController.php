@@ -53,8 +53,18 @@ class ApplicationController extends Controller
             'vaps_affiliated' => 'required|string|max:255',
             'aps_member' => 'required|string|max:255',
             'club_nomination' => 'nullable|string|max:255',
+            'where_hear'=> 'nullable|string|max:255',
+            'where_hear_other'=>'nullable|string|max:255',
             'confirm_terms' => 'required',
         ]);
+
+        
+        if($attributes['where_hear'] == 'Other'){
+            // Add in the where_hear_other field data
+            $attributes['where_hear'] .= ': '.$attributes['where_hear_other'];
+            unset($attributes['where_hear_other']);
+        }
+
 
         $application = Application::firstOrCreate(['user_id' => $request->user()->id]);
 
