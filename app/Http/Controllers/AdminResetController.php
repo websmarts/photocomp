@@ -11,7 +11,7 @@ class AdminResetController extends Controller
     {
         
         // Check this is the admin user
-        if(! Auth::user()->id == 1){
+        if(! auth()->user()->id == 1){
             flash('Bad request');
             back();
         }
