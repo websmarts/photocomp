@@ -9,6 +9,13 @@ class AdminResetController extends Controller
 {
     public function reset()
     {
+        
+        // Check this is the admin user
+        if(! Auth::user()->id == 1){
+            flash('Bad request');
+            back();
+        }
+        
         // Check the compitition is closed - it needs to be
         if (strtolower($this->setting('competition_status')) !== 'closed') {
             flash('Cannot reset the application unless the competition status is "closed"');
