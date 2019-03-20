@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+
+use App\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+
+        $schedule->call(function () {
+            User::where('verified' ,'=', 0)
+            ->where( 'created_at', '<', Carbon::now()->subDays(1))
+            ->where('is_admin','=','no')
+            ->delete();
+        })->hourly();
     }
 
     /**
