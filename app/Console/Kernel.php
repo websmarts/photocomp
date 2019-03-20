@@ -28,12 +28,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->call(function () {
-            User::where('verified' ,'=', 0)
-            ->where( 'created_at', '<', Carbon::now()->subDays(1))
-            ->where('is_admin','=','no')
-            ->delete();
-        })->hourly();
+        // $schedule->call(function () {
+        //     User::where('verified' ,'=', 0)
+        //     ->where( 'created_at', '<', Carbon::now()->subDays(1))
+        //     ->where('is_admin','=','no')
+        //     ->delete();
+        // })->hourly();
+
+        $schedule->command('users:purge')->hourly();
     }
 
     /**
