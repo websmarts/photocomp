@@ -474,6 +474,8 @@ var remoteCall = function (action, data) {
         button: selectFileBtn,
         url: 'api/upload',
         autoSubmit: false,
+        queue: false,
+        multipleSelect: false,
         //allowedExtensions: ['jpg', 'jpeg'], // for example, if we were uploading pics
         name: 'image',
         multipart: true,
@@ -488,7 +490,7 @@ var remoteCall = function (action, data) {
             this.setProgressBar( progressBar );
         },
         onChange: function(filename,extension,selectFileBtn,filesize, file){
-
+          this.clearQueue();
          //console.log(filename,extension,filesize)
          hideMessage('xhr upload line 492');
          
