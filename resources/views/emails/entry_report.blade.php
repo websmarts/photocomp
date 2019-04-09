@@ -106,11 +106,11 @@ levels were 29% across Print sections and 20% across the Digital section.</p>
 </table>
 
 
-<p>We are very pleased with the high standard of entries and we would like to thank you for your support of this Exhibition.</p>
 
-<p>We cordially invite you, your family and your friends to attend our Official Opening and awards presentation on Sunday 19th May, 2018, at The Warragul Downtowner, 55-57 Victoria Street, Warragul, Victoria at 2:00pm.</p>
-<p>Our exhibition is open Friday 17th May to Monday 20st May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
-<p>AIt is always surprising how quickly the year rolls around. January 2020 when entries open for the 2020 National is not that far away. We hope to see your images again next year.  </p>
+
+<p>We cordially invite you, your family and your friends to attend our Official Opening and awards presentation on Sunday 19th May, 2019, at The Warragul Downtowner, 55-57 Victoria Street, Warragul, Victoria at 2:00pm.</p>
+<p>Our exhibition is open Friday 17th May to Monday 20th May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
+<p>It is always surprising how quickly the year rolls around. January 2020 when entries open for the 2020 National is not that far away. We hope to see your images again next year.  </p>
 <p>Keep an eye on our website www.warragulnational.org for more details.</p>
 <p>Thank you for your support for the 2019 Warragul National, one of only three National Competitions held in Victoria.</p>
 <p>&nbsp;</p>
