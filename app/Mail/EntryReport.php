@@ -26,7 +26,7 @@ class EntryReport extends Mailable
     public function __construct($results)
     {
         $this->results = $results;
-        $this->sections = Section::with('category')->get();
+        $this->sections = Section::with('category')->get()->keyBy('id');
 
         $this->photoCount = Photo::count();
         $this->applicationCount = Application::count();

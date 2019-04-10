@@ -40,7 +40,7 @@ class AdminMessagingController extends Controller
 
         $applicants = Application::whereNotNull('payment_method')->with('user')->get();
 
-        dd($applicants);
+        //dd($applicants);
 
         $n = 0;
         foreach ($applicants as $applicant) {
@@ -104,7 +104,7 @@ class AdminMessagingController extends Controller
 
                 }
 
-                // dd(collect($results[1022]));
+                 //dd(collect($results[1276]));
 
                 // return new EntryReport(collect($results[1022]));
 
@@ -137,6 +137,6 @@ class AdminMessagingController extends Controller
 
         }
 
-        dd('done');
+        dd('all done');
     }
 }
