@@ -69,7 +69,7 @@ levels were 29% across Print sections and 20% across the Digital section.</p>
 
 				<td colspan="7"><div style="padding-bottom:8px; font-weight: bold; border-bottom: 1px solid #000000">Section {{ $row['section'] }}
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					@if(isSet($sections[$row['section']]) )
+					@if( $sections->where('id',$row['section'])->first() )
 						{{$row['section']}}::{{ $sections->where('id',$row['section'])->first()->name }} -
 						{{ $sections->where('id',$row['section'])->first()->category->name }}
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
