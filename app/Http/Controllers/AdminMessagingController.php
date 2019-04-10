@@ -127,8 +127,9 @@ class AdminMessagingController extends Controller
                     $to = $sections->first()[1]['email'];
                     //dd($sections);
 
+                    return new EntryReport($sections); // debug view - comment out for production
                     Mail::to($to)->queue(new EntryReport($sections));
-                    //return new EntryReport($sections);
+                    
                     $n++;
                 }
 
