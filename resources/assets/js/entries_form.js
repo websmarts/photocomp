@@ -494,7 +494,7 @@ var remoteCall = function (action, data) {
          //console.log(filename,extension,filesize)
          hideMessage('xhr upload line 492');
          
-          if (  ! /jpe?g$/i.test(extension) || filesize > 2047) {
+          if (  ! /jpe?g$/i.test(extension) || filesize > 4096) {
             //this.removeCurrent();
             //this.clearQueue();
             //alert('Warning invalid file selected');
