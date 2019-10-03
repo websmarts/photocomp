@@ -87,13 +87,16 @@ class PhotosHandler
         $this->width = $image->width();
         $this->height = $image->height();
 
+        $maxwidth = 2560; //px
+        $maxheight = 1440; //px
 
-        if ($this->height > 1080) {
-            $jsend = new Jsend('fail', null, 'Image height ('.$this->height.'px) is greater than the allowed 1080 pixels');
+
+        if ($this->height > $maxheight) {
+            $jsend = new Jsend('fail', null, 'Image height ('.$this->height.'px) is greater than the allowed ' . $maxheight . ' pixels');
             return $jsend->response();
         }
-        if ($this->width > 1920) {
-            $jsend = new Jsend('fail', null, 'Image width ('.$this->width.'px) is greater than the allowed 1920 pixels');
+        if ($this->width > $maxwidth) {
+            $jsend = new Jsend('fail', null, 'Image width ('.$this->width.'px) is greater than the allowed ' . $maxwidth .' pixels');
             return $jsend->response();
         }
 

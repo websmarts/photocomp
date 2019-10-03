@@ -24,10 +24,13 @@ class CreateApplicationsTable extends Migration
             $table->string('address2')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
+            $table->string('country')->nullable();// added 10/2019
             $table->string('postcode')->nullable();
             $table->string('phone')->nullable();
             $table->string('vaps_affiliated')->nullable();
             $table->string('aps_member')->nullable();
+            $table->string('aps_membership_number')->nullable();// added 10/2019
+            $table->string('club_name')->nullable();// added 10/2019
             $table->string('club_nomination')->nullable();
             $table->string('confirm_terms')->nullable();
 
