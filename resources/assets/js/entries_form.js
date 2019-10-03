@@ -498,7 +498,7 @@ var remoteCall = function (action, data) {
             //this.removeCurrent();
             //this.clearQueue();
             //alert('Warning invalid file selected');
-            showMessage('Files must be a JPEG and smaller than 2MB','danger');
+            showMessage('Files must be a JPEG and smaller than 4MB','danger');
             selectFileBtn.innerHTML ='Click here to <br>select image to upload';
             return false;
           }
