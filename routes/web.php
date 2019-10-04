@@ -84,6 +84,8 @@ Route::middleware(['auth', 'can:enter'])->group(function () {
 // Payment request
     Route::get('/checkout/final/{method}', 'CheckoutController@final')->name('checkout.final');
 
+    Route::get('/labels/{user}','PdfController@index')->name('labelmaker');;
+
 });
 
 Route::prefix('paypal')->group(function () {
@@ -92,3 +94,5 @@ Route::prefix('paypal')->group(function () {
     Route::get('success', 'PaypalController@success');
     Route::get('cancel', 'PaypalController@cancel');
 });
+
+

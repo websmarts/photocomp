@@ -179,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
@@ -232,7 +233,8 @@ return [
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
+        
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],

@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container" >
+   @if($application->user->prints->count())
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-right">
+                <a href="{{ route('labelmaker',$application->user->id) }}" >Download lables pdf</a>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             @include('layouts.partials.back_to_dashboard_link')

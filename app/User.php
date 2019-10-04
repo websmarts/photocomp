@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('\App\Photo');
     }
+
+    public function prints()
+    {
+        return $this->hasMany('\App\Photo')->where('category_id',2)->orderBy('section_id','asc');
+    }
 }
