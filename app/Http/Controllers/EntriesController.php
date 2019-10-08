@@ -43,6 +43,7 @@ class EntriesController extends Controller
 
         $categories = Category::with('sections')->get();
 
+       
         // Show view that does not allow any changes if entrant has paid
         if (Auth::user()->application->submitted) {
             return view('entries.show', compact('categories'));

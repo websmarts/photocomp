@@ -20,10 +20,17 @@ class PdfController extends Controller
     public function index($user)
     {
         $user = User::find($user);
+        if(!$user ) {
+            flash('unable to complete request');
+            return redirect('home');
+        }
        
 
         // Get list of user PRINTS ie User Photos where category_id =2
+
         $prints = $user->prints()->with('section')->get();
+
+        
 
         
        

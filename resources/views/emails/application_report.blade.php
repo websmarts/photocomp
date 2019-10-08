@@ -13,6 +13,16 @@
 <p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p>
 <p>&nbsp;</p>
 <p style="font-size:120%; font-weight: bold">Entrant number: {{ $user->id +1000 }} </p>
+
+	@if($user->prints->count())
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-right">
+                <a href="{{ route('labelmaker',$user->id) }}" >Download labels pdf to print and attach to your prints</a>
+            </div>
+        </div>
+    @endif
+
+
 @endif
 
 <p>Payment status:

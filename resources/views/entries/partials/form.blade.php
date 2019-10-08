@@ -136,7 +136,7 @@ the category requirements to avoid being rejected. Please review the definitions
 
 	<hr>
 
-	<p>Only click the SAVE ENTRY FORM button below after you have completed uploading all of your photos and indicated your return instructions.</p>
+	<p>Only click the FINALISE ENTRY FORM button below after you have completed uploading all of your photos and indicated your return instructions.</p>
 	<p>If you would like to complete this section later it is safe to logout and login again later when you are ready to continue updating the form, the system will remember all the photos you have uploaded to date.</p>
 
 	<button id="final_submit_button" class="btn btn-primary">Finalise Entry Form</button>
