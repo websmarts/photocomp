@@ -102,7 +102,7 @@ class EntriesController extends Controller
         $this->photosHandler = new PhotosHandler($this->setting(), $this->user);
 
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpg,jpeg|max:2048',
+            'image' => 'required|image|mimes:jpg,jpeg|max:4096',
             'category_id' => 'required|integer|min:1',
             'section_id' => 'required|integer|min:1',
             'title' => 'required|min:3',
