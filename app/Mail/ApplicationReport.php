@@ -2,11 +2,13 @@
 
 namespace App\Mail;
 
-use App\Category;
 use App\User;
+use App\Category;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationReport extends Mailable
 {
@@ -14,6 +16,8 @@ class ApplicationReport extends Mailable
 
     public $user;
     public $categories;
+    public $pdf;
+    public $printsCount;
 
     /**
      * Create a new message instance.
@@ -24,6 +28,10 @@ class ApplicationReport extends Mailable
     {
         $this->user = $user;
         $this->categories = Category::with('sections')->get();
+        $this->printsCount = $this->user->prints->count();
+
+       
+
 
     }
 
@@ -34,6 +42,26 @@ class ApplicationReport extends Mailable
      */
     public function build()
     {
-        return $this->subject('Confirmation of Photo Competition Submission')->view('emails.application_report');
+        
+        // Create labels pdf and attach IF the entry has any prints
+        
+        if($this->printsCount){
+            
+            $prints = $this->user->prints()->with('section')->get();
+            $user = $this->user;
+            $this->pdf = PDF::loadView('entries.labels2', compact('user','prints'));
+            // Save pdf to storage
+            // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
+            
+             return $this->subject('Confirmation of Photo Competition Submission')
+                    ->view('emails.application_report')
+                    ->attachData($this->pdf, 'print_labels.pdf',[ 'mime' => 'application/pdf']);
+               
+        }
+        
+        // if no prints we dont attach pdf for labels
+        return $this->subject('Confirmation of Photo Competition Submission')
+                    ->view('emails.application_report');
+       
     }
 }

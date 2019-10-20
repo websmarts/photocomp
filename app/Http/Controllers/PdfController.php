@@ -10,6 +10,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
 {
@@ -19,6 +20,8 @@ class PdfController extends Controller
     
     public function index($user)
     {
+        
+        dd('unsupported request');
         $user = User::find($user);
         if(!$user ) {
             flash('unable to complete request');
@@ -32,13 +35,18 @@ class PdfController extends Controller
 
         
 
-        
+       // dd($user->prints->count());
        
        
 
         // return view('entries.labels2',compact('user','prints'));
 
         $pdf = PDF::loadView('entries.labels2', compact('user','prints'));
+
+        // Save pdf to storage
+        Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
+
+
         return $pdf->stream('labels.pdf');
     }
 }

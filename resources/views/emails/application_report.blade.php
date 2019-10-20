@@ -17,7 +17,14 @@
 	@if($user->prints->count())
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-right">
-                <a href="{{ route('labelmaker',$user->id) }}" >Download labels pdf to print and attach to your prints</a>
+			<p>If you have print entries, you must use the labels in the attached PDF with your prints.</p>
+			<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS </p>
+			<p  style="color:red; font-weight: bold; text-align: center">Fix to back of the mat at the BOTTOM LEFT corner.</p>
+			<p style=" text-align: center">Many entrants use AVERY one-up labels and cut the sheet after printing.</p>
+			<p style="color:blue; font-weight: bold; text-align: center">When printing these labels, <u>DO NOT SCALE - DO NOT FIT TO SIZE</u> - Print only at 100% size</p>
+
+			<p style="color:red; font-weight: bold; text-decoration: underline;  text-align: center">IF YOU DO NOT USE THESE LABELS, YOUR PRINTS WILL NOT BE JUDGED</p>
+
             </div>
         </div>
     @endif

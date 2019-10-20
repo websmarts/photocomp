@@ -113,12 +113,7 @@
 
                                     </table>
 
-                                    @if($application->user->prints->count())
-                                        
-                                                <a href="{{ route('labelmaker',$application->user->id) }}" >Download labels pdf to print and attach to your prints</a>
-                                    
-                                       
-                                    @endif
+                                   
                                 @else
                                     @if($application->submitted)
                                         <p>The fee for your current entries will be ${{ number_format($application->entries_cost + $application->return_postage,2) }}</p>
