@@ -55,7 +55,7 @@ class ApplicationReport extends Mailable
             
              return $this->subject('Confirmation of Photo Competition Submission')
                     ->view('emails.application_report')
-                    ->attachData($this->pdf, 'print_labels.pdf',[ 'mime' => 'application/pdf']);
+                    ->attachData($this->pdf->output(), 'print_labels.pdf',[ 'mime' => 'application/pdf']);
                
         }
         
