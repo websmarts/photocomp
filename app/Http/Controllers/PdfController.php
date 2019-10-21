@@ -21,7 +21,7 @@ class PdfController extends Controller
     public function index($user)
     {
         
-        dd('unsupported request');
+        dd('unsupported request');// This controller is not used!!!
         $user = User::find($user);
         if(!$user ) {
             flash('unable to complete request');
