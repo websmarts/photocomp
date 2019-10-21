@@ -18,6 +18,7 @@ class ApplicationReport extends Mailable
     public $categories;
     public $pdf;
     public $printsCount;
+    public $transactionId;
 
     /**
      * Create a new message instance.
@@ -30,8 +31,7 @@ class ApplicationReport extends Mailable
         $this->categories = Category::with('sections')->get();
         $this->printsCount = $this->user->prints->count();
 
-       
-
+        $this->transactionId = $user->application->txn_id;
 
     }
 
@@ -45,7 +45,7 @@ class ApplicationReport extends Mailable
         
         // Create labels pdf and attach IF the entry has any prints
         
-        if($this->printsCount){
+        if($this->printsCount &&  $this->transactionId > ' ' ){
             
             $prints = $this->user->prints()->with('section')->get();
             $user = $this->user;

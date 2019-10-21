@@ -9,6 +9,8 @@
 <p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
 
 @if($user->application->txn_id > ' ' )
+
+
 <p>&nbsp;</p>
 <p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p>
 <p>&nbsp;</p>
@@ -29,8 +31,8 @@
         </div>
     @endif
 
-
 @endif
+
 
 <p>Payment status:
 @if($user->application->txn_id > ' ' )
