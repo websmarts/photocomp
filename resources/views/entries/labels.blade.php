@@ -111,7 +111,10 @@ ON THE BOTTOM LEFT CORNER</span></p>
 		</tr>
 	@endforeach 
 	</table>
-	<div class="page-break"></div>
+	
+	@if(!$loop->last)
+		<div class="page-break"></div>
+	@endif
 @endforeach
 
 
