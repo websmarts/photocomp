@@ -46,11 +46,12 @@
  $rowCounter = 0; 
 @endphp
 
-<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS<br>
-Many entrants use AVERY one-up labels and cut the sheet after printing.</p>
-<p style="color:red; font-weight: bold; text-align: center">When printing these labels, <u>DO NOT SCALE - DO NOT FIT TO SIZE</u> - Print only at 100% size</p>
+<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS</p>
+<div style="text-align: center">Many entrants use AVERY one-up labels and cut the sheet after printing.</div>
+<div style="color:red; font-weight: bold; text-align: center">Fix to back of the mat at the BOTTOM LEFT corner.</div>
+<p style="color:blue; font-weight: bold; text-align: center">When printing these labels, <u>DO NOT SCALE - DO NOT FIT TO SIZE</u> - Print only at 100% size</p>
 
-<p style="color:blue; font-weight: bold; text-decoration: underline;  text-align: center">IF YOU DO NOT USE THESE LABELS, YOUR PRINTS WILL NOT BE JUDGED</p>
+<p style="color:red; font-weight: bold; text-decoration: underline;  text-align: center">IF YOU DO NOT USE THESE LABELS, YOUR PRINTS WILL NOT BE JUDGED</p>
 
 
 
@@ -84,7 +85,7 @@ Many entrants use AVERY one-up labels and cut the sheet after printing.</p>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td style="border:3px solid #000">&nbsp;</td>
             </tr>
         </table>
         

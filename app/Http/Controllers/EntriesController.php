@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Http\Controllers\Controller;
-use App\Mail\ApplicationReport;
 use App\User;
-use App\Utility\PhotosHandler;
+use App\Photo;
+use App\Category;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use App\Utility\PhotosHandler;
+use App\Mail\ApplicationReport;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use App\Photo;
 
 class EntriesController extends Controller
 {
@@ -74,6 +75,9 @@ class EntriesController extends Controller
             'return_post_option' => (string) $request->input('return_post_option'),
             'submitted' => Carbon::now(),
         ];
+
+
+       
 
         $this->user->application->update($data);
 
@@ -197,4 +201,6 @@ class EntriesController extends Controller
         return $this->entries;
 
     }
+
+    
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -18,6 +19,8 @@ Route::get('/mailable', function () {
 
     return new App\Mail\ApplicationReport(Auth::user());
 });
+
+
 
 Route::get('/', 'WelcomeController@index');
 
@@ -63,6 +66,38 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'can:enter'])->group(function () {
+
+    Route::get('/labelpdf', function(){
+
+    
+        
+        $user = Auth::guard('web')->user();
+       
+        // Get list of user PRINTS ie User Photos where category_id =2
+
+        $prints = $user->prints()->with('section')->get();
+       
+        
+
+       // dd($user->prints->count());
+       
+       
+
+        // return view('entries.labels2',compact('user','prints'));
+
+       $pdf = PDF::loadView('entries.labels', compact('user','prints'));
+
+        // Save pdf to storage
+        // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
+
+
+        return $pdf->stream('labels.pdf');
+    
+
+
+    });
+
+
     // Display the first application form
     Route::get('/home', 'HomeController@index')->name('home');
 

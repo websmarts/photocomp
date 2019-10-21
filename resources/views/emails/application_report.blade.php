@@ -8,6 +8,7 @@
 
 <p style="font-size:140%; font-weight: bold">Warragul National Photo Competition Entry Report</p>
 
+
 @if($user->application->txn_id > ' ' )
 
 
@@ -68,6 +69,7 @@ $application  = $user->application;
 <p>Return postage amount ($): {{ number_format($application->return_postage,2) }}<br>
 Return option selected: {{ $application->return_post_option or ' - '}} </p>
 <p>Cost of entries ($): {{ number_format($application->entries_cost,2) }}</p>
+<p>Total cost ($):{{ number_format(($application->entries_cost + $application->return_postage),2) }}
 
 <!--<p>You may log back into your account at any stage during the competition to review you entry details. </p>-->
 
