@@ -104,6 +104,10 @@ ON THE BOTTOM LEFT CORNER</span></p>
 				</table>
 				
 			</td>  
+
+			@if($items->count() == 1)
+			<td width="50%" >&nbsp;</td>
+			@endif
 			
 		
 			
@@ -111,7 +115,7 @@ ON THE BOTTOM LEFT CORNER</span></p>
 		</tr>
 	@endforeach 
 	</table>
-	
+
 	@if(!$loop->last)
 		<div class="page-break"></div>
 	@endif
