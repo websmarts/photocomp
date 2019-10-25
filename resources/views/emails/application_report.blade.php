@@ -20,7 +20,9 @@
 	@if($user->prints->count())
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-right">
-			<p>If you have print entries, you must use the labels in the attached PDF with your prints.</p>
+			<p>If you have print entries, please use the labels in the attached PDF with your prints.<br />
+Uniform identifying labels on Prints will help the Print Stewards immensely.</p>
+			
 			<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS </p>
 			<p  style="color:red; font-weight: bold; text-align: center">Fix to back of the mat at the BOTTOM LEFT corner.</p>
 			<p style=" text-align: center">Many entrants use AVERY one-up labels and cut the sheet after printing.</p>
