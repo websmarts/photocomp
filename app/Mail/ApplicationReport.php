@@ -49,7 +49,7 @@ class ApplicationReport extends Mailable
             
             $prints = $this->user->prints()->with('section')->get();
             $user = $this->user;
-            $this->pdf = PDF::loadView('entries.labels2', compact('user','prints'));
+            $this->pdf = PDF::loadView('entries.labels', compact('user','prints'));
             // Save pdf to storage
             // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
             
