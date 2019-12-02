@@ -67,7 +67,7 @@ class ApplicationController extends Controller
             'where_hear_other'=>'nullable|string|max:255',
             'confirm_terms' => 'required',
             'country' => 'nullable|string|max:255',
-            'aps_membership_number' => 'nullable|integer|digits:6',
+            'aps_membership_number' => 'nullable|string|size:6',
             'club_name' => 'nullable|string|max:255'
         ]);
 
