@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
@@ -27,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectPath = '/home';
 
     /**
      * Create a new controller instance.
@@ -42,6 +43,9 @@ class ResetPasswordController extends Controller
     // Following function overrides the one in ResetPasswords Trait to
     // stop the passowrd being hashed TWICE - ie once by the trait and once by
     // the User model mutator
+
+
+    
 
      /**
      * Reset the given user's password.
@@ -59,7 +63,11 @@ class ResetPasswordController extends Controller
 
         $user->save();
 
-        event(new PasswordReset($user));
+        // Auth::logout();
+        // flash('Your password has been updated. Login now using your updated password');
+        
+
+        // event(new PasswordReset($user));
 
         $this->guard()->login($user);
     }
