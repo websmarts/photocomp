@@ -47,9 +47,17 @@ class ApplicationReport extends Mailable
         
         if($this->printsCount &&  $this->transactionId > ' ' ){
             
-            $prints = $this->user->prints()->with('section')->get();
+            $prints = $this->user->prints()
+            ->orderBy('section_id','asc')
+            ->orderBy('section_entry_number','asc')
+            ->with('section')->get();
+            
             $user = $this->user;
             $this->pdf = PDF::loadView('entries.labels', compact('user','prints'));
+
+
+
+
             // Save pdf to storage
             // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
             

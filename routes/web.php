@@ -3,6 +3,9 @@
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 
+
+//use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +23,27 @@ Route::get('/mailable', function () {
     return new App\Mail\ApplicationReport(Auth::user());
 });
 
+// Route::get('/labeltest', function() {
+
+    
+//     $user = \App\User::find(59);
+//     $prints = $user->prints()
+//     ->orderBy('section_id','asc')
+//     ->orderBy('section_entry_number','asc')
+//     ->with('section')->get();
+
+//     $pdf = PDF::loadView('entries.labels', compact('user','prints'));
+
+//         // Save pdf to storage
+//        Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
+
+
+//         return $pdf->stream('labels.pdf');
+
+
+//     //dd ($prints);
+    
+// });
 
 
 Route::get('/', 'WelcomeController@index');

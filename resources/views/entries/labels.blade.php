@@ -99,7 +99,7 @@ ON THE TOP LEFT CORNER</span></p>
 				<!-- <p class="larger">{{-- $user->email --}}</p> -->
 
 				<p  class="larger">{{ $print->section_id }}: {{ $print->section->name}}</p>	
-				<p class="larger">Print {{ $counter }} of {{ $prints->where('section_id', $print->section_id)->count() }} </p>
+				<p class="larger">Print {{ $print->section_entry_number + 1 }} of {{ $prints->where('section_id', $print->section_id)->count() }} </p>
 
 				
 				<!-- <table width="100%">
