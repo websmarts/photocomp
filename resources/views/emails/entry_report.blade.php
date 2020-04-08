@@ -10,16 +10,16 @@
 <table width="98%">
 	<tr>
 		<td width="400"><img src="{{ $message->embed(public_path('images/email_image.jpg')) }}">
-		<br>APS Approval Number 2019/05</td>
+		<br>APS Approval Number 2020/02</td>
 		<td>
 			<p style="font-size:140%; font-weight: bold;text-align: center">{{ $settings->title }}</p>
 			<div style="text-align: center">
-				Warragul Downtowner<br />
-				55-57 Victoria Street, Warragul<br />
-				Friday 17th to Monday 20th May<br />
-				 10:00am 4:00pm<br />
+				<br />
+				<br />
+				<br />
+				<br />
 				
-				Official Opening Sunday 19th May 2:00pm
+				&nbsp;
 			</div>
 		</td>
 	</tr>
@@ -36,12 +36,14 @@
 
 <p> Dear {{ $results->first()[1]['givennames'] }},</p>
 <p> {{ str_repeat('&nbsp;',strlen($results->first()[1]['givennames']) + 6) }} Hello and 
-	thank you for your hard work, dedication and effort in entering or {{ $settings->title }}.</p>
-<p>Your images were among 1517 images in total submitted by 138 entrants for judging this year.
+	thank you for your hard work, dedication and effort in entering our {{ $settings->title }}.</p>
+
+<p>This year we were hit by COVID-19. Therefore, these results are for your digital entries. We managed, with the help of our judges, to judge these images remotely.</p>
+
+<p>Your images were among 563 digital images submitted by 79 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, 
 therefore making the lowest score achievable being 3 
-and the highest score achievable being 15. Acceptance 
-levels were 29% across Print sections and 20% across the Digital section.</p>
+and the highest score achievable being 15. There were 150 acceptances.</p>
 
 <p>Please find your results below</p>
 
@@ -106,17 +108,17 @@ levels were 29% across Print sections and 20% across the Digital section.</p>
 </table>
 
 
+<p>Unfortunately we have cancelled our exhibition and awards ceremony this year.</p>
 
 
-<p>We cordially invite you, your family and your friends to attend our Official Opening and awards presentation on Sunday 19th May, 2019, at The Warragul Downtowner, 55-57 Victoria Street, Warragul, Victoria at 2:00pm.</p>
-<p>Our exhibition is open Friday 17th May to Monday 20th May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
-<p>It is always surprising how quickly the year rolls around. January 2020 when entries open for the 2020 National is not that far away. We hope to see your images again next year.  </p>
-<p>Keep an eye on our website www.warragulnational.org for more details.</p>
-<p>Thank you for your support for the 2019 Warragul National, one of only three National Competitions held in Victoria.</p>
+<p>Please keep an eye on our website www.warragulnational.org for more details.</p>
+
+
+<p>Thank you for your support for the 2020 Warragul National, one of only two National Competitions held in Victoria.</p>
 <p>&nbsp;</p>
 <p>Kind Regards,</p>
 <p>Jane Woodcock<br />
-Chairman<br />
+Chair<br />
 {{ $settings->title }}</p>
 
 
