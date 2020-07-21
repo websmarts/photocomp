@@ -23,27 +23,59 @@ Route::get('/mailable', function () {
     return new App\Mail\ApplicationReport(Auth::user());
 });
 
-// Route::get('/labeltest', function() {
+Route::get('/labeltest', function() {
+
+    $users = \App\User::All();
+
+    $sections =[];
+
+    foreach ($users as $user) {
+        //$user = \App\User::find(59);
+
+        $prints = $user->prints()
+        ->with('section')->get();
+
+       
+        //$sections[$user->id] = [];
+        $entryNo =0;
+        $lastSectionId = null;
+
+        
+
+        foreach ($prints as $print) {
+
+            if($print->section_id != $lastSectionId){
+                $entryNo =0;
+            }
+
+            if ($entryNo++ != $print->section_entry_number){
+                $sections[$user->email][$print->section_id][$entryNo - 1] = $print->section_entry_number;
+            }
+
+            
+            $lastSectionId = $print->section_id;
+
+        }
+
+    }
 
     
-//     $user = \App\User::find(59);
-//     $prints = $user->prints()
-//     ->orderBy('section_id','asc')
-//     ->orderBy('section_entry_number','asc')
-//     ->with('section')->get();
-
-//     $pdf = PDF::loadView('entries.labels', compact('user','prints'));
-
-//         // Save pdf to storage
-//        Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
-
-
-//         return $pdf->stream('labels.pdf');
-
-
-//     //dd ($prints);
     
-// });
+    dd($sections);
+
+
+    // $pdf = PDF::loadView('entries.labels', compact('user','prints'));
+
+    //     // Save pdf to storage
+    //    Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
+
+
+    //     return $pdf->stream('labels.pdf');
+
+
+    //dd ($prints);
+    
+});
 
 
 Route::get('/', 'WelcomeController@index');

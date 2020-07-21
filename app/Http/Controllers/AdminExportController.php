@@ -25,8 +25,12 @@ class AdminExportController extends Controller
             JOIN photos p ON p.user_id = a.user_id
             JOIN sections s ON p.section_id = s.`id`
             JOIN categories c ON p.category_id = c.`id`
+            WHERE a.payment_method = "paypal"
             ORDER BY a.id ASC
         ';
+
+        // Added WHERE payment_method = paypal after 2020 season to
+        // ensure exported entries have at least tried to pay!
 
         $results = DB::select($sql);
 
@@ -110,6 +114,7 @@ class AdminExportController extends Controller
             fputcsv($file, $columns);
 
             foreach ($items as $item) {
+    
                 fputcsv($file, $item);
             }
             fclose($file);
