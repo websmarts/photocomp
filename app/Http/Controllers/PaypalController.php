@@ -18,7 +18,6 @@ class PaypalController extends Controller
 
         $data = $request->all();
         return view('paypal.success', compact('data'));
-
     }
 
     public function cancel(Request $request)
@@ -26,7 +25,6 @@ class PaypalController extends Controller
 
         $data = $request->all();
         return view('paypal.cancel', compact('data'));
-
     }
 
     public function ipn(Request $request)
@@ -78,7 +76,6 @@ class PaypalController extends Controller
                     ->cc($cc)
                     ->queue(new ApplicationReport($user));
             }
-
         } else {
 
             $msg = "IPN was not verified \n";
@@ -86,5 +83,4 @@ class PaypalController extends Controller
             Log::info($msg);
         }
     }
-
 }
