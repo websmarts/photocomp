@@ -77,7 +77,6 @@ Route::get('/labeltest', function() {
     
 });
 
-
 Route::get('/', 'WelcomeController@index');
 
 // Laravels std auth routes
