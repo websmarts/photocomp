@@ -102,14 +102,14 @@ ON THE TOP LEFT CORNER</span></p>
 				<p class="larger">Print {{ $print->section_entry_number + 1 }} of {{ $prints->where('section_id', $print->section_id)->count() }} </p>
 
 				
-				<!-- <table width="100%">
+				<table width="100%">
 					<tr class="boxed">
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td style="border:3px solid #000">&nbsp;</td>
 					</tr>
-				</table> -->
+				</table>
 				
 			</td>  
 

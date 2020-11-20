@@ -1,0 +1,11 @@
+
+TODO
+
+Ability to edit entries after payment is made. This would be limited to deleting/replacing images and  editing image titles. No ability to enter extra sections.
+Change the settings to add extra variables.
+a) Field for $ flagfall. (Currently $4.)
+b) Field for $ for each Print section.
+c) Field for $ for each Digital section.
+Logic is TotalFee = $Flagfall + (Number of PrintSections x $PrintSection) + (Number DigitalSections x $DigitalSection)
+ One extra item. In 2020 you implemented labels for prints. Initially we had an extra empty table (1 row, 4 columns) on each label. Certain members objected and we had you remove this feature. They have moved on so could you please put it back in (as per attached example)? Also, if we were doing 1 print section per A4 sheet, could each box be a bit taller perhaps?
+ 

@@ -16,5 +16,9 @@ class Setting extends Model
         'competition_status',
         'return_instructions',
         'paypal_mode',
+        'flagfall_cost',
+        'digital_section_cost',
+        'print_section_cost'
+
     ];
 }

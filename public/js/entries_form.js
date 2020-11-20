@@ -2333,6 +2333,11 @@ window.onload = function () {
   var $uploaderExtError = false;
   var $sectionCounter = []; // holds section entry couters.
   var $sectionCount; // number of sections entered
+  // Added in 2020
+  var $digitalSectionCount = 0;
+  var $printSectionCount = 0;
+
+  // TODO replace $maxSectionEntries with setting max_entries_per_section
   var $maxSectionEntries = 4; // max entries accepted per section
   var ajaxActive = false;
 
@@ -2500,7 +2505,9 @@ window.onload = function () {
     e.preventDefault();
   });
 
+  // LIST ALL ENTRIES AND TOTAL UP ENTRY COSTS
   var list_entries = function list_entries(entries) {
+
     $entryCount = 0;
 
     var cost = 0;
@@ -2511,10 +2518,12 @@ window.onload = function () {
     $categoryCounters = []; // reset category counters
     $sectionCount = 0;
     $categoryCounterIndex = 0;
+
+    // Loop through the CATEGORIES - ie Digital images | Prints
     $.each(entries, function (category_name, sections) {
       // console.log('CATEGORY_NAME', category_name);
-      //console.log('sections', sections);
-      $categoryCounterIndex++;
+      // console.log('sections', sections);
+      $categoryCounterIndex++; // 1 == Digital , 2 = Print
 
       parts.push('<div class="category">');
       parts.push('<h2>' + category_name + '</h2>');
@@ -2523,19 +2532,19 @@ window.onload = function () {
 
       $sectionCost = 0;
       $.each(sections, function (section_name, section_entries) {
-        //console.log('SECTION_NAME', section_name);
-        //console.log('SECTION_ENTRIES', section_entries);
+        // console.log('SECTION_NAME', section_name);
+        // console.log('SECTION_ENTRIES', section_entries);
         parts.push('<h3>' + section_name + '</h3>');
 
         var section_item_count = 0;
         if (section_entries.length > 0) {
           $sectionCount++;
 
-          $categoryCounters[$categoryCounterIndex] = 1; // indicates category has entries
+          $categoryCounters[$categoryCounterIndex]++; // indicates category has entries
         }
         $.each(section_entries, function (index, section_item) {
           // console.log('SECTION_ENTRY_index', index);
-          //console.log('SECTION_ITEM', section_item);
+          // console.log('SECTION_ITEM', section_item);
 
           section_item_count++;
           $entryCount++;
@@ -2550,16 +2559,20 @@ window.onload = function () {
           parts.push('<div class="img-container"><img src="/storage/photos/' + section_item.filepath + '"></div><span class="title">' + section_item.title + '</span></div>');
           //parts.push( section_item.section_entry_number + ' - ' +  section_item.title + '</div>');
         });
-        if (section_item_count < 1) {
-          //parts.push('<div>no section entries</div>');
-        } else if (section_item_count > 0) {
-          if (cost == 0) {
-            cost += first_section_cost; // First section $14
-          } else {
-            cost += additional_section_cost; // each extra section $10
-          }
-        }
       });
+      cost = flagfall_cost; // init
+
+
+      if ($categoryCounters[2] < 1 && $categoryCounters[1] > 0) {
+        cost = digital_only_entry_surcharge;
+      }
+
+      cost += $categoryCounters[1] * digital_section_cost + $categoryCounters[2] * print_section_cost;
+      // console.log('COST',cost);
+      // console.log('CATEGORYCOUNTERS',$categoryCounters);
+      // console.log('print_section_cost',print_section_cost);
+      // console.log('digital_section_cost',digital_section_cost);
+
       parts.push('</div><!-- end category -->');
     });
 
@@ -2760,8 +2773,12 @@ window.onload = function () {
     hoverClass: 'hover',
     focusClass: 'focus',
     responseType: 'json',
-    customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-  }, _defineProperty(_ref, 'customHeaders', { 'Authorization': 'Bearer ' + $apiToken }), _defineProperty(_ref, 'startXHR', function startXHR() {
+    customHeaders: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  }, _defineProperty(_ref, 'customHeaders', {
+    'Authorization': 'Bearer ' + $apiToken
+  }), _defineProperty(_ref, 'startXHR', function startXHR() {
     ajaxActive = true;
     progressOuter.style.display = 'block'; // make progress bar visible
     this.setProgressBar(progressBar);

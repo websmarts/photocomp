@@ -99,13 +99,15 @@ the category requirements to avoid being rejected. Please review the definitions
 	<hr>
 
 	<p>ENTRY FEES<br />
-	First section: ${{ number_format($settings->first_section_cost,2)  }}<br />
+	Base fee: ${{ number_format($settings->flagfall_cost,2)  }}<br />
 
+	
+
+	Digital image sections: ${{ number_format($settings->digital_section_cost,2) }} each section<br />
+	Print sections: ${{ number_format($settings->print_section_cost,2) }} each section<br />
 	@if($application->club_nomination !== "Warragul Camera Club")
 	Please note - an additional fee of ${{ number_format($settings->digital_only_entry_surcharge,2) }} for catalog postage will apply for digital-only entries.<br>
 	@endif
-
-	Additional sections: ${{ number_format($settings->additional_section_cost,2) }} each<br />
 	</p>
 	<hr>
 

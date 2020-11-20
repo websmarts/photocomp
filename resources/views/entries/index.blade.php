@@ -34,8 +34,14 @@
 @section('scripts')
 <!-- Cost of entering competition sections -->
 <script>
-    var first_section_cost = parseFloat({{ $settings->first_section_cost }});
-    var additional_section_cost = parseFloat({{ $settings->additional_section_cost }});
+    var flagfall_cost = parseFloat({{ $settings->flagfall_cost }});
+    var print_section_cost = parseFloat({{ $settings->print_section_cost }});
+    var digital_section_cost = parseFloat({{ $settings->digital_section_cost }});
+    var max_entries_per_section = parseInt({{ $settings->max_entries_per_section }});
+
+
+    // var first_section_cost = parseFloat({{ $settings->first_section_cost }});
+    // var additional_section_cost = parseFloat({{ $settings->additional_section_cost }});
     var digital_only_entry_surcharge = parseFloat({{ $settings->digital_only_entry_surcharge }});
     var application_return_postage = parseInt({{ $application->return_postage or 0 }});
     var return_instructions = "{{ $application->return_post_option }}";
