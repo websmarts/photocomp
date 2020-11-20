@@ -49,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
             Mail::to('iwmaclagan@gmail.com')->send(new QueueFailure());
         });
 
+        
+
     }
 
     /**

@@ -30,7 +30,8 @@
                             @if(!$application->completed )
                              <a href="{{ route('show_application_form') }}" >Complete the Application Form</a>
                              @else
-                             Complete the Application Form
+                             Complete the Application Form<br/>
+                            
                             @endif
 
 
@@ -52,8 +53,10 @@
                         <div class="col-sm-4">Step 2:<br />
                             @if($application->completed && !$application->submitted)
                             <a href="{{ route('entries_upload_form') }}">Complete the Entry Form</a>
+                            
                             @else
                             Complete the Entry Form
+                            
                             @endif
 
                         </div>
@@ -64,11 +67,10 @@
                                @if($application->completed)
                                     @if($application->submitted )
                                         Entry form has been completed<br />
-                                        @if( !$application->submitted)
-                                            <a href="{{ route('entries_upload_form') }}">View Entry Form</a>
-                                        @else( $application->paid)
-                                            <a href="{{ route('entries_upload_form') }}">View Entry Form</a>
-                                        @endif
+                                        
+                                            <a href="{{ route('entries_upload_form') }}">View entries</a><br>
+                                            <a href="{{ route('edit_entries') }}" >Edit  entries</a>
+                                    
                                     @else
                                         Entry Form has NOT been completed
                                     @endif

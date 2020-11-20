@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class EntriesController extends Controller
+class EntriesEditController extends Controller
 {
     private $entries = []; // an array of entries we return with ahr requests
 
@@ -42,19 +42,28 @@ class EntriesController extends Controller
     public function index()
     {
 
-        $categories = Category::with('sections')->get();
-
-       
-        // Show view that does not allow any changes if entrant has paid
-        if (Auth::user()->application->submitted) {
-            return view('entries.show', compact('categories'));
+        // If user has not submitted yet then they should not be here
+        // they should be using the standard entriy form 
+        if (!Auth::user()->application->submitted) {
+            return redirect( route('entries_upload_form'));
         }
 
-        $returnOptions = explode("\r\n", $this->setting('return_instructions'));
 
         $application = Auth::user()->application;
 
-        return view('entries.index', compact('categories', 'returnOptions', 'application'));
+        $sectionIds = $application->photos()->get()->pluck('section_id')->unique()->values();
+
+        $categories = Category::with(['sections'=> function($query) use ($sectionIds){
+          
+          $query->whereIn('id' ,$sectionIds);
+          
+        }])->get();
+
+        //dd($categories);
+
+        $returnOptions =[];
+
+        return view('entries.edit', compact('categories', 'returnOptions', 'application'));
     }
 
     /**

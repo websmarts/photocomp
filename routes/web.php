@@ -109,7 +109,7 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::post('application/{application}', 'AdminApplicationController@update')->name('admin.application.update');
     Route::get('application/{application}/verifyemail', 'AdminApplicationController@verifyEmail')->name('admin.application.verifyemail');
 
-// Messaging routs
+// Messaging routes
     Route::get('messaging', 'AdminMessagingController@index')->name('admin.messaging');
     Route::post('messaging/message_all', 'AdminMessagingController@messageAll')->name('admin.message_all');
     Route::post('messaging/message_results', 'AdminMessagingController@messageResults')->name('admin.message_results');
@@ -162,7 +162,9 @@ Route::middleware(['auth', 'can:enter'])->group(function () {
     Route::post('/application', 'ApplicationController@processRegistrationForm')->name('process_application_form');
 
 // Show image entry upload form - ajax uplaod handler
+    Route::get('/editentries', 'EntriesEditController@index')->name('edit_entries');  
     Route::get('/entries', 'EntriesController@index')->name('entries_upload_form');
+   
 
     // The following were added to the api routes file api.php
     // Route::post('/process', 'EntriesController@process')->name('process');
