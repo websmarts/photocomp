@@ -83,6 +83,7 @@ class AdminExportController extends Controller
             'category_name',
             'email',
             'where_hear',
+            'return_group'
         ];
         $items = [];
 
