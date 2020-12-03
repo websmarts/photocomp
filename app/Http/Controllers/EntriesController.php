@@ -73,6 +73,7 @@ class EntriesController extends Controller
             'entries_cost' => (float) $request->input('entries_cost'),
             'return_postage' => (string) $request->input('return_postage'),
             'return_post_option' => (string) $request->input('return_post_option'),
+            'return_group' => (string) $request->input('return_group',''),
             'submitted' => Carbon::now(),
         ];
 

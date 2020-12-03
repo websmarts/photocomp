@@ -122,7 +122,7 @@
 
 					<div class="row" style="margin-top:20px;">
 						<div class="col-xs-12">
-							<label for="max_entries_per_section" class="control-label">Return Instructions (one option per line)</label>
+							<label for="return_instructions" class="control-label">Return Instructions (one option per line)</label>
 							<textarea class="form-control" style="min-height:10em" name="return_instructions">{{ old('return_instructions',$settings->return_instructions) }}</textarea>
 
 							@if ($errors->has('return_instructions'))

@@ -38,6 +38,7 @@ class Application extends Model
         'entries_cost',
         'return_postage',
         'return_post_option',
+        'return_group',
         'submitted',
         'payment_method',
 

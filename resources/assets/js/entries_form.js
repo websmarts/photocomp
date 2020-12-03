@@ -464,6 +464,7 @@ window.onload = function () {
           entries_cost: $entriesCost + $catalogFee,
           return_postage: $returnPostageCost,
           return_post_option: $('#return_instructions').val(),
+          return_group:$('#return_group').val(),
           api_token: $apiToken,
         }
       })
