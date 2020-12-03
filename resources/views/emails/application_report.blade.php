@@ -70,7 +70,8 @@ $application  = $user->application;
 <p>APS Member: {{ $application->aps_member }} </p>
 <p>Club nomination: {{ $application->club_nomination }} <p>
 <p>Return postage amount ($): {{ number_format($application->return_postage,2) }}<br>
-Return option selected: {{ $application->return_post_option or ' - '}} </p>
+Return option selected: {{ $application->return_post_option or ' - '}} <br>
+Return group entered: {{ $application->return_group or ' - '}}</p>
 <p>Cost of entries ($): {{ number_format($application->entries_cost,2) }}</p>
 <p>Total cost ($):{{ number_format(($application->entries_cost + $application->return_postage),2) }}
 
