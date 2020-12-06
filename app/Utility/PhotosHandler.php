@@ -87,8 +87,8 @@ class PhotosHandler
         $this->width = $image->width();
         $this->height = $image->height();
 
-        $maxwidth = 2560; //px
-        $maxheight = 1440; //px
+        $maxwidth = 1920; //px
+        $maxheight = 1080; //px
 
 
         if ($this->height > $maxheight) {

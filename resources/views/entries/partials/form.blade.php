@@ -20,8 +20,8 @@
 				<div>IMPORTANT: Image files must be:
 					<ul>
 						<li>JPEG format.</li>
-						<li>No more than 2560 pixels wide.</li>
-						<li>No more than 1440 pixels high.</li>
+						<li>No more than 1920 pixels wide.</li>
+						<li>No more than 1080 pixels high.</li>
 						<li>No more than a 4MB file size.</li>
 					</ul>
 
