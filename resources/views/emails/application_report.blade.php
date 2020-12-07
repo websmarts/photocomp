@@ -23,9 +23,8 @@
 			<p>If you have print entries, please use the labels in the attached PDF with your prints.<br />
 Uniform identifying labels on Prints will help the Print Stewards immensely.</p>
 			
-			<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND<br>ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS
-
-ON THE TOP LEFT CORNER</p>
+			<p style="font-size:140%; font-weight: bold; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE 
+			LINES AND<br>ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS ON THE BOTTOM LEFT CORNER</p>
 			
 			<p style=" text-align: center">Many entrants use AVERY one-up labels and cut the sheet after printing.</p>
 			<p style="color:blue; font-weight: bold; text-align: center">When printing these labels, <u>DO NOT SCALE - DO NOT FIT TO SIZE</u> - Print only at 100% size</p>

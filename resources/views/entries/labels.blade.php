@@ -62,9 +62,10 @@
 
 <p class="normal">Please use these labels with your prints.<br />
 Uniform identifying labels on Prints will help the Print Stewards immensely.</p>
-<p style="font-size:14pt; font-weight: normal; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND<br><span style="font-weight:bold"> ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS
+<p style="font-size:14pt; font-weight: normal; text-align: center">PRINT THE LABELS, CUT THEM ALONG THE LINES AND<br><span style="font-weight:bold">
+ ATTACH SECURELY TO THE BACK OF EACH OF YOUR PRINTS
 
-ON THE TOP LEFT CORNER</span></p>
+ON THE BOTTOM LEFT CORNER</span></p>
 <div style="text-align: center">Many entrants use AVERY one-up labels and cut the sheet after printing.</div>
 
 <p style="color:blue; font-weight: bold; text-align: center">When printing these labels, <u>DO NOT SCALE - DO NOT FIT TO SIZE</u> - Print only at 100% size</p>
