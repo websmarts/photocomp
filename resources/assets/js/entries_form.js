@@ -278,9 +278,9 @@ window.onload = function () {
       cost = flagfall_cost; // init
 
 
-      if($categoryCounters[2] < 1 && $categoryCounters[1] > 0){
-        cost = digital_only_entry_surcharge;
-      }
+      // if($categoryCounters[2] < 1 && $categoryCounters[1] > 0){
+      //   cost += digital_only_entry_surcharge;
+      // }
 
       cost += ($categoryCounters[1] * digital_section_cost) +  ($categoryCounters[2] * print_section_cost);
       // console.log('COST',cost);
