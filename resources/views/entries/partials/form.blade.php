@@ -22,7 +22,7 @@
 						<li>JPEG format.</li>
 						<li>No more than 1920 pixels wide.</li>
 						<li>No more than 1080 pixels high.</li>
-						<li>No more than a 4MB file size.</li>
+						<li>No more than a 3MB file size.</li>
 					</ul>
 
 				</div>
