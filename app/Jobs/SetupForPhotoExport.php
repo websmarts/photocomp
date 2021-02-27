@@ -46,14 +46,18 @@ class SetupForPhotoExport implements ShouldQueue
     public function handle()
     {
 
+        // Reset export status of all exported photos
         Photo::where('exported', 'yes')->update(['exported' => 'no']);
+
+        // Delete the current export folder and its contenmts
+        Storage::disk('s3')->deleteDirectory(env('AWS_EXPORT_FOLDER'));
 
         // Make directory if it doesnt exit
         Storage::disk('s3')->makeDirectory(env('AWS_EXPORT_FOLDER'));
 
-        // Delete all the files in the directory
-        $files = Storage::disk('s3')->files(env('AWS_EXPORT_FOLDER'));
-        Storage::disk('s3')->delete($files);
+        // Original way to Delete all the files in the directory
+        // $files = Storage::disk('s3')->files(env('AWS_EXPORT_FOLDER'));
+        // Storage::disk('s3')->delete($files);
 
     }
 
