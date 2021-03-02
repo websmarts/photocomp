@@ -35,6 +35,8 @@ class ExportPhoto implements ShouldQueue
 
         $fileContents = Storage::get('photos/' . $this->photo->filepath);
 
+        
+
         Storage::disk('s3')->put(env('AWS_EXPORT_FOLDER') . '/' . $this->photo->export_filename, $fileContents);
 
         $this->photo->exported = 'yes';

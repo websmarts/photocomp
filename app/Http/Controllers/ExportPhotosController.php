@@ -18,12 +18,15 @@ class ExportPhotosController extends Controller
             ->orderBy('section_entry_number', 'asc')
             ->get(); // Always export ALL photos
 
+    
         Storage::disk('local')->put('logs/export.log', 'Photo  export date: ' . Carbon::now()->toFormattedDateString());
 
         // Compile the list of photo export jobs
         $photoExports = $photos->map(function ($photo) {
             return new \App\Jobs\ExportPhoto($photo);
         });
+
+
 
         SetupForPhotoExport::withChain($photoExports->toArray())->dispatch()->allOnConnection('database')->allOnQueue('export');
 
