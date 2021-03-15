@@ -22,6 +22,7 @@ class ExportPhoto implements ShouldQueue
      */
     public function __construct($photo)
     {
+        
         $this->photo = $photo;
     }
 

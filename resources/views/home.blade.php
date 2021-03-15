@@ -1,3 +1,4 @@
+use Illuminate\Support\Facades\Auth;
 @extends('layouts.app')
 
 @section('content')
@@ -69,7 +70,8 @@
                                         Entry form has been completed<br />
                                         
                                             <a href="{{ route('entries_upload_form') }}">View entries</a><br>
-                                            <a href="{{ route('edit_entries') }}" >Edit  entries</a>
+                                            <a href="{{ route('edit_entries') }}" >Edit  entries</a><br>
+                                            <a href="{{ url('labelpdf') }}" >Print entry labels pdf</a>
                                     
                                     @else
                                         Entry Form has NOT been completed
