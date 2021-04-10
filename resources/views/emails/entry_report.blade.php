@@ -38,12 +38,11 @@
 <p> {{ str_repeat('&nbsp;',strlen($results->first()[1]['givennames']) + 6) }} Hello and 
 	thank you for your hard work, dedication and effort in entering our {{ $settings->title }}.</p>
 
-<p>This year we were hit by COVID-19. Therefore, these results are for your digital entries. We managed, with the help of our judges, to judge these images remotely.</p>
 
-<p>Your images were among 563 digital images submitted by 79 entrants for judging this year.
+<p>Your images were among 1213 digital images submitted by 114 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, 
 therefore making the lowest score achievable being 3 
-and the highest score achievable being 15. There were 150 acceptances.</p>
+and the highest score achievable being 15. Acceptance levels were 31 percent across Print sections and 32 percent across the Digital section.</p>
 
 <p>Please find your results below</p>
 
@@ -108,17 +107,27 @@ and the highest score achievable being 15. There were 150 acceptances.</p>
 </table>
 
 
-<p>Unfortunately we have cancelled our exhibition and awards ceremony this year.</p>
+<p>We cordially invite you, your family and your friends to attend our Official Opening and the Awards Presentation at 2pm on Sunday 16th May, 2021, 
+in the Fountain Room at the West Gippsland Arts Centre, 63 Smith Street, Warragul, Victoria (enter via Civic Place).</p>
+<p>Due to covid restrictions, numbers will need to be capped. Please book your place (free) through TryBooking using the following URL:
+https://learn.trybooking.com/hc/en-us/articles/360002789713-Free-events</p>
+
+<p>Our exhibition is open Friday 14th to Sunday 16th May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
+
+<p>It is always surprising how quickly the year rolls around. January 2022, when entries open for the 49th Warragul National,
+ is not that far away. We hope to see your images again next year.</p>
+
+<p>Keep an eye on our website www.warragulnational.org for more details.</p>
+
+<p>Thank you for your support for the 2021 Warragul National, one of now only two National Competitions held in Victoria.
+</p>
 
 
-<p>Please keep an eye on our website www.warragulnational.org for more details.</p>
 
-
-<p>Thank you for your support for the 2020 Warragul National, one of only two National Competitions held in Victoria.</p>
 <p>&nbsp;</p>
 <p>Kind Regards,</p>
 <p>Jane Woodcock<br />
-Chair<br />
+Chairman<br />
 {{ $settings->title }}</p>
 
 
