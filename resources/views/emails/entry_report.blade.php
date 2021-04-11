@@ -41,7 +41,7 @@
 	thank you for your hard work, dedication and effort in entering our {{ $settings->title }}.</p>
 
 
-<p>Your images were among 1213 images submitted by 110 entrants for judging this year.
+<p>Your images were among 1123 images submitted by 110 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, 
 therefore making the lowest score achievable being 3 
 and the highest score achievable being 15. Acceptance levels were 31 percent across Print sections and 32 percent across the Digital sections.</p>
