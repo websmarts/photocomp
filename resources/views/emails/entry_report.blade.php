@@ -41,7 +41,7 @@
 	thank you for your hard work, dedication and effort in entering our {{ $settings->title }}.</p>
 
 
-<p>Your images were among 1213 digital images submitted by 110 entrants for judging this year.
+<p>Your images were among 1213 images submitted by 110 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, 
 therefore making the lowest score achievable being 3 
 and the highest score achievable being 15. Acceptance levels were 31 percent across Print sections and 32 percent across the Digital sections.</p>
@@ -114,11 +114,12 @@ in the Fountain Room at the West Gippsland Arts Centre, 63 Smith Street, Warragu
 <p>Due to covid restrictions, numbers will need to be capped. Please book your place (free) through TryBooking using the following URL:
 https://www.trybooking.com/BQHNA</p>
 
-<p>When you make a booking you will be sent tickets so I would add in your correspondence to sponsors, members and award winners to print the tickets out.</p>
+<p>When you make a booking you will be sent tickets so please print the tickets out and bring them with you.</p>
 
 <p>Our exhibition is open Friday 14th to Sunday 16th May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
 
 <p>If you are looking to use acceptances towards APS honours please check the details  carefully and email us of any changes ASAP.</p>
+
 <p>It is always surprising how quickly the year rolls around. January 2022, when entries open for the 49th Warragul National,
  is not that far away. We hope to see your images again next year.</p>
 
