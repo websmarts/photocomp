@@ -10,14 +10,16 @@
 <table width="98%">
 	<tr>
 		<td width="400"><img src="{{ $message->embed(public_path('images/email_image.jpg')) }}">
-		<br>APS Approval Number 2020/02</td>
+		<br>APS Approval Number 2021/05</td>
 		<td>
 			<p style="font-size:140%; font-weight: bold;text-align: center">{{ $settings->title }}</p>
 			<div style="text-align: center">
-				<br />
-				<br />
-				<br />
-				<br />
+				West Gippsland Arts Centre<br />
+				63 Smith Street, Warragul VIC<br />
+				Friday 14th to Sunday 16th May<br />
+				10:00am 4:00pm<br />
+				Award Presentations<br />
+				Sunday 16th May 2:00pm
 				
 				&nbsp;
 			</div>
@@ -39,10 +41,10 @@
 	thank you for your hard work, dedication and effort in entering our {{ $settings->title }}.</p>
 
 
-<p>Your images were among 1213 digital images submitted by 114 entrants for judging this year.
+<p>Your images were among 1213 digital images submitted by 110 entrants for judging this year.
 Your score is derived by three judges each giving points out of five, 
 therefore making the lowest score achievable being 3 
-and the highest score achievable being 15. Acceptance levels were 31 percent across Print sections and 32 percent across the Digital section.</p>
+and the highest score achievable being 15. Acceptance levels were 31 percent across Print sections and 32 percent across the Digital sections.</p>
 
 <p>Please find your results below</p>
 
@@ -107,26 +109,29 @@ and the highest score achievable being 15. Acceptance levels were 31 percent acr
 </table>
 
 
-<p>We cordially invite you, your family and your friends to attend our Official Opening and the Awards Presentation at 2pm on Sunday 16th May, 2021, 
+<p>We cordially invite you to attend the Awards Presentation at 2pm on Sunday 16th May, 2021, 
 in the Fountain Room at the West Gippsland Arts Centre, 63 Smith Street, Warragul, Victoria (enter via Civic Place).</p>
 <p>Due to covid restrictions, numbers will need to be capped. Please book your place (free) through TryBooking using the following URL:
-https://learn.trybooking.com/hc/en-us/articles/360002789713-Free-events</p>
+https://www.trybooking.com/BQHNA</p>
+
+<p>When you make a booking you will be sent tickets so I would add in your correspondence to sponsors, members and award winners to print the tickets out.</p>
 
 <p>Our exhibition is open Friday 14th to Sunday 16th May from 10am to 4pm daily. We would love to see you and your family and friends at anytime during the weekend.</p>
 
+<p>If you are looking to use acceptances towards APS honours please check the details  carefully and email us of any changes ASAP.</p>
 <p>It is always surprising how quickly the year rolls around. January 2022, when entries open for the 49th Warragul National,
  is not that far away. We hope to see your images again next year.</p>
 
 <p>Keep an eye on our website www.warragulnational.org for more details.</p>
 
-<p>Thank you for your support for the 2021 Warragul National, one of now only two National Competitions held in Victoria.
+<p>Thank you for your support for the 2021 Warragul National.
 </p>
 
 
 
 <p>&nbsp;</p>
 <p>Kind Regards,</p>
-<p>Jane Woodcock<br />
+<p>Jane Woodcock FAPS EFIAP<br />
 Chairman<br />
 {{ $settings->title }}</p>
 
