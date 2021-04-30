@@ -77,7 +77,7 @@
 
 <div id="container">
 
-    <div id="photo"><img src="http://photocomp.warragulnational.org/storage/app/photos/{{ $certificate['filepath'] }}" 
+    <div id="photo"><img src="{{ storage()->disk('local')->get('photos/'. $certificate['filepath'] }}" 
         width="{{ $certificate['photo']->width }}" 
         height="{{ $certificate['photo']->height }}" /></div>
 
