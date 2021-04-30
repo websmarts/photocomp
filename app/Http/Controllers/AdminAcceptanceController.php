@@ -83,7 +83,7 @@ class AdminAcceptanceController extends Controller
 
                         // Get the photo data
                         $certificate['photo'] = Photo::where('filepath','=',$certificate['filepath'])->get();
-
+                        dd($certificate);
                         $div_x = $certificate['photo']->width / 600;
                         $div_y = $certificate['photo']->height / 300;
                         $div = 1;
