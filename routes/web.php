@@ -118,6 +118,8 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('export/photos', 'ExportPhotosController@export')->name('admin.export.photos');
 
     Route::get('reset', 'AdminResetController@reset')->name('admin.master.reset');
+
+    Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
 });
 
 Route::middleware(['auth', 'can:enter'])->group(function () {

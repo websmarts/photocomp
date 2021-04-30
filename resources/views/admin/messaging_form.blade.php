@@ -55,8 +55,10 @@
 			<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
 
 			<h3>Send Final Reports</h3>
-			<p>NOTE: The spreadsheet file must be in an EXCEL 2003 (xls) format. It must only contain one worksheet - delete any additional worksheets otherwise the report will not function correctly.
-			<p>
+			<p>NOTE: The spreadsheet file must be in an EXCEL 2003 (xls) format. 
+				It must only contain one worksheet - delete any additional worksheets otherwise the report 
+				will not function correctly.</p>
+
 				<form method="post" action="{{route('admin.message_results')}}"  enctype="multipart/form-data" id="message_results_form">
 					{{ csrf_field() }}
 					<div class="form-group">
@@ -76,6 +78,37 @@
 					<div class="row" style="margin-top:20px;">
 				        <div class="col-xs-12 col-md-3 col-md-offset-5">
 				            <button type="submit" class="btn btn-primary" id="save_btn" name="save_btn" >Send Competition Results</button>
+				        </div>
+					</div>
+
+				</form>
+
+				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
+
+				<h3>Send Acceptance Certificates</h3>
+			<p>NOTE: The spreadsheet file must be in an EXCEL 2003 (xls) format. 
+				It must only contain one worksheet - delete any additional worksheets otherwise the report 
+				will not function correctly.</p>
+				
+				<form method="post" action="{{route('admin.acceptances')}}"  enctype="multipart/form-data" id="message_results_form">
+					{{ csrf_field() }}
+					<div class="form-group">
+				    	<div class="row" style="margin-top:20px;">
+					        <div class="col-xs-12">
+					            <label for="spreadsheet" class="control-label">Certificate spreadsheet</label>
+					            <input type="file" class="form-control" id="spreadsheet" name="spreadsheet" value="{{ old('spreadsheet',$settings->spreadsheet) }}" />
+					            @if ($errors->has('spreadsheet'))
+					                <span class="help-block">
+					                    <strong>{{ $errors->first('spreadsheet') }}</strong>
+					                </span>
+					            @endif
+					        </div>
+				       	</div>
+			       </div>
+
+					<div class="row" style="margin-top:20px;">
+				        <div class="col-xs-12 col-md-3 col-md-offset-5">
+				            <button type="submit" class="btn btn-primary" id="save_btn" name="save_btn" >Send Acceptance Certificates</button>
 				        </div>
 					</div>
 
