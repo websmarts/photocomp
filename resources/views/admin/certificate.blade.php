@@ -77,7 +77,7 @@
 
 <div id="container">
 
-    <div id="photo">{{ $certificate['filepath'] }}</div>
+    <div id="photo"><img src="/storage/photos/{{ $certificate['filepath'] }}" width="{{ $certificate['photo']->width" height="{{ $certificate['photo']->height" /></div>
 
 
     <div id="title">&#8220; {{ $certificate['title'] }}  &#8221;</div>

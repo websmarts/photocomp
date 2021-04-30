@@ -95,7 +95,7 @@ class AdminAcceptanceController extends Controller
                         $certificate['photo']->height = (int) $certificate['photo']->height / $div;
                         $certificate['photo']->width = (int) $certificate['photo']->width / $div;
 
-                        dd($certificate);
+                        //dd($certificate);
 
 
                         // Next two lines used for debug to return cert view
