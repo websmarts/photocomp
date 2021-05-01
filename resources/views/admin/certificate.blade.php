@@ -15,7 +15,7 @@
    
     .certificate {
     
-        background-image: url('http://photocomp.test/storage/certificate_background.jpg');
+        background-image: url('/storage/certificate_background.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: -23px -20px;
