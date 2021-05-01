@@ -30,13 +30,13 @@
         top: 300px;
         width:602px;
         
-        border: 1px solid red;
+        border: 0px solid red;
         text-align: center;
     }
 
     #photo {
         width: 100%;
-        border: 1px solid green;
+        border: 0px solid green;
         height: 300px;
         
     }
@@ -44,23 +44,23 @@
     #title {
        
         font-size:16pt;
-        border: 1px solid green;
+        border: 0px solid green;
         padding:10px;
         
     }
 
     #entrant {
-        border:1px solid blue;
+        border: 0px solid blue;
         font-size:16pt;
         padding: 10px;
     }
     #section {
-        border: 1px solid black;
+        border: 0px solid black;
         font-size: 16pt;
         padding:10px;
     }
     #result {
-        border: 1px solid black;
+        border: 0px solid black;
         font-size: 20pt;
         font-weight: bold;
         padding:10px;
