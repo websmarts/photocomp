@@ -14,16 +14,16 @@ class Certificate extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $certificate;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($certificate)
     {
-        $this->data = $data;
+        $this->certificate = $certificate;
 
     }
 
@@ -39,15 +39,15 @@ class Certificate extends Mailable
         
         if(1 ){
             
-            $data = $this->data;
+            $certificate = $this->certificate;
 
-            $this->pdf = PDF::loadView('admin.certificate', compact('data'));
+            $this->pdf = PDF::loadView('admin.certificate', compact('certificate'));
 
 
             // Save pdf to storage
             // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
             
-             return $this->subject('Photo Competition Acceptance Certificate # ' . $data['id']++)
+             return $this->subject('Photo Competition Acceptance Certificate # ' . $certificate['id']++)
                     ->view('emails.acceptance_certificate')
                     ->attachData($this->pdf->output(), 'certificate.pdf',[ 'mime' => 'application/pdf']);
                
