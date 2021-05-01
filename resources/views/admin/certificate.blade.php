@@ -77,7 +77,7 @@
 
 <div id="container">
 
-    <div id="photo"><img src="{{ route('admin.acceptance.photo',['filepath'=>$certificate['filepath']) }}" 
+    <div id="photo"><img src="{{ route('admin.acceptance.photo',['filepath'=>$certificate['filepath']]) }}" 
         width="{{ $certificate['photo']->width }}" 
         height="{{ $certificate['photo']->height }}" /></div>
 
