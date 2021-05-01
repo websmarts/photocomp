@@ -122,6 +122,8 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('reset', 'AdminResetController@reset')->name('admin.master.reset');
 
     Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
+
+    Route::post('background', 'AdminAcceptanceController@background')->name('admin.acceptance.background');
     
 });
 

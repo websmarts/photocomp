@@ -113,6 +113,33 @@
 					</div>
 
 				</form>
+				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
+
+				<form method="post" action="{{route('admin.acceptance.background')}}"  enctype="multipart/form-data" id="message_results_form">
+					{{ csrf_field() }}
+					<div class="form-group">
+				    	<div class="row" style="margin-top:20px;">
+					        <div class="col-xs-12">
+					            <label for="background" class="control-label">Certificate background image ** use a 2480px x 3508px jpg </label>
+					            <input type="file" class="form-control" id="background" name="background" value="{{ old('background',$settings->background) }}" />
+					            @if ($errors->has('background'))
+					                <span class="help-block">
+					                    <strong>{{ $errors->first('background') }}</strong>
+					                </span>
+					            @endif
+					        </div>
+				       	</div>
+			       </div>
+
+					<div class="row" style="margin-top:20px;">
+				        <div class="col-xs-12 col-md-3 col-md-offset-5">
+				            <button type="submit" class="btn btn-primary" id="save_btn" name="save_btn" >Upload background image</button>
+				        </div>
+					</div>
+
+				</form>
+
+				<img src="/storage/certificate_background.jpg" width="100" />
 
 				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class AdminAcceptanceController extends Controller
 {
@@ -66,7 +67,7 @@ class AdminAcceptanceController extends Controller
 
                 // return new EntryReport(collect($results[1022]));
 
-                
+
                 foreach ($results as $email => $certificates) {
                     $n = 0;
                     foreach ($certificates as $certificate) {
@@ -83,12 +84,12 @@ class AdminAcceptanceController extends Controller
                         //dd($certificate);
 
                         // Get the photo data
-                        $certificate['photo'] = Photo::where('filepath','=',$certificate['filepath'])->get()->first();
+                        $certificate['photo'] = Photo::where('filepath', '=', $certificate['filepath'])->get()->first();
                         //dd($certificate);
                         $div_x = $certificate['photo']->width / 600;
                         $div_y = $certificate['photo']->height / 300;
                         $div = 1;
-                        if($div_x >= $div_y){
+                        if ($div_x >= $div_y) {
                             $div = $div_x;
                         } elseif ($div_y > $div_x) {
                             $div = $div_y;
@@ -103,7 +104,7 @@ class AdminAcceptanceController extends Controller
 
                         // Next two lines used for debug to return cert view
 
-                         return view('admin.certificate', compact('certificate'));
+                        return view('admin.certificate', compact('certificate'));
 
                         // $pdf = PDF::loadView('admin.certificate', compact('certificate'));
                         // return $pdf->stream('certificate.pdf');
@@ -124,5 +125,27 @@ class AdminAcceptanceController extends Controller
     public function getAcceptancePhoto($filepath)
     {
         return Image::make(storage_path() . '/app/photos/' . $filepath)->response();
+    }
+
+    public function background(Request $request)
+    {
+        if (Input::hasFile('background')) {
+            $image      = $request->file('background');
+            $fileName   = 'certificate_background' . '.' . $image->getClientOriginalExtension();
+
+            $img = Image::make($image->getRealPath());
+            $img->resize(2480, 3508, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            $img->stream(); // <-- Key point
+
+            //dd();
+            Storage::disk('public')->put( $fileName, $img);
+
+            return redirect()->back();
+        } else {
+            dd('no file supplied'.time());
+        }
     }
 }
