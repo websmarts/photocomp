@@ -123,7 +123,7 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 
     Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
     // image provider for certificates
- Route::get('acceptance/photo/{filepath}','AdminAcceptanceController@getAcceptancePhoto')->name('admin.acceptance.photo');
+    Route::get('acceptance/photo/{filepath}','AdminAcceptanceController@getAcceptancePhoto')->name('admin.acceptance.photo');
 
 });
 
