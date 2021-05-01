@@ -96,7 +96,7 @@ class AdminAcceptanceController extends Controller
                         $certificate['photo']->height = (int) $certificate['photo']->height / $div;
                         $certificate['photo']->width = (int) $certificate['photo']->width / $div;
 
-                        dd($certificate);
+                        //dd($certificate);
 
                         dd(route('admin.acceptance.photo',['filepath'=>$certificate['filepath']]));
 
