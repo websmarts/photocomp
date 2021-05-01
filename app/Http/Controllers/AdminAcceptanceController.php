@@ -102,8 +102,11 @@ class AdminAcceptanceController extends Controller
 
 
                         // Next two lines used for debug to return cert view
-                        $pdf = PDF::loadView('admin.certificate', compact('certificate'));
-                        return $pdf->stream('certificate.pdf');
+
+                        return view('admin.certificate', compact('certificate'));
+
+                        // $pdf = PDF::loadView('admin.certificate', compact('certificate'));
+                        // return $pdf->stream('certificate.pdf');
 
                         //Mail::to($to)->queue(new Certificate($certificate));
 
