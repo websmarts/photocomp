@@ -122,10 +122,12 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('reset', 'AdminResetController@reset')->name('admin.master.reset');
 
     Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
-    // image provider for certificates
-    Route::get('acceptance/photo/{filepath}','AdminAcceptanceController@getAcceptancePhoto')->name('admin.acceptance.photo');
-
+    
 });
+
+// image provider for certificates
+Route::get('acceptance/photo/{filepath}','AdminAcceptanceController@getAcceptancePhoto')->name('admin.acceptance.photo');
+
 
 Route::middleware(['auth', 'can:enter'])->group(function () {
 
