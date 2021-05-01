@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
 
 class AdminAcceptanceController extends Controller
 {
@@ -113,5 +114,10 @@ class AdminAcceptanceController extends Controller
         }
 
         dd('all done');
+    }
+
+    public function getAcceptancePhoto($filepath)
+    {
+        return Image::make(storage_path() . '/app/photos/' . $filepath)->response();
     }
 }

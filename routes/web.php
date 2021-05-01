@@ -2,6 +2,7 @@
 
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 
 //use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 |
  */
 
+ 
 // preview mailable
 Route::get('/mailable', function () {
 
@@ -120,6 +122,9 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('reset', 'AdminResetController@reset')->name('admin.master.reset');
 
     Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
+    // image provider for certificates
+ Route::get('acceptance/photo/{filepath}','AdminAcceptanceController@getAcceptancePhoto')->name('admin.acceptance.photo');
+
 });
 
 Route::middleware(['auth', 'can:enter'])->group(function () {
