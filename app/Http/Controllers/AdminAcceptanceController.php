@@ -98,7 +98,7 @@ class AdminAcceptanceController extends Controller
 
                         //dd($certificate);
 
-                        dd(route('admin.acceptance.photo',['filepath'=>$certificate['filepath']]));
+                        //dd(route('admin.acceptance.photo',['filepath'=>$certificate['filepath']]));
 
 
                         // Next two lines used for debug to return cert view
