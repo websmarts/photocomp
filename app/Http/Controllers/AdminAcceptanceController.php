@@ -79,7 +79,7 @@ class AdminAcceptanceController extends Controller
 
                         $to = $certificate['email'];
 
-                        $certificate['id'] = $n;
+                        $certificate['id'] = $n++;
 
                         //dd($certificate);
 
@@ -109,14 +109,14 @@ class AdminAcceptanceController extends Controller
                         // $pdf = PDF::loadView('admin.certificate', compact('certificate'));
                         // return $pdf->stream('certificate.pdf');
 
-                        $to = 'iwmaclagan@gmail.com'; // debug
+                        // $to = 'iwmaclagan@gmail.com'; // debug
 
                         Mail::to($to)->queue(new Certificate($certificate));
 
-                        $n++;
+                        
                     }
                 }
-                dd('done');
+                // dd('done');
                 return view('admin.messaging_queued', compact('n'));
             }
         }
