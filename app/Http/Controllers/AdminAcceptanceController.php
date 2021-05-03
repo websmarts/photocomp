@@ -79,7 +79,8 @@ class AdminAcceptanceController extends Controller
 
                         $to = $certificate['email'];
 
-                        $certificate['id'] = $n++;
+                        $n++;
+                        $certificate['id'] = $n;
 
                         //dd($certificate);
 
