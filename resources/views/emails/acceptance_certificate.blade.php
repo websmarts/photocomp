@@ -5,7 +5,18 @@
 	<title>Photocomp Acceptance Certificate</title>
 </head>
 <body>
-	<p>Please find acceptance certificate attached</p>
+	<p>Dear Entrant in the Warragul National Photographic Competition,</p>
+
+ 
+
+<p>Congratulations on your success in this year’s competition. 
+Your Certificate is attached. You will receive an individual email with each Certificate.</p>
+
+ 
+
+<p>Regards,</p>
+
+<p>Chair, Warragul National Committee</p>
 
 
 </body>
