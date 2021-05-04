@@ -113,7 +113,7 @@
 					</div>
 
 				</form>
-				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
+				<div style="margin-bottom: 20px;margin-top: 40px; border-bottom:1px dashed #333"></div>
 
 				<form method="post" action="{{route('admin.acceptance.background')}}"  enctype="multipart/form-data" id="message_results_form">
 					{{ csrf_field() }}
@@ -138,8 +138,8 @@
 					</div>
 
 				</form>
-
-				<img src="/storage/certificate_background.jpg" width="100" />
+				<p>The current background image:
+				<img src="/storage/certificate_background.jpg" width="100" /></p>
 
 				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
 
