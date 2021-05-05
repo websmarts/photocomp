@@ -67,9 +67,10 @@ class AdminAcceptanceController extends Controller
 
                 // return new EntryReport(collect($results[1022]));
 
-
+                $n = 0;// init certificate total counter
                 foreach ($results as $email => $certificates) {
-                    $n = 0;
+                    
+                    $x = 0;// reset certificate counter for this email recipient
                     foreach ($certificates as $certificate) {
                         // Skip if no email
                         if (!isset($certificate['email'])) {
@@ -79,8 +80,9 @@ class AdminAcceptanceController extends Controller
 
                         $to = $certificate['email'];
 
-                        $n++;
-                        $certificate['id'] = $n;
+                        $n++; // inc the certificate total counter
+                        $x++; // inc this entrants certificate counter
+                        $certificate['id'] = $x;
 
                         //dd($certificate);
 
