@@ -139,7 +139,7 @@
 
 				</form>
 				<p>The current background image:
-				<img src="/storage/certificate_background.jpg?{{ time() }}" width="100" /></p>
+				<a href="/storage/certificate_background.jpg?{{ time() }}" target="_blank" ><img src="/storage/certificate_background.jpg?{{ time() }}" width="200" border="0" /></a></p>
 
 				<div style="margin-bottom: 20px;margin-top: 20px; border-bottom:1px dashed #333"></div>
 
