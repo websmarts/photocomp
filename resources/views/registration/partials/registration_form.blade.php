@@ -69,7 +69,8 @@
             @endif
         </div>
     </div>
-    <div class="row">
+    <!-- 
+        <div class="row">
         <div class="col-xs-12">
             <label class="control-label">Address 2</label>
             <input type="text" class="form-control address" name="address2" value="{{ old('address2',$application->address2) }}"/>
@@ -80,6 +81,7 @@
             @endif
         </div>
     </div>
+    -->
 </div>
 <div class="form-group">
     <div class="row">
