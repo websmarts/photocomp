@@ -29,8 +29,12 @@
 
             <li> You will receive another email with a full summary of your entry including thumbnails of your images. (Check your Junk folder!)</li>
 
-            <li> Once payment is received no further changes can be made to your entry.</li>
-            </ol>
+            <li>After finalising your entry and paying via PayPal, you can update your images (add an extra image to make it up to four per section, delete an image or delete and then replace an image).</li>
+     
+            <li>Editing image names requires you to delete the image and upload it again with the new title.</li>
+            <li>However, you CANNOT add images to another section in which you had no entries at the time of payment.</li>
+        
+        </ol>
 
 
 
