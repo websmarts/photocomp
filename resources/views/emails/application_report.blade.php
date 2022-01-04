@@ -12,8 +12,8 @@
 @if($user->application->txn_id > ' ' )
 
 
-<p>&nbsp;</p>
-<p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p>
+<!-- <p>&nbsp;</p>
+<p style="font-size:130%;"><u>To help the Print Entry Stewards,</u> <strong>please print out a copy of this email and include it with any prints submitted.</strong></p> -->
 <p>&nbsp;</p>
 <p style="font-size:120%; font-weight: bold">Entrant number: {{ $user->id +1000 }} </p>
 
@@ -75,6 +75,7 @@ Return group entered: {{ $application->return_group or ' - '}}</p>
 <p>Total cost ($):{{ number_format(($application->entries_cost + $application->return_postage),2) }}
 
 <!--<p>You may log back into your account at any stage during the competition to review you entry details. </p>-->
+<p>You may log back into your account at any stage during the competition to review you entry details and update your image entries. However, once payment is made, while you can update images in existing sections, you cannot add images to additional sections.</p>
 
 @if(!$user->application->txn_id )
 <p>You can pay for your entry fee using one of the options provided on the competition web site - http://photocomp.warragulnational.org </p>
