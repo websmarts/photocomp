@@ -19,11 +19,18 @@ use Intervention\Image\Facades\Image;
  */
 
  
-// preview mailable
+// preview application report mailable
 Route::get('/mailable', function () {
 
     return new App\Mail\ApplicationReport(Auth::user());
 });
+
+
+Route::get('/entryTest', function(){
+return view('emails.entry_report_test');
+
+});
+
 
 Route::get('/labeltest', function() {
 

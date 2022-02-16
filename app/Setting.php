@@ -18,7 +18,9 @@ class Setting extends Model
         'paypal_mode',
         'flagfall_cost',
         'digital_section_cost',
-        'print_section_cost'
+        'print_section_cost',
+        'result_report_top_text_block',
+        'result_report_main_text_block'
 
     ];
 }

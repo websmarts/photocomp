@@ -28,7 +28,9 @@ class SettingsController extends Controller
             'paypal_mode' => 'required',
             'flagfall_cost' => 'required|numeric|min:0',
             'digital_section_cost' => 'required|numeric|min:0',
-            'print_section_cost' => 'required|numeric|min:0'
+            'print_section_cost' => 'required|numeric|min:0',
+            'result_report_top_text_block'=>'required|min:50|max:254',
+            'result_report_main_text_block'=> 'required|min:250|max:1540'
     
         ]);
 

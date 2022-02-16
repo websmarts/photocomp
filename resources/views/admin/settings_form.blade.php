@@ -133,6 +133,35 @@
 						</div>
 					</div>
 
+					<!-- Report text blocks start here -->
+					<div class="row" style="margin-top:20px;">
+						<div class="col-xs-12">
+							<label for="result_report_top_text_block" class="control-label">Results email: Top block of text under Title</label>
+							<textarea class="form-control" style="min-height:10em; text-align:center" name="result_report_top_text_block">{{ old('result_report_top_text_block',$settings->result_report_top_text_block) }}</textarea>
+
+							@if ($errors->has('result_report_top_text_block'))
+							<span class="help-block">
+								<strong>{{ $errors->first('result_report_top_text_block') }}</strong>
+							</span>
+							@endif
+						</div>
+					</div>
+
+					<div class="row" style="margin-top:20px;">
+						<div class="col-xs-12">
+							<label for="result_report_main_text_block" class="control-label">Results email: Main block of text</label>
+							<textarea class="form-control" style="min-height:30em" name="result_report_main_text_block">{{ old('result_report_main_text_block',$settings->result_report_main_text_block) }}</textarea>
+
+							@if ($errors->has('result_report_main_text_block'))
+							<span class="help-block">
+								<strong>{{ $errors->first('result_report_main_text_block') }}</strong>
+							</span>
+							@endif
+						</div>
+					</div>
+					
+					<!-- Report text blocks end -->
+
 					<div class="row">
 						<div class="col-xs-12">
 							<label class="control-label">Competition status</label>
