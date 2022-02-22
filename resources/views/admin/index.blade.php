@@ -14,6 +14,9 @@
 			<p><a href="{{ route('admin.category.form') }}">Edit Competition Categories</a></p>
 			<p><a href="{{ route('admin.credentials.form') }}">Change the Administrator</a></p>
 			<hr>
+			<h3>Accounts</h3>
+			<p><a href="{{ route('admin.accounts.list') }}">List Accounts</a></p>
+			<hr>
 
 			<h3>Applications ({{ $applicationCount }})</h3>
 			<p><a href="{{ route('admin.applications') }}">List Entrant Applications</a></p>

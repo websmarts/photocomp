@@ -28,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectPath = '/home';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -56,7 +56,9 @@ class ResetPasswordController extends Controller
      */
     protected function resetPassword($user, $password)
     {
+        // App\User model implements hash in password setter
         //$user->password = Hash::make($password);
+
         $user->password = $password;
 
         $user->setRememberToken(Str::random(60));
@@ -66,9 +68,16 @@ class ResetPasswordController extends Controller
         // Auth::logout();
         // flash('Your password has been updated. Login now using your updated password');
         
-
         // event(new PasswordReset($user));
 
+        // Change redirect if Admin user
+        if($user->is_admin === 'yes'){
+           $this->redirectTo ='/admin/dashboard';
+        }
+
         $this->guard()->login($user);
+        
     }
+
+    
 }

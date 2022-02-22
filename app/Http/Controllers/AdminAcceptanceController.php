@@ -40,6 +40,86 @@ class AdminAcceptanceController extends Controller
         // dd($request);
 
         if (Input::hasFile('spreadsheet')) {
+            $path = Input::file('spreadsheet')->getRealPath();
+            $data = Excel::load($path, function ($reader) {
+            })->get();
+
+
+            // Collect all results into a collection keyed by email  address
+            if (!empty($data) && $data->count()) {
+
+                foreach ($data as $key => $value) {
+                    $rows[] = [
+                        'title' => $value->title,
+                        'filepath' => $value->filepath,
+                        'section' => $value->section_name,
+                        'fullname' => $value->FullName,
+                        'email' => $value->email,
+                        'award' => $value->Award
+                    ];
+                }
+                $entrantResults = collect($rows)->groupBy('email');
+                // dd($entrantResults);
+                // return new EntryReport(collect($results[1022]));
+
+                
+                $n = 0;// init certificate total counter
+
+                foreach ($entrantResults as $email => $entries) {
+                    $to = $email;
+                    $certificates =[];
+                    $x = 0;// reset certificate counter for this entrant
+
+                    foreach ($entries as $certificate) {
+               
+                        $n++; // inc the certificate total counter
+                        $x++; // inc this entrants certificate counter
+                        $certificate['id'] = $x;
+
+                        // Add the certificate photo info
+                        $certificate['photo'] = Photo::where('filepath', '=', $certificate['filepath'])->get()->first();
+                        
+                        $div_x = $certificate['photo']->width / 600;
+                        $div_y = $certificate['photo']->height / 300;
+                        $div = 1;
+                        if ($div_x >= $div_y) {
+                            $div = $div_x;
+                        } elseif ($div_y > $div_x) {
+                            $div = $div_y;
+                        }
+                        $certificate['photo']->height = (int) $certificate['photo']->height / $div;
+                        $certificate['photo']->width = (int) $certificate['photo']->width / $div;
+
+                        $certificates[$n] = $certificate;
+                        
+                    }
+                    //dd($certificates);
+
+                    // return view('admin.certificates', compact('certificates')); // debug view
+
+                    // debug pdf view gen below
+
+                    
+                    // $pdf = PDF::loadView('admin.certificates', compact('certificates'));
+                    // return $pdf->stream('certificates.pdf');
+
+                    Mail::to($to)->queue(new Certificate($certificates));
+                    // Mail::to($to)->queue(new Certificate($certificates));
+
+                }
+                // dd('done');
+                return view('admin.messaging_queued', compact('n'));
+            }
+        }
+
+        dd('all done');
+    }
+
+    public function oldSendCertificates(Request $request)
+    {
+        // dd($request);
+
+        if (Input::hasFile('spreadsheet')) {
 
             $path = Input::file('spreadsheet')->getRealPath();
             $data = Excel::load($path, function ($reader) {

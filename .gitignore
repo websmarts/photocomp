@@ -12,3 +12,4 @@ yarn-error.log
 .env
 *.xlsx
 .vscode
+server_notes.txt

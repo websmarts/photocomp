@@ -83,6 +83,15 @@ class Application extends Model
         return $this->txn_id !== null;
     }
 
+    public function delete()
+    {
+        // delete all related photos 
+        $this->photos()->delete();
+        
+        // delete the application
+        return parent::delete();
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');

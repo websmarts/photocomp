@@ -58,6 +58,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+       
         if (Gate::allows('admin')) {
             $this->redirectTo = route('admin.dashboard');
             return;

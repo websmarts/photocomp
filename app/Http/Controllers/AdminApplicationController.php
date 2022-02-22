@@ -13,6 +13,8 @@ class AdminApplicationController extends Controller
     public function index()
     {
         $applications = Application::with('photos')->get();
+
+       
         return view('admin.applications')->with('applications', $applications);
     }
 

@@ -41,15 +41,28 @@ class Certificate extends Mailable
             
             $certificate = $this->certificate;
 
-            $this->pdf = PDF::loadView('admin.certificate', compact('certificate'));
+            // if $certificate is an array then likely we have a number of
+            // certificates to include in the pdf, not just one
+
+            if(is_array($certificate) && count($certificate) > 0){
+                
+                $this->pdf = PDF::loadView('admin.certificates', ['certificates' => $certificate]);
+                return $this->subject('Photo Competition Acceptance Certificates  ' )
+                    ->view('emails.acceptance_certificate')
+                    ->attachData($this->pdf->output(), 'certificates.pdf',[ 'mime' => 'application/pdf']);
+            } else {
+                $this->pdf = PDF::loadView('admin.certificate', compact('certificate'));
+                return $this->subject('Photo Competition Acceptance Certificate # ' . $certificate['id']++)
+                    ->view('emails.acceptance_certificate')
+                    ->attachData($this->pdf->output(), 'certificate.pdf',[ 'mime' => 'application/pdf']);
+            }
+
 
 
             // Save pdf to storage
             // Storage::disk('public')->put('labels/labels_' . $user->id.'.pdf',$pdf->output());
             
-             return $this->subject('Photo Competition Acceptance Certificate # ' . $certificate['id']++)
-                    ->view('emails.acceptance_certificate')
-                    ->attachData($this->pdf->output(), 'certificate.pdf',[ 'mime' => 'application/pdf']);
+             
                
         }
         

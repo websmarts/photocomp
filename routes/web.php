@@ -131,6 +131,12 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::post('acceptances', 'AdminAcceptanceController@sendCertificates')->name('admin.acceptances');
 
     Route::post('background', 'AdminAcceptanceController@background')->name('admin.acceptance.background');
+
+    // List  & edit/delete logins
+    Route::get('/accounts', 'AccountEditController@index')->name('admin.accounts.list');
+    Route::get('/account/{id}', 'AccountEditController@edit')->name('admin.account.edit');
+    Route::post('account/{id}', 'AccountEditController@update')->name('admin.account.update');
+
     
 });
 
@@ -173,6 +179,7 @@ Route::middleware(['auth', 'can:enter'])->group(function () {
 
     // Display the first application form
     Route::get('/home', 'HomeController@index')->name('home');
+
 
 // Show and Process the  application form
     Route::get('/application', 'ApplicationController@showRegistrationForm')->name('show_application_form');
