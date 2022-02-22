@@ -32,7 +32,7 @@
                     
                     <td>{{ $a->email }}</td>
                     <td>{{ $a->verified ? 'yes' : 'no' }}</td>
-                    <td>{{ $a->application->completed ? 'yes' : 'no' }}</td>
+                    <td>{{ $a->application ? $a->application->completed ? 'yes' : 'no' : 'no' }}</td>
                     <td>{{ $a->created_at->format('d-m-Y') }}</td>
                     <td><a href="{{ route('admin.account.edit',['id'=>$a->id]) }}" >edit</a></td>
                 </tr>
@@ -49,7 +49,7 @@
                     
                     <td>{{ $a->email }}</td>
                     <td>{{ $a->verified ? 'yes' : 'no' }}</td>
-                    <td>{{ $a->application->completed ? 'yes' : 'no' }}</td>
+                    <td>{{ $a->application ? $a->application->completed ? 'yes' : 'no' : 'no' }}</td>
                     <td>{{ $a->created_at->format('d-m-Y') }}</td>
                     <td><a href="{{ route('admin.account.edit',['id'=>$a->id]) }}" >edit</a></td>
                 </tr>

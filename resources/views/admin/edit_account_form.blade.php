@@ -30,7 +30,7 @@
 
             
             
-            @if(!$account->application->completed && $account->is_admin == 'no' )
+            @if((!$account->application && $account->is_admin == 'no') or (!$account->application->completed && $account->is_admin == 'no')  )
 
            
             <hr>
