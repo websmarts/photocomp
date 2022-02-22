@@ -17,7 +17,12 @@ class AccountEditController extends Controller
             ->get();
 
         foreach($accounts as &$a ){
-            $a['confirm_terms'] = $a->application->completed;
+            if($a->application){
+                $a['confirm_terms'] = $a->application->completed;
+            } else {
+                $a['confirm_terms'] ='';
+            }
+            
         }
 
 
