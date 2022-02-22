@@ -159,6 +159,9 @@
 							@endif
 						</div>
 					</div>
+
+					<a href="/admin/entryTest" target="_blank">preview result page look</a>
+					<hr>
 					
 					<!-- Report text blocks end -->
 

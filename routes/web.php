@@ -26,10 +26,7 @@ Route::get('/mailable', function () {
 });
 
 
-Route::get('/entryTest', function(){
-return view('emails.entry_report_test');
 
-});
 
 
 Route::get('/labeltest', function() {
@@ -136,6 +133,11 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('/accounts', 'AccountEditController@index')->name('admin.accounts.list');
     Route::get('/account/{id}', 'AccountEditController@edit')->name('admin.account.edit');
     Route::post('account/{id}', 'AccountEditController@update')->name('admin.account.update');
+
+    Route::get('/entryTest', function(){
+        return view('emails.entry_report_test');
+        
+    });
 
     
 });
