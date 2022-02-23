@@ -46,8 +46,8 @@ class AccountEditController extends Controller
         // if $request->delete_account == 'DELETE' ->delete the account
         if(strtoupper($request->delete_account) === 'DELETE'){
             
-            if($user){
-                if($user->application->completed !== 'checked'){
+            if($user ){
+                if($user->application && $user->application->completed !== 'checked'){
                     $user->application()->delete();
                 }
                 

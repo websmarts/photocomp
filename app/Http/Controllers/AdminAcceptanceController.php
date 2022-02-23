@@ -64,11 +64,13 @@ class AdminAcceptanceController extends Controller
 
                 
                 $n = 0;// init certificate total counter
+                $m = 0; // entrant counter
 
                 foreach ($entrantResults as $email => $entries) {
                     $to = $email;
                     $certificates =[];
                     $x = 0;// reset certificate counter for this entrant
+                    $m++; // increment the entrant counter
 
                     foreach ($entries as $certificate) {
                
@@ -108,7 +110,7 @@ class AdminAcceptanceController extends Controller
 
                 }
                 // dd('done');
-                return view('admin.messaging_queued', compact('n'));
+                return view('admin.messaging_queued', ['certificates'=>$n, 'entrants'=>$m]);
             }
         }
 
