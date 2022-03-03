@@ -33,7 +33,7 @@ class CreateApplicationsTable extends Migration
             $table->string('club_name')->nullable();// added 10/2019
             $table->string('club_nomination')->nullable();
             $table->string('confirm_terms')->nullable();
-            $table->string('where_hear')->nullable();
+            //$table->string('where_hear')->nullable();
 
             $table->integer('number_of_entries')->unsigned()->default(0);
             $table->integer('number_of_sections')->unsigned()->default(0);
