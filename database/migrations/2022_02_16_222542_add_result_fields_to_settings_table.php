@@ -14,8 +14,8 @@ class AddResultFieldsToSettingsTable extends Migration
     public function up()
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->string('result_report_top_text_block');
-            $table->mediumText('result_report_main_text_block');
+            $table->string('result_report_top_text_block')->default('Add your top block block of text for reports email');
+            $table->mediumText('result_report_main_text_block')->default('Add your main block of text here for reports email');
         });
     }
 
