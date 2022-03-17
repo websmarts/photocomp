@@ -3,6 +3,8 @@
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+
 
 
 //use Illuminate\Support\Facades\Storage;
@@ -22,7 +24,10 @@ use Intervention\Image\Facades\Image;
     $photos = \App\Photo::All();
 
     foreach($photos as $photo){
-        echo $photo->filepath . "<br>";
+        if(!Storage::exists('photos/'.$photo->filepath)){
+            echo $photo->filepath . "<br>";
+        }
+       
     }
 
  });
