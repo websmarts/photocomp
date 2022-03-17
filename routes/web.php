@@ -18,14 +18,14 @@ use Intervention\Image\Facades\Image;
 |
  */
 
- Route::get('exporttest', function(){
+ Route::get('/exporttest', function(){
     $photos = \App\Photo::All();
 
     foreach($photos as $photo){
-        echo $photo->filepath . "<br>'";
+        echo $photo->filepath . "<br>";
     }
 
- })
+ });
 
  
 // preview application report mailable
