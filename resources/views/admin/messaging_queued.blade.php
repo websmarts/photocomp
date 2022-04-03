@@ -8,7 +8,7 @@
 
 			@include('layouts.partials.back_to_admin_dashboard_link')
 
-			<h1>Emails have been queued for delivery for {{ $entrants }} entrants with a total of {{ $certificates }} attached.</h1>
+			<h1>Success: All emails have been queued for delivery</h1>
 		</div>
 	</div>
 </div>
